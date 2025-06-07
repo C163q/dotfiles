@@ -1,4 +1,7 @@
-vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {
+    noremap = true,
+    desc = "Go to definition"
+})
 
 vim.keymap.set('n', 'gD', function()
         local org_path = vim.api.nvim_buf_get_name(0)
@@ -21,4 +24,8 @@ vim.keymap.set('n', 'gD', function()
             -- Switch to the original tab
             vim.api.nvim_command('normal! gt')
         end
-    end, bufopts)
+    end,
+    {
+        noremap = true,
+        desc = "Go to definition in a new TAB"
+})

@@ -45,7 +45,8 @@ api.nvim_set_keymap(
     '<Leader>b',
     ':BufferLinePick<CR>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Pick tab at BufferLine'
     }
 )
 
@@ -54,7 +55,8 @@ api.nvim_set_keymap(
     '<Leader>n',
     ':BufferLinePickClose<CR>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Close tab at BufferLine'
     }
 )
 
@@ -63,7 +65,8 @@ api.nvim_set_keymap(
     '<Leader>b',
     '<Esc>:BufferLinePick<CR>i',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Pick tab at BufferLine'
     }
 )
 
@@ -72,7 +75,8 @@ api.nvim_set_keymap(
     '<Leader>n',
     '<Esc>:BufferLinePickClose<CR>i',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Close tab at BufferLine'
     }
 )
 
@@ -82,7 +86,8 @@ api.nvim_set_keymap(
     '<Leader>p',
     ':BufferLineTogglePin<CR>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Pin current window at BufferLine'
     }
 )
 
@@ -91,21 +96,45 @@ api.nvim_set_keymap(
     '<Leader>p',
     '<Esc>:BufferLineTogglePin<CR>i',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Pin current window at BufferLine'
     }
 )
 
 -- Close current tab when press <Leader>C
-api.nvim_set_keymap(
+vim.keymap.set(
     '',
     '<Leader>c',
-    ':bdelete<CR>',
+    function()
+        local buffer_id = vim.fn.bufnr()
+        if buffer_id then
+            vim.cmd("BufferLineCyclePrev")
+            vim.cmd("bdelete "..buffer_id)
+        end
+    end,
     {
-        noremap = true
+        noremap = true,
+        desc = 'Close current window'
     }
 )
 
-
+--[[
+local bufferline = require('bufferline')
+-- Test
+vim.keymap.set(
+    '',
+    '<Leader>v',
+    function()
+        -- bufferline.exec(1, function(buf, visible_buffers)
+        --     vim.cmd('bdelete'..buf.id)
+        -- end)
+    end,
+    {
+        noremap = true,
+        desc = "Test"
+    }
+)
+--]]
 
 
 

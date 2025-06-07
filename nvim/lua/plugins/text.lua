@@ -1,3 +1,4 @@
+-- Highlight color
 return {
 
     -- https://github.com/numToStr/Comment.nvim
@@ -28,5 +29,24 @@ return {
     -- They all share same configuration approaches and general design principles.
     {
         'echasnovski/mini.nvim', version = '*'
+    },
+
+    -- https://github.com/lukas-reineke/indent-blankline.nvim
+    -- Indent Blankline: This plugin adds indentation guides to Neovim.
+    -- It uses Neovim's virtual text feature and no conceal
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        ---@module "ibl"
+        ---@type ibl.config
+        config = function()
+            local hooks = require "ibl.hooks"
+            hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+                vim.api.nvim_set_hl(0, 'CurrentScope', { fg = "#8a8466" })
+            end)
+            require("ibl").setup({
+                scope = { highlight = 'CurrentScope' }
+            })
+        end,
     },
 }

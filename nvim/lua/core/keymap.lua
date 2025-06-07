@@ -217,15 +217,14 @@ api.nvim_set_keymap(
     }
 )
 
--- Open terminal when press <Leader>t
+-- exit terminal mode to normal mode when press <ESC>
 api.nvim_set_keymap(
-    '',
-    '<Leader>t',
-    ':sp<CR>:terminal<CR>',
+    't',
+    '<Esc>',
+    '<C-\\><C-n>',
     {
         noremap = true
     }
 )
-
 
 

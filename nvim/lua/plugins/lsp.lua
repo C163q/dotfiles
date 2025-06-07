@@ -20,7 +20,7 @@ return {
     {
         "neovim/nvim-lspconfig",
     },
-    
+
     -- https://github.com/mason-org/mason-lspconfig.nvim
     -- mason-lspconfig bridges mason.nvim with the lspconfig plugin - making it easier to use both plugins together.
     {
@@ -31,5 +31,5 @@ return {
             "neovim/nvim-lspconfig",
         },
     },
-    
+
 }

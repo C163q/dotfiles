@@ -1,7 +1,14 @@
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Write down ALL LSPs
+local language_servers = vim.lsp.get_clients()
+for _, ls in ipairs(language_servers) do
+    require('lspconfig')[ls].setup({
+        capabilities = capabilities
+    })
+end
+
+--[[
 require("lspconfig").bashls.setup {
     capabilities = capabilities,
 }
@@ -29,7 +36,7 @@ require("lspconfig").rust_analyzer.setup {
 require("lspconfig").vtsls.setup {
     capabilities = capabilities,
 }
-
+--]]
 
 -- Setup
 local cmp_status_ok, cmp = pcall(require, "cmp")

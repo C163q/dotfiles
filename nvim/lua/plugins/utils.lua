@@ -46,6 +46,29 @@ return {
         ---@type neotree.Config?
         opts = {
             -- fill any relevant options here
+            close_if_last_window = false,
+            enable_git_status = true,
+            default_component_configs = {
+                git_status = {
+                    symbols = {
+                        -- Change type
+                        added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+                        modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
+                        deleted = "✖", -- this can only be used in the git_status source
+                        renamed = "󰁕", -- this can only be used in the git_status source
+                        -- Status type
+                        untracked = "",
+                        ignored = "",
+                        unstaged = "󰄱",
+                        staged = "",
+                        conflict = "",
+                    },
+                },
+                window = {
+                    position = "left",
+                    width = 0.2,
+                }
+            }
         },
     },
 
@@ -107,12 +130,16 @@ return {
                     alphabet = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 },
                 diagnostics = "nvim_lsp",
+                diagnostics_indicator = function(count, level, diagnostics_dict, context)
+                    local icon = level:match("error") and " " or " "
+                    return " " .. icon .. count
+                end,
                 -- 左侧让出 nvim-tree 的位置
                 offsets = {{
                     filetype = "neo-tree",
                     text = "File Explorer",
                     highlight = "Directory",
-                    text_align = "left"
+                    text_align = "center"
                 }},
                 custom_filter = function(buf_number, buf_numbers)
                     -- filter out filetypes you don't want to see
@@ -137,4 +164,131 @@ return {
         ---@type render.md.UserConfig
         opts = {},
     },
+
+    -- https://github.com/akinsho/toggleterm.nvim
+    -- toggleterm.nvim: A neovim plugin to persist and toggle multiple terminals during an editing session
+    {
+        'akinsho/toggleterm.nvim',
+        version = "*",
+        opts = {}
+    },
+
+    -- https://github.com/nvim-telescope/telescope.nvim
+    -- telescope.nvim: Gaze deeply into unknown regions using the power of the moon.
+    {
+        'nvim-telescope/telescope.nvim',
+        -- branch = '0.1.x',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+    },
+
+    -- https://github.com/kevinhwang91/nvim-ufo
+    -- nvim-ufo: The goal of nvim-ufo is to make Neovim's fold look modern and keep high performance.
+    {
+        'kevinhwang91/nvim-ufo',
+        dependencies = { 'kevinhwang91/promise-async' },
+        config = function()
+            vim.o.statuscolumn='%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "󰍝" : "󰍟") : "│") : " " }'
+            vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+            vim.o.foldlevelstart = 99
+            vim.o.foldenable = true
+
+            -- Tell the server the capability of foldingRange,
+            -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true
+            }
+            local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
+            for _, ls in ipairs(language_servers) do
+                require('lspconfig')[ls].setup({
+                    capabilities = capabilities
+                    -- you can add other fields for setting up lsp server in this table
+                })
+            end
+
+            local handler = function(virtText, lnum, endLnum, width, truncate)
+                local newVirtText = {}
+                local suffix = (' 󰁂 %d '):format(endLnum - lnum)
+                local sufWidth = vim.fn.strdisplaywidth(suffix)
+                local targetWidth = width - sufWidth
+                local curWidth = 0
+                for _, chunk in ipairs(virtText) do
+                    local chunkText = chunk[1]
+                    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                    if targetWidth > curWidth + chunkWidth then
+                        table.insert(newVirtText, chunk)
+                    else
+                        chunkText = truncate(chunkText, targetWidth - curWidth)
+                        local hlGroup = chunk[2]
+                        table.insert(newVirtText, {chunkText, hlGroup})
+                        chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                        -- str width returned from truncate() may less than 2nd argument, need padding
+                        if curWidth + chunkWidth < targetWidth then
+                            suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
+                        end
+                        break
+                    end
+                    curWidth = curWidth + chunkWidth
+                end
+                table.insert(newVirtText, {suffix, 'MoreMsg'})
+                return newVirtText
+            end
+
+            require('ufo').setup({
+                fold_virt_text_handler = handler
+            })
+        end
+    },
+
+--[[
+    -- https://github.com/rcarriga/nvim-notify
+    -- nvim-notify: A fancy, configurable, notification manager for NeoVim
+    -- DISABLED for messages truncated when `max_width` set.
+    {
+        "rcarriga/nvim-notify",
+        opts = {
+            max_width = 30,
+            max_height = 20,
+            wrap_message = true,
+        }
+    },
+--]]
+
+    -- https://github.com/folke/noice.nvim
+    -- Noice (Nice, Noise, Notice): Highly experimental plugin that 
+    -- completely replaces the UI for messages, cmdline and the popupmenu.
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+            lsp = {
+                -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                    ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                },
+            },
+            presets = {
+                bottom_search = false,  -- use a classic bottom cmdline for search
+                command_palette = true, -- position the cmdline and popupmenu together
+                long_message_to_split = true,   -- long messages will be sent to a split
+                inc_rename = false,     -- enables an input dialog for inc-rename.nvim
+                lsp_doc_border = true,  -- add a border to hover docs and signature help
+            },
+            messages = {
+                enabled = false,
+            },
+            popupmenu = {
+                enabled = false,
+            },
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        }
+    }
 }

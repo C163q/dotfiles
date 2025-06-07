@@ -1,10 +1,16 @@
 local api = vim.api
 
 -- PLUGIN neo-tree config
-api.nvim_set_keymap(
+vim.keymap.set(
     '',
     '<C-Q>',
-    ':Neotree<CR>',
+    function()
+        if (vim.bo.filetype == 'neo-tree') then
+            vim.cmd("Neotree toggle=true")
+        else
+            vim.cmd("Neotree")
+        end
+    end,
     {
         noremap = true
     }
