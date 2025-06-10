@@ -15,10 +15,12 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
     group = 'IrreplaceableWindows',
     pattern = '*',
     callback = function()
-        local filetypes = { 'neo-tree', 'notify' }
-        local buftypes = { 'terminal', 'nofile' }
-        if vim.tbl_contains(buftypes, vim.bo.buftype) or
-            vim.tbl_contains(filetypes, vim.bo.filetype) then
+        local filetypes_or = { 'neo-tree', 'dap-float' }
+        local buftypes_or = { 'terminal' }
+        -- DO NOT put 'nofile' buftype HERE!!!!!!!!!!!!!!!!!!
+        -- or snacks.picker WILL OVERWRITE current file for 'winfixbuf' set.
+        if vim.tbl_contains(buftypes_or, vim.bo.buftype) or
+            vim.tbl_contains(filetypes_or, vim.bo.filetype) then
             vim.cmd('set winfixbuf')
         end
     end
@@ -35,5 +37,32 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.opt_local.foldcolumn = '0'
     end,
 })
+
+--[[
+-- Prevent being truncated for noise 'view = mini'
+vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+  group = curfile_augroup,
+  pattern = '*',
+  callback = function ()
+    vim.api.nvim_win_set_option(0, 'winhl', '')
+    -- vim.opt.signcolumn = 'yes' -- comment/delete this line fixes the problem!
+  end,
+})
+--]]
+
+-- make dap-float easy to exit
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'dap-float' },
+    callback = function()
+        local buffer_id = vim.fn.bufnr()
+        vim.api.nvim_create_autocmd("WinLeave", {
+            buffer = buffer_id,
+            callback = function()
+                vim.cmd('exit')
+            end
+        })
+    end
+})
+
 
 

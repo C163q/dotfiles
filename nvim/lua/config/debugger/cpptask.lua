@@ -9,6 +9,13 @@ dap.configurations.cpp = {
         end,
         cwd = '${workspaceFolder}',
         stopAtEntry = true,
+        setupCommands = {
+            {
+                text = '-enable-pretty-printing',
+                description =  'enable pretty printing',
+                ignoreFailures = false
+            },
+        },
     },
     {
         name = 'Attach to gdbserver :1234',
@@ -31,4 +38,6 @@ dap.configurations.cpp = {
     },
 }
 
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
 

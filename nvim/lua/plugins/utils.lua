@@ -26,6 +26,10 @@ return {
                     }
                 }
             },
+            options = {
+                theme = "catppuccin"
+                -- ... the rest of your lualine config
+            }
         }
     },
 
@@ -78,34 +82,53 @@ return {
     --   a collection of queries for enabling tree-sitter features built into Neovim for these languages;
     --   a staging ground for treesitter-based features considered for upstreaming to Neovim.
     {
-        {
-            'nvim-treesitter/nvim-treesitter',
-            lazy = false,
-            branch = 'main',
-            build = ":TSUpdate",
-            config = function()
-                require('nvim-treesitter.config').setup(opts)
-                require('nvim-treesitter').setup()
+        'nvim-treesitter/nvim-treesitter',
+        lazy = false,
+        branch = 'main',
+        build = ":TSUpdate",
+        config = function()
+            require('nvim-treesitter.config').setup(opts)
+            require('nvim-treesitter').setup()
 
-                local ensure_installed = {
-                    'rust', 'javascript', 'c', 'lua',
-                    'cmake', 'cpp', 'json', 'jsonc',
-                    'markdown', 'python', 'yaml', 'bash'
-                }
+            local ensure_installed = {
+                'rust', 'javascript', 'c', 'lua',
+                'cmake', 'cpp', 'json', 'jsonc',
+                'markdown', 'python', 'yaml', 'bash'
+            }
 
-                require('nvim-treesitter').install(ensure_installed):wait(30000)
+            require('nvim-treesitter').install(ensure_installed):wait(30000)
 
-                -- enable highlight
-                vim.api.nvim_create_autocmd('FileType', {
-                    pattern = { '<filetype>' },
-                    callback = function() vim.treesitter.start() end,
-                })
+            -- enable highlight
+            vim.api.nvim_create_autocmd('FileType', {
+                pattern = { '<filetype>' },
+                callback = function() vim.treesitter.start() end,
+            })
 
-                -- enable folds
-                vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            -- enable folds
+            vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
-            end
-        },
+        end
+    },
+
+    -- https://github.com/nvim-treesitter/nvim-treesitter-context
+    -- nvim-treesitter-context: Lightweight alternative to context.vim
+    {
+        'nvim-treesitter/nvim-treesitter-context',
+        opts = {
+            enable = true,  -- Enable this plugin (Can be enabled/disabled later via commands)
+            multiwindow = false,    -- Enable multiwindow support.
+            max_lines = 6,  -- How many lines the window should span. Values <= 0 mean no limit.
+            min_window_height = 0,  -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+            line_numbers = true,
+            multiline_threshold = 3,   -- Maximum number of lines to show for a single context
+            trim_scope = 'inner', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+            mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+            -- Separator between context and content. Should be a single character string, like '-'.
+            -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+            separator = nil,
+            zindex = 20, -- The Z-index of the context window
+            on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+        }
     },
 
     -- https://github.com/akinsho/bufferline.nvim
@@ -149,7 +172,8 @@ return {
                         return true
                     end
                 end,
-            }
+            },
+            highlights = require("catppuccin.groups.integrations.bufferline").get()
         }
     },
 
@@ -187,57 +211,7 @@ return {
         'kevinhwang91/nvim-ufo',
         dependencies = { 'kevinhwang91/promise-async' },
         config = function()
-            vim.o.statuscolumn='%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "󰍝" : "󰍟") : "│") : " " }'
-            vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-            vim.o.foldlevelstart = 99
-            vim.o.foldenable = true
-
-            -- Tell the server the capability of foldingRange,
-            -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities.textDocument.foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true
-            }
-            local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
-            for _, ls in ipairs(language_servers) do
-                require('lspconfig')[ls].setup({
-                    capabilities = capabilities
-                    -- you can add other fields for setting up lsp server in this table
-                })
-            end
-
-            local handler = function(virtText, lnum, endLnum, width, truncate)
-                local newVirtText = {}
-                local suffix = (' 󰁂 %d '):format(endLnum - lnum)
-                local sufWidth = vim.fn.strdisplaywidth(suffix)
-                local targetWidth = width - sufWidth
-                local curWidth = 0
-                for _, chunk in ipairs(virtText) do
-                    local chunkText = chunk[1]
-                    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-                    if targetWidth > curWidth + chunkWidth then
-                        table.insert(newVirtText, chunk)
-                    else
-                        chunkText = truncate(chunkText, targetWidth - curWidth)
-                        local hlGroup = chunk[2]
-                        table.insert(newVirtText, {chunkText, hlGroup})
-                        chunkWidth = vim.fn.strdisplaywidth(chunkText)
-                        -- str width returned from truncate() may less than 2nd argument, need padding
-                        if curWidth + chunkWidth < targetWidth then
-                            suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
-                        end
-                        break
-                    end
-                    curWidth = curWidth + chunkWidth
-                end
-                table.insert(newVirtText, {suffix, 'MoreMsg'})
-                return newVirtText
-            end
-
-            require('ufo').setup({
-                fold_virt_text_handler = handler
-            })
+            require('config.ufo')
         end
     },
 
@@ -263,6 +237,7 @@ return {
         event = "VeryLazy",
         opts = {
             -- add any options here
+            --[[
             lsp = {
                 -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
                 override = {
@@ -271,24 +246,90 @@ return {
                     ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
                 },
             },
+            --]]
             presets = {
                 bottom_search = false,  -- use a classic bottom cmdline for search
-                command_palette = true, -- position the cmdline and popupmenu together
+                command_palette = false, -- position the cmdline and popupmenu together
                 long_message_to_split = true,   -- long messages will be sent to a split
                 inc_rename = false,     -- enables an input dialog for inc-rename.nvim
                 lsp_doc_border = true,  -- add a border to hover docs and signature help
             },
             messages = {
-                enabled = false,
+                -- NOTE: If you enable messages, then the cmdline is enabled automatically.
+                -- This is a current Neovim limitation.
+                enabled = false,        -- enables the Noice messages UI
+                view = "mini",          -- view for messages
+                view_error = "mini",    -- view for errors
+                view_warn = "mini",     -- view for warnings
+                view_history = "messages", -- view for :messages
+                view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
             },
             popupmenu = {
                 enabled = false,
+            },
+            lsp = {
+                signature = {
+                    enabled = false,
+                },
+                progress = {
+                    enabled = false,
+                },
+                hover = {
+                    enabled = false,
+                },
             },
         },
         dependencies = {
             -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
             "MunifTanjim/nui.nvim",
             "nvim-treesitter/nvim-treesitter",
+        }
+    },
+
+
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+            bigfile = { enabled = true },
+            dashboard = { enabled = true },
+            explorer = { enabled = true },
+            indent = { enabled = true },
+            input = { enabled = true },
+            picker = { enabled = true },
+            notifier = { enabled = true },
+            quickfile = { enabled = true },
+            scope = { enabled = true },
+            scroll = { enabled = false },   -- NOT good for using keyboard
+            statuscolumn = { enabled = true },
+            words = { enabled = true },
+        },
+        keys = {
+            -- picker overwrite windows for winfixbuf is set!!!!!!
+            -- May solve: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+            { "<leader>gn", function() Snacks.picker.notifications() end, desc = "Notification History" },
+            { "<leader>g:", function() Snacks.picker.command_history() end, desc = "Command History" },
+            { "gx", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+            { "gX", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+            { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+            { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+            { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+            { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+            { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+        },
+        picker = {
+            jump = {
+                jumplist = true, -- save the current position in the jumplist
+                tagstack = false, -- save the current position in the tagstack
+                reuse_win = true, -- reuse an existing window if the buffer is already open
+                close = true, -- close the picker when jumping/editing to a location (defaults to true)
+                match = false, -- jump to the first match position. (useful for `lines`)
+            },
         }
     }
 }

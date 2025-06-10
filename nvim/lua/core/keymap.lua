@@ -227,4 +227,14 @@ api.nvim_set_keymap(
     }
 )
 
+-- exit insert mode when press Alt+Space
+vim.keymap.set(
+    'i',
+    '<M-Space>',
+    '<Esc>',
+    {
+        noremap = true
+    }
+)
+
 

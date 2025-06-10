@@ -23,13 +23,10 @@ return {
     -- nvim-dap-ui: A UI for nvim-dap which provides a good out of the box configuration.
     {
         "rcarriga/nvim-dap-ui",
-        dependencies = { "mfussenegger/nvim-dap", "nvim-dap-virtual-text", "nvim-neotest/nvim-nio" },
+        dependencies = { "mfussenegger/nvim-dap", "nvim-dap-virtual-text", "nvim-neotest/nvim-nio", "folke/noice.nvim" },
+        -- lazy=true,
         config = function()
             require('nvim-dap-virtual-text').setup() -- optional
-            local ok, noice = pcall(require, 'noice')
-            if ok then
-                noice.setup()
-            end
             require('config.dap-ui')
         end,
 

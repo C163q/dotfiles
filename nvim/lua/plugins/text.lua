@@ -49,4 +49,15 @@ return {
             })
         end,
     },
+
+    -- https://github.com/catgoose/nvim-colorizer.lua
+    -- NvChad/nvim-colorizer.lua has moved, supports custom colors. Now being maintained
+    -- https://www.reddit.com/r/neovim/comments/1hjjhvb/nvchadnvimcolorizerlua_has_moved_supports_custom/
+    -- colorizer.lua: A high-performance color highlighter for Neovim which has no external dependencies! Written in performant Luajit.
+    {
+        "catgoose/nvim-colorizer.lua",
+        event = "BufReadPre",
+        opts = { -- set to setup table
+        },
+    }
 }
