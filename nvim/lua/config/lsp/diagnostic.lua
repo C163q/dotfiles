@@ -104,7 +104,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- highlight words under cursor
         if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-            local highlight_augroup = vim.api.nvim_create_augroup('LSPDocumentHighlightToggle', { clear = true })
+            local highlight_augroup = vim.api.nvim_create_augroup('LSPDocumentHighlightToggle', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
                 buffer = event.buf,
                 group = highlight_augroup,
@@ -117,6 +117,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 callback = vim.lsp.buf.clear_references,
             })
         end
+
+        -- offloads upon detachment
+        vim.api.nvim_create_autocmd('LspDetach', {
+            group = vim.api.nvim_create_augroup('LSPDetachCleanUp', { clear = true }),
+            callback = function (detach_event)
+                -- vim.lsp.buf.clear_references()
+                vim.api.nvim_clear_autocmds({ group = 'LSPDocumentHighlightToggle', buffer = detach_event.buf })
+            end
+        })
 
     end
 })
