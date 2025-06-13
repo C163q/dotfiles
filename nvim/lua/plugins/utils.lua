@@ -249,7 +249,7 @@ return {
             --]]
             presets = {
                 bottom_search = false,  -- use a classic bottom cmdline for search
-                command_palette = false, -- position the cmdline and popupmenu together
+                command_palette = true, -- position the cmdline and popupmenu together
                 long_message_to_split = true,   -- long messages will be sent to a split
                 inc_rename = false,     -- enables an input dialog for inc-rename.nvim
                 lsp_doc_border = true,  -- add a border to hover docs and signature help
@@ -257,7 +257,7 @@ return {
             messages = {
                 -- NOTE: If you enable messages, then the cmdline is enabled automatically.
                 -- This is a current Neovim limitation.
-                enabled = false,        -- enables the Noice messages UI
+                enabled = true,        -- enables the Noice messages UI
                 view = "mini",          -- view for messages
                 view_error = "mini",    -- view for errors
                 view_warn = "mini",     -- view for warnings
@@ -308,19 +308,66 @@ return {
             scroll = { enabled = false },   -- NOT good for using keyboard
             statuscolumn = { enabled = true },
             words = { enabled = true },
+            -- Can't use sixel for cost too much time rendering.
+            --[[
+            dashboard = {
+                sections = {
+                    {
+                        section = "terminal",
+                        cmd = "cat ~/custom/neovim/dashboard_ascii_art_1.txt; sleep .1s",
+                        height = 14,
+                        width = 30,
+                        padding = 1,
+                        indent = 20,
+                    },
+                    {
+                        pane = 2,
+                        { section = "header" },
+                        { section = "keys", gap = 1, padding = 1 },
+                        { section = "startup" },
+                    },
+                },
+            }
+            --]]
         },
         keys = {
             -- picker overwrite windows for winfixbuf is set!!!!!!
             -- May solve: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+            { "<leader>gf", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+            { "<leader>m", function() Snacks.picker.buffers() end, desc = "Buffers" },
             { "<leader>gn", function() Snacks.picker.notifications() end, desc = "Notification History" },
             { "<leader>g:", function() Snacks.picker.command_history() end, desc = "Command History" },
+            { "<leader>g/", function() Snacks.picker.grep() end, desc = "Grep" },
+            { "<leader>ge", function() Snacks.explorer() end, desc = "File Explorer" },
+            { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
+            { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+            { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
+            { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
+            { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+            { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
+            { "<leader>go", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
             { "gx", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
             { "gX", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
             { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
             { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
             { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+            { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
+            { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
+            { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
+            { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
+            { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+            { "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
+            { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
+            { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
+            { "<leader>sj", function() Snacks.picker.jumps() end, desc = "Jumps" },
+            { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+            { "<leader>sl", function() Snacks.picker.loclist() end, desc = "Location List" },
+            { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
+            { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
+            { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
             { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
             { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+            { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
         },
         picker = {
             jump = {
@@ -330,6 +377,6 @@ return {
                 close = true, -- close the picker when jumping/editing to a location (defaults to true)
                 match = false, -- jump to the first match position. (useful for `lines`)
             },
-        }
+        },
     }
 }

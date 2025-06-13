@@ -120,16 +120,17 @@ api.nvim_set_keymap(
 )
 
 -- Move selected lines in VISUAL mode when press Shift+J or Shift+K
-api.nvim_set_keymap(
+vim.keymap.set(
     'v',
     'J',
     ":m '>+1<CR>gv=gv",
     {
         noremap = true
     }
+
 )
 
-api.nvim_set_keymap(
+vim.keymap.set(
     'v',
     'K',
     ":m '<-2<CR>gv=gv",

@@ -1,26 +1,29 @@
-local api = vim.api
 
 -- Go to Next BufferLine when press ctrl+N
 -- Go to Prev BufferLine when press ctrl+B
-api.nvim_set_keymap(
+vim.keymap.set(
     '',
     '<C-h>',
-    ':BufferLineCyclePrev<CR>',
+    function ()
+        vim.cmd('BufferLineCyclePrev')
+    end,
     {
         noremap = true
     }
 )
 
-api.nvim_set_keymap(
+vim.keymap.set(
     '',
     '<C-l>',
-    ':BufferLineCycleNext<CR>',
+    function ()
+        vim.cmd('BufferLineCycleNext')
+    end,
     {
         noremap = true
     }
 )
 
-api.nvim_set_keymap(
+vim.keymap.set(
     'i',
     '<C-h>',
     '<Esc>:BufferLineCyclePrev<CR>i',
@@ -29,7 +32,7 @@ api.nvim_set_keymap(
     }
 )
 
-api.nvim_set_keymap(
+vim.keymap.set(
     'i',
     '<C-l>',
     '<Esc>:BufferLineCycleNext<CR>i',
@@ -40,40 +43,24 @@ api.nvim_set_keymap(
 
 -- BufferLine Pick when press <Leader>B
 -- BufferLine Pick Close when press <Leader>N
-api.nvim_set_keymap(
+vim.keymap.set(
     '',
     '<Leader>b',
-    ':BufferLinePick<CR>',
+    function ()
+        vim.cmd('BufferLinePick')
+    end,
     {
         noremap = true,
         desc = 'Pick tab at BufferLine'
     }
 )
 
-api.nvim_set_keymap(
+vim.keymap.set(
     '',
     '<Leader>n',
-    ':BufferLinePickClose<CR>',
-    {
-        noremap = true,
-        desc = 'Close tab at BufferLine'
-    }
-)
-
-api.nvim_set_keymap(
-    'i',
-    '<Leader>b',
-    '<Esc>:BufferLinePick<CR>i',
-    {
-        noremap = true,
-        desc = 'Pick tab at BufferLine'
-    }
-)
-
-api.nvim_set_keymap(
-    'i',
-    '<Leader>n',
-    '<Esc>:BufferLinePickClose<CR>i',
+    function ()
+        vim.cmd('BufferLinePickClose')
+    end,
     {
         noremap = true,
         desc = 'Close tab at BufferLine'
@@ -81,20 +68,12 @@ api.nvim_set_keymap(
 )
 
 -- BufferLine Pin current file when press <Leader>P
-api.nvim_set_keymap(
+vim.keymap.set(
     '',
     '<Leader>p',
-    ':BufferLineTogglePin<CR>',
-    {
-        noremap = true,
-        desc = 'Pin current window at BufferLine'
-    }
-)
-
-api.nvim_set_keymap(
-    'i',
-    '<Leader>p',
-    '<Esc>:BufferLineTogglePin<CR>i',
+    function ()
+        vim.cmd('BufferLineTogglePin')
+    end,
     {
         noremap = true,
         desc = 'Pin current window at BufferLine'

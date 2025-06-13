@@ -50,8 +50,10 @@ vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
 })
 --]]
 
+vim.api.nvim_create_augroup('WinEasyExit', { clear = true })
 -- make dap-float easy to exit
 vim.api.nvim_create_autocmd('FileType', {
+    group = 'WinEasyExit',
     pattern = { 'dap-float' },
     callback = function()
         local buffer_id = vim.fn.bufnr()

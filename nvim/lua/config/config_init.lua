@@ -1,6 +1,7 @@
 require("config.neo-tree")
 require("config.bufferline")
-require("config.diagnostic")
+-- move to core/lsp_enable.lua
+-- require("config.diagnostic")
 require("config.complement")
 require("config.text")
 require("config.toggleterm")
