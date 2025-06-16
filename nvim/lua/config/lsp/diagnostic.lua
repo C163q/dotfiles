@@ -127,6 +127,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
             end
         })
 
+        -- vim.notify(client.name, 2)
+        --[[
+        if client and client.name == 'basedpyright' then
+            vim.keymap.set('n', '<Leader>lp',function()
+                    if _G.MyCustomSettings.basedpyrightTypeCheck then
+                        _G.MyCustomSettings.basedpyrightTypeCheck = false
+                    else
+                        _G.MyCustomSettings.basedpyrightTypeCheck = true
+                    end
+                    vim.lsp.buf.clear_references()
+            end, { buffer = event.buf, noremap = true, desc = "Toggle basedpyright Type Check" })
+        end
+        --]]
+
     end
 })
 
