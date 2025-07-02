@@ -1,4 +1,4 @@
-
+require('core.global')
 require('core.keymap')
 require('config.lazy')
 require('core.basic')

@@ -127,7 +127,6 @@ vim.keymap.set(
     {
         noremap = true
     }
-
 )
 
 vim.keymap.set(

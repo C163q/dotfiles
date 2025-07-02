@@ -70,7 +70,7 @@ return {
                 },
                 window = {
                     position = "left",
-                    width = 0.2,
+                    width = 0.18,
                 }
             }
         },
@@ -368,6 +368,12 @@ return {
             { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
             { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
             { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+            { "<leader>fB", function() Snacks.picker.buffers() end, desc = "Buffers" },
+            { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
+            { "<leader>fF", function() Snacks.picker.files() end, desc = "Find Files" },
+            { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
+            { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+            { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
         },
         picker = {
             jump = {

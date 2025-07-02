@@ -1,7 +1,6 @@
 local opt = vim.opt
 
 -- 行号
--- opt.relativenumber = true
 opt.number = true
 
 -- 缩进
@@ -30,4 +29,7 @@ opt.splitbelow = true
 opt.termguicolors = true
 opt.signcolumn = "yes"
 
+if _G.MyCustomSettings.relativeLineNumber then
+    opt.relativenumber = true
+end
 

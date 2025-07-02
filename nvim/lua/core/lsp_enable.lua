@@ -5,10 +5,6 @@
 
 -- The first link tells you how `vim.lsp.config()` and `lsp/` merged.
 
-_G.MyCustomSettings = {
-    basedpyrightTypeCheck = true,
-}
-
 vim.lsp.enable('lua_ls')
 require('config.lsp.lua_ls')
 vim.lsp.enable('clangd')
