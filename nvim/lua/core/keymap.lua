@@ -33,39 +33,60 @@ api.nvim_set_keymap(
     }
 )
 
+-- Function to move the cursor by a specified number of lines
+local function move_cursor_linewise(offset)
+    if offset == 0 then
+        return
+    end
+    if offset < 0 then
+        offset = -offset
+        vim.api.nvim_feedkeys(tostring(offset) .. "k", "n", false)
+        return
+    end
+    vim.api.nvim_feedkeys(tostring(offset) .. "j", "n", false)
+end
+
 -- Go Up 5 lines when press Ctrl+Up
-api.nvim_set_keymap(
+vim.keymap.set(
     '',
     '<C-Up>',
-    '<Up><Up><Up><Up><Up>',
+    function ()
+        move_cursor_linewise(-5)
+    end,
     {
         noremap = true
     }
 )
 
-api.nvim_set_keymap(
+vim.keymap.set(
     'i',
     '<C-Up>',
-    '<Up><Up><Up><Up><Up>',
+    function ()
+        move_cursor_linewise(-5)
+    end,
     {
         noremap = true
     }
 )
 
 -- Go Down 5 lines when press Ctrl+Down
-api.nvim_set_keymap(
+vim.keymap.set(
     '',
     '<C-Down>',
-    '<Down><Down><Down><Down><Down>',
+    function ()
+        move_cursor_linewise(5)
+    end,
     {
         noremap = true
     }
 )
 
-api.nvim_set_keymap(
+vim.keymap.set(
     'i',
     '<C-Down>',
-    '<Down><Down><Down><Down><Down>',
+    function ()
+        move_cursor_linewise(5)
+    end,
     {
         noremap = true
     }
@@ -114,6 +135,62 @@ api.nvim_set_keymap(
     'i',
     '<C-S-Right>',
     '<Esc>$a',
+    {
+        noremap = true
+    }
+)
+
+-- remap function of <S-Up> and <S-Down>
+api.nvim_set_keymap(
+    '',
+    '<C-S-Up>',
+    '<PageUp>',
+    {
+        noremap = true
+    }
+)
+
+api.nvim_set_keymap(
+    'i',
+    '<C-S-Up>',
+    '<PageUp>',
+    {
+        noremap = true
+    }
+)
+
+api.nvim_set_keymap(
+    '',
+    '<C-S-Down>',
+    '<PageDown>',
+    {
+        noremap = true
+    }
+)
+
+api.nvim_set_keymap(
+    'i',
+    '<C-S-Down>',
+    '<PageDown>',
+    {
+        noremap = true
+    }
+)
+
+-- <S-Up> and <S-Down> for scroll up or scroll down
+api.nvim_set_keymap(
+    '',
+    '<S-Up>',
+    '<ScrollWheelUp>',
+    {
+        noremap = true
+    }
+)
+
+api.nvim_set_keymap(
+    '',
+    '<S-Down>',
+    '<ScrollWheelDown>',
     {
         noremap = true
     }

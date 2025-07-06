@@ -5,6 +5,7 @@ return {
     -- // Comment.nvim: Smart and Powerful commenting plugin for neovim
     {
         'numToStr/Comment.nvim',
+        event = { 'BufReadPost', 'BufNewFile' },
         opts = {
             -- add any options here
         }
@@ -31,6 +32,7 @@ return {
         'echasnovski/mini.nvim', version = '*'
     },
 
+    --[[
     -- https://github.com/lukas-reineke/indent-blankline.nvim
     -- Indent Blankline: This plugin adds indentation guides to Neovim.
     -- It uses Neovim's virtual text feature and no conceal
@@ -50,6 +52,7 @@ return {
             })
         end,
     },
+    --]]
 
     -- https://github.com/catgoose/nvim-colorizer.lua
     -- NvChad/nvim-colorizer.lua has moved, supports custom colors. Now being maintained
@@ -60,5 +63,6 @@ return {
         event = "BufReadPre",
         opts = { -- set to setup table
         },
-    }
+    },
+
 }

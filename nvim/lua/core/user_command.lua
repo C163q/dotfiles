@@ -81,8 +81,7 @@ vim.api.nvim_create_autocmd('FileType', {
             vim.tbl_contains(filetypes, vim.bo.filetype) then
             local buffer_id = vim.fn.bufnr()
             vim.keymap.set("n", "<Esc>", function () vim.cmd("exit") end, { buffer = buffer_id, noremap = true })
-            vim.keymap.set("n", "q", function () vim.cmd("exit") end, { buffer = buffer_id, noremap = true })
-            vim.keymap.set("v", "q", function () vim.cmd("exit") end, { buffer = buffer_id, noremap = true })
+            vim.keymap.set("", "q", function () vim.cmd("exit") end, { buffer = buffer_id, noremap = true })
         end
     end
 })

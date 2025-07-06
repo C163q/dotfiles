@@ -20,6 +20,17 @@ return {
         priority = 1000,
         config = function()
             require("catppuccin").setup({
+                custom_highlights = function ()
+                    return {
+                        RainbowRed = { fg = "#D66F77" },
+                        RainbowYellow = { fg = "#D5C356" },
+                        RainbowBlue = { fg = "#459EE6" },
+                        RainbowOrange = { fg = "#E0A57E" },
+                        RainbowGreen = { fg = "#98C379" },
+                        RainbowViolet = { fg = "#C678DD" },
+                        RainbowCyan = { fg = "#56B6C2" },
+                    }
+                end,
                 flavour = "mocha",
                 styles = {  -- Handles the styles of general hi groups (see `:h highlight-args`):
                     comments = { "italic" },    -- Change the style of comments

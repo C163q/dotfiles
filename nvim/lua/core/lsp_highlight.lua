@@ -10,6 +10,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     end
 })
 
+vim.api.nvim_set_hl(0, 'SnacksIndent', { fg = "#636779" })
+
 vim.api.nvim_set_hl(0, 'Type', { fg='#63a7e4' })
 vim.api.nvim_set_hl(0, 'Function', { fg='#f4efa3' })
 vim.api.nvim_set_hl(0, 'Character', { link='String' })

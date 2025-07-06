@@ -93,7 +93,7 @@ return {
             local ensure_installed = {
                 'rust', 'javascript', 'c', 'lua',
                 'cmake', 'cpp', 'json', 'jsonc',
-                'markdown', 'python', 'yaml', 'bash'
+                'markdown', 'python', 'regex', 'yaml', 'bash'
             }
 
             require('nvim-treesitter').install(ensure_installed):wait(30000)
@@ -181,7 +181,7 @@ return {
     -- render-markdown.nvim: Plugin to improve viewing Markdown files in Neovim
     {
         'MeanderingProgrammer/render-markdown.nvim',
-        lazy = true,
+        ft = { 'markdown' },
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
         -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
         -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
@@ -195,9 +195,16 @@ return {
     -- toggleterm.nvim: A neovim plugin to persist and toggle multiple terminals during an editing session
     {
         'akinsho/toggleterm.nvim',
-        lazy = true,
+        event = { 'BufReadPost', 'BufNewFile' },
         version = "*",
         opts = {}
+    },
+
+    -- https://github.com/nvim-lua/plenary.nvim
+    -- plenary.nvim: All the lua functions I don't want to write twice.
+    {
+        'nvim-lua/plenary.nvim',
+        opt = {},
     },
 
     -- https://github.com/nvim-telescope/telescope.nvim
@@ -304,14 +311,44 @@ return {
             bigfile = { enabled = true },
             dashboard = { enabled = true },
             explorer = { enabled = true },
-            indent = { enabled = true },
+            indent = {
+                enabled = true,
+                indent = {
+                    priority = 1,
+                    enabled = true, -- enable indent guides
+                    char = "│",
+                    only_scope = false, -- only show indent guides of the scope
+                    only_current = false, -- only show indent guides in the current window
+                    hl = "SnacksIndent", ---@type string|string[] hl groups for indent guides
+                },
+                scope = {
+                    enabled = true, -- enable highlighting the current scope
+                    priority = 200,
+                    char = "│",
+                    underline = false, -- underline the start of the scope
+                    only_current = false, -- only show scope in the current window
+                    hl = {  ---@type string|string[] hl group for scopes
+                        "RainbowRed",
+                        "RainbowYellow",
+                        "RainbowBlue",
+                        "RainbowOrange",
+                        "RainbowGreen",
+                        "RainbowViolet",
+                        "RainbowCyan",
+                    }
+                },
+            },
             input = { enabled = true },
             picker = { enabled = true },
             notifier = { enabled = true },
             quickfile = { enabled = true },
             scope = { enabled = true },
-            scroll = { enabled = false },   -- NOT good for using keyboard
-            statuscolumn = { enabled = true },
+            scroll = {  -- NOT good for using keyboard
+                enabled = false,
+            },
+            statuscolumn = {    -- override by nvim-ufo
+                enabled = true,
+            },
             words = { enabled = true },
             -- Can't use sixel for cost too much time rendering.
             --[[

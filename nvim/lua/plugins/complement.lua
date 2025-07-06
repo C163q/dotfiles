@@ -43,7 +43,7 @@ return {
                     auto_show = true,
                 },
                 list = {
-                    selection = { preselect = false, auto_insert = true },
+                    selection = { preselect = false, auto_insert = false },
                 },
                 menu = {
                     draw = {
@@ -62,6 +62,9 @@ return {
                         },
                     },
                 },
+                ghost_text = {
+                    enabled = true,
+                }
             },
             keymap = {
                 ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
@@ -79,8 +82,8 @@ return {
                 ['<CR>'] = { 'accept', 'fallback' },
                 ['<C-y>'] = { 'select_and_accept' },
 
-                ['<Left>'] = { 'snippet_backward', 'fallback' },
-                ['<Right>'] = { 'snippet_forward', 'fallback' },
+                ['<C-Left>'] = { 'snippet_backward', 'fallback' },
+                ['<C-Right>'] = { 'snippet_forward', 'fallback' },
 
                 ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
 
