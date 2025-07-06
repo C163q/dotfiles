@@ -20,7 +20,7 @@ return {
         priority = 1000,
         config = function()
             require("catppuccin").setup({
-                flavour = "Mocha",
+                flavour = "mocha",
                 styles = {  -- Handles the styles of general hi groups (see `:h highlight-args`):
                     comments = { "italic" },    -- Change the style of comments
                 },
@@ -44,11 +44,11 @@ return {
                     native_lsp = {
                         enabled = true,
                         virtual_text = {
-                            errors = { "italic" },
-                            hints = { "italic" },
-                            warnings = { "italic" },
-                            information = { "italic" },
-                            ok = { "italic" },
+                            errors = {},
+                            hints = {},
+                            warnings = {},
+                            information = {},
+                            ok = {},
                         },
                         underlines = {
                             errors = { "undercurl" },

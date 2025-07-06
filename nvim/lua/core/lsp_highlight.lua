@@ -33,6 +33,7 @@ vim.api.nvim_set_hl(0, '@operator', { link='Operator' })
 vim.api.nvim_set_hl(0, '@lsp.type.typeParameter', { fg='#cd86a9' })
 -- vim.api.nvim_set_hl(0, '@lsp.type.number', { fg='#9eef82' })
 vim.api.nvim_set_hl(0, '@lsp.mod.documentation', { bold = true })
+vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { undercurl = true, sp="#F9E2AF" })
 
 -- C/C++ Specific
 vim.api.nvim_create_augroup('CCppSpeicalHighlight', { clear = true })
@@ -50,6 +51,7 @@ vim.api.nvim_create_autocmd("FileType", {
             vim.api.nvim_set_hl(0, 'cppOperator', { fg='#f4efa3' })
             vim.api.nvim_set_hl(0, 'cOperator', { link='cType' })
             vim.api.nvim_set_hl(0, '@variable.builtin', { fg='#6bf9ff' })
+            vim.api.nvim_set_hl(0, '@lsp.type.unknown.cpp', { fg='#ffd8d8' })
         end)
     end
 })

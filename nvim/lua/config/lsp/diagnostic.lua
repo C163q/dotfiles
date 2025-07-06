@@ -97,6 +97,23 @@ vim.keymap.set('n', '<Leader>lf', (function ()
 end)(),
 { noremap = true, desc = 'Toggle Float Text of Diagnostics' })
 
+-- config: keymap of signature_help
+vim.keymap.set('i', '<C-e>', function ()
+    vim.lsp.buf.signature_help({
+        focusable = true,
+        focus = true,
+        border = "rounded",
+    })
+end)
+
+vim.keymap.set('n', '<C-e>', function ()
+    vim.lsp.buf.signature_help({
+        focusable = true,
+        focus = true,
+        border = "rounded",
+    })
+end)
+
 
 -- Lsp attach config
 vim.api.nvim_create_augroup('LspDiagnosticConfigs', { clear = true })

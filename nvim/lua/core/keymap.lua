@@ -237,4 +237,49 @@ vim.keymap.set(
     }
 )
 
+vim.keymap.set("", '<Leader>v', function ()
+        vim.cmd('Inspect')
+    end,
+    { noremap = true }
+)
+
+--[[
+-- switch window with keypad Up Down Left Right
+vim.keymap.set(
+    'n',
+    '<kUp>',
+    '<C-w><Up>',
+    {
+        noremap = true
+    }
+)
+
+vim.keymap.set(
+    'n',
+    '<kDown>',
+    '<C-w><Down>',
+    {
+        noremap = true
+    }
+)
+
+vim.keymap.set(
+    'n',
+    '<kLeft>',
+    '<C-w><Left>',
+    {
+        noremap = true
+    }
+)
+
+vim.keymap.set(
+    'n',
+    '<kRight>',
+    '<C-w><Right>',
+    {
+        noremap = true
+    }
+)
+--]]
+
 

@@ -4,6 +4,11 @@ return {
     --   Easily install and manage LSP servers, DAP servers, linters, and formatters.
     {
         "mason-org/mason.nvim",
+        dependencies = {
+            -- Install or upgrade all of your third-party tools.
+            -- Link: https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+            'WhoIsSethDaniel/mason-tool-installer.nvim',
+        },
         opts = {
             ui = {
                 icons = {

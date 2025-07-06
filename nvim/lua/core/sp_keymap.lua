@@ -13,8 +13,5 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 
-vim.keymap.set("", '<Leader>v', function ()
-        vim.cmd('Inspect')
-    end,
-    { noremap = true })
+
 

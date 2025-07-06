@@ -1,9 +1,19 @@
-local util = require 'lspconfig.util'
+---@brief
+---
+--- https://clangd.llvm.org/installation.html
+---
+--- - **NOTE:** Clang >= 11 is recommended! See [#23](https://github.com/neovim/nvim-lspconfig/issues/23).
+--- - If `compile_commands.json` lives in a build directory, you should
+---   symlink it to the root of your source tree.
+---   ```
+---   ln -s /path/to/myproject/build/compile_commands.json /path/to/myproject/
+---   ```
+--- - clangd relies on a [JSON compilation database](https://clang.llvm.org/docs/JSONCompilationDatabase.html)
+---   specified as compile_commands.json, see https://clangd.llvm.org/installation#compile_commandsjson
 
 -- https://clangd.llvm.org/extensions.html#switch-between-sourceheader
 local function switch_source_header(bufnr)
   local method_name = 'textDocument/switchSourceHeader'
-  bufnr = util.validate_bufnr(bufnr)
   local client = vim.lsp.get_clients({ bufnr = bufnr, name = 'clangd' })[1]
   if not client then
     return vim.notify(('method %s is not supported by any servers active on the current buffer'):format(method_name))
@@ -47,57 +57,44 @@ local function symbol_info()
   end, bufnr)
 end
 
-return {
-  default_config = {
-    cmd = { 'clangd' },
-    filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
-    root_dir = function(fname)
-      return util.root_pattern(
-        '.clangd',
-        '.clang-tidy',
-        '.clang-format',
-        'compile_commands.json',
-        'compile_flags.txt',
-        'configure.ac' -- AutoTools
-      )(fname) or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
-    end,
-    single_file_support = true,
-    capabilities = {
-      textDocument = {
-        completion = {
-          editsNearCursor = true,
-        },
-      },
-      offsetEncoding = { 'utf-8', 'utf-16' },
-    },
-  },
-  commands = {
-    ClangdSwitchSourceHeader = {
-      function()
-        switch_source_header(0)
-      end,
-      description = 'Switch between source/header',
-    },
-    ClangdShowSymbolInfo = {
-      function()
-        symbol_info()
-      end,
-      description = 'Show symbol info',
-    },
-  },
-  docs = {
-    description = [[
-https://clangd.llvm.org/installation.html
+---@class ClangdInitializeResult: lsp.InitializeResult
+---@field offsetEncoding? string
 
-- **NOTE:** Clang >= 11 is recommended! See [#23](https://github.com/neovim/nvim-lspconfig/issues/23).
-- If `compile_commands.json` lives in a build directory, you should
-  symlink it to the root of your source tree.
-  ```
-  ln -s /path/to/myproject/build/compile_commands.json /path/to/myproject/
-  ```
-- clangd relies on a [JSON compilation database](https://clang.llvm.org/docs/JSONCompilationDatabase.html)
-  specified as compile_commands.json, see https://clangd.llvm.org/installation#compile_commandsjson
-]],
+return {
+  cmd = { 'clangd' },
+  filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+  root_markers = {
+    '.clangd',
+    '.clang-tidy',
+    '.clang-format',
+    'compile_commands.json',
+    'compile_flags.txt',
+    'configure.ac', -- AutoTools
+    '.git',
   },
+  capabilities = {
+    textDocument = {
+      completion = {
+        editsNearCursor = true,
+      },
+    },
+    offsetEncoding = { 'utf-8', 'utf-16' },
+  },
+  ---@param client vim.lsp.Client
+  ---@param init_result ClangdInitializeResult
+  on_init = function(client, init_result)
+    if init_result.offsetEncoding then
+      client.offset_encoding = init_result.offsetEncoding
+    end
+  end,
+  on_attach = function(_, bufnr)
+    vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdSwitchSourceHeader', function()
+      switch_source_header(bufnr)
+    end, { desc = 'Switch between source/header' })
+
+    vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdShowSymbolInfo', function()
+      symbol_info()
+    end, { desc = 'Show symbol info' })
+  end,
 }
 

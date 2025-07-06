@@ -36,6 +36,7 @@ return {
     -- It uses Neovim's virtual text feature and no conceal
     {
         "lukas-reineke/indent-blankline.nvim",
+        event = { 'BufReadPost', 'BufNewFile' },
         main = "ibl",
         ---@module "ibl"
         ---@type ibl.config

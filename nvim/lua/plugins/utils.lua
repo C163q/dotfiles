@@ -181,18 +181,21 @@ return {
     -- render-markdown.nvim: Plugin to improve viewing Markdown files in Neovim
     {
         'MeanderingProgrammer/render-markdown.nvim',
+        lazy = true,
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
         -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
         -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
         ---@module 'render-markdown'
         ---@type render.md.UserConfig
         opts = {},
+        version = "*",
     },
 
     -- https://github.com/akinsho/toggleterm.nvim
     -- toggleterm.nvim: A neovim plugin to persist and toggle multiple terminals during an editing session
     {
         'akinsho/toggleterm.nvim',
+        lazy = true,
         version = "*",
         opts = {}
     },
@@ -209,6 +212,7 @@ return {
     -- nvim-ufo: The goal of nvim-ufo is to make Neovim's fold look modern and keep high performance.
     {
         'kevinhwang91/nvim-ufo',
+        -- event = { 'BufReadPost', 'BufNewFile' }, -- Don't Lazy load to enable specific autocommands
         dependencies = { 'kevinhwang91/promise-async' },
         config = function()
             require('config.ufo')
@@ -286,7 +290,8 @@ return {
         }
     },
 
-
+    -- https://github.com/folke/snacks.nvim
+    -- snacks.nvim: A collection of small QoL plugins for Neovim.
     {
         "folke/snacks.nvim",
         priority = 1000,
@@ -348,7 +353,7 @@ return {
             { "<leader>go", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
             { "gx", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
             { "gX", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
-            { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+            { "gR", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
             { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
             { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
             { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },

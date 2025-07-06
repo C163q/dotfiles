@@ -13,6 +13,23 @@ return {
         dependencies = { "rafamadriz/friendly-snippets" },
     },
 
+    -- https://github.com/folke/lazydev.nvim
+    -- lazydev.nvim is a plugin that properly configures LuaLS for editing your Neovim config
+    -- by lazily updating your workspace libraries.
+    ---@Warning: NOT compatible with folke/neodev.nvim!!!!!!!
+    {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        event = { 'BufReadPost', 'BufNewFile' },
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+
     -- https://github.com/Saghen/blink.cmp
     -- Blink Completion (blink.cmp): Performant, batteries-included completion plugin for Neovim
     {
@@ -54,16 +71,16 @@ return {
                 ['<C-b>'] = { 'show', 'show_documentation', 'hide_documentation' },
                 ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
 
-                ['<Tab>'] = { 'select_next', 'fallback' },
-                ['<S-Tab>'] = { 'select_prev', 'fallback' },
+                ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+                ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
                 ['<Up>'] = { 'select_prev', 'fallback' },
                 ['<Down>'] = { 'select_next', 'fallback' },
 
                 ['<CR>'] = { 'accept', 'fallback' },
                 ['<C-y>'] = { 'select_and_accept' },
 
-                ['<S-Up>'] = { 'snippet_backward', 'fallback' },
-                ['<S-Down>'] = { 'snippet_forward', 'fallback' },
+                ['<Left>'] = { 'snippet_backward', 'fallback' },
+                ['<Right>'] = { 'snippet_forward', 'fallback' },
 
                 ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
 
@@ -84,6 +101,18 @@ return {
                 },
             },
             snippets = { preset = 'luasnip' },
+            sources = {
+                -- add lazydev to your completion providers
+                default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+                providers = {
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink",
+                        -- make lazydev completions top priority (see `:h blink.cmp`)
+                        score_offset = 100,
+                    },
+                },
+            }
         },
     }
 

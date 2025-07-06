@@ -1,3 +1,7 @@
+require("lazydev").setup({
+    library = { "nvim-dap-ui" },
+})
+
 return {
 
     -- https://github.com/mfussenegger/nvim-dap
@@ -15,6 +19,7 @@ return {
     -- nvim-treesitter is used to find variable definitions.
     {
         'theHamsta/nvim-dap-virtual-text',
+        lazy = true,
         dependencies = { 'mfussenegger/nvim-dap', 'nvim-treesitter/nvim-treesitter' },
         opts = {},
     },
@@ -24,7 +29,7 @@ return {
     {
         "rcarriga/nvim-dap-ui",
         dependencies = { "mfussenegger/nvim-dap", "nvim-dap-virtual-text", "nvim-neotest/nvim-nio", "folke/noice.nvim" },
-        -- lazy=true,
+        lazy = true,
         config = function()
             require('nvim-dap-virtual-text').setup() -- optional
             require('config.dap-ui')
@@ -38,6 +43,7 @@ return {
     {
         'mfussenegger/nvim-dap-python',
         dependencies = { 'mfussenegger/nvim-dap', "rcarriga/nvim-dap-ui" },
+        lazy = true,
         ft = { 'python' },
         config = function ()
             local path = '~/.local/share/nvim/mason/packages/debugpy/venv/bin/python'

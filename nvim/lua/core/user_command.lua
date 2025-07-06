@@ -30,7 +30,7 @@ vim.api.nvim_create_augroup('NvimUFOIgnore', { clear = true })
 -- nvim-ufo ignore filetype
 vim.api.nvim_create_autocmd('FileType', {
     group = 'NvimUFOIgnore',
-    pattern = { 'neo-tree', 'notify' },
+    pattern = { 'neo-tree', 'notify', 'snacks_dashboard' },
     callback = function()
         require('ufo').detach()
         vim.opt_local.foldenable = false
@@ -50,10 +50,10 @@ vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
 })
 --]]
 
-vim.api.nvim_create_augroup('WinEasyExit', { clear = true })
+vim.api.nvim_create_augroup('WinEasyExitDapFloat', { clear = true })
 -- make dap-float easy to exit
 vim.api.nvim_create_autocmd('FileType', {
-    group = 'WinEasyExit',
+    group = 'WinEasyExitDapFloat',
     pattern = { 'dap-float' },
     callback = function()
         local buffer_id = vim.fn.bufnr()
@@ -63,6 +63,27 @@ vim.api.nvim_create_autocmd('FileType', {
                 vim.cmd('exit')
             end
         })
+        vim.keymap.set("", "q", function () vim.cmd('exit') end, { buffer = buffer_id, noremap = true })
+        vim.keymap.set("", ".", function () vim.cmd('exit') end, { buffer = buffer_id, noremap = true })
+        vim.keymap.set("n", "<Esc>", function () vim.cmd('exit') end, { buffer = buffer_id, noremap = true })
+    end
+})
+
+vim.api.nvim_create_augroup('WinEasyExitBufType', { clear = true })
+-- make windows easy to exit
+vim.api.nvim_create_autocmd('FileType', {
+    group = 'WinEasyExitBufType',
+    pattern = '*',
+    callback = function ()
+        local filetypes = {}
+        local buftypes = { "quickfix" }
+        if vim.tbl_contains(buftypes, vim.bo.buftype) or
+            vim.tbl_contains(filetypes, vim.bo.filetype) then
+            local buffer_id = vim.fn.bufnr()
+            vim.keymap.set("n", "<Esc>", function () vim.cmd("exit") end, { buffer = buffer_id, noremap = true })
+            vim.keymap.set("n", "q", function () vim.cmd("exit") end, { buffer = buffer_id, noremap = true })
+            vim.keymap.set("v", "q", function () vim.cmd("exit") end, { buffer = buffer_id, noremap = true })
+        end
     end
 })
 

@@ -28,6 +28,7 @@ opt.splitbelow = true
 -- 外观
 opt.termguicolors = true
 opt.signcolumn = "yes"
+vim.o.winborder = "rounded"
 
 if _G.MyCustomSettings.relativeLineNumber then
     opt.relativenumber = true
