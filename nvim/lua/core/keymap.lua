@@ -50,9 +50,7 @@ end
 vim.keymap.set(
     '',
     '<C-Up>',
-    function ()
-        move_cursor_linewise(-5)
-    end,
+    '<Up><Up><Up><Up><Up>',
     {
         noremap = true
     }
@@ -61,9 +59,7 @@ vim.keymap.set(
 vim.keymap.set(
     'i',
     '<C-Up>',
-    function ()
-        move_cursor_linewise(-5)
-    end,
+    '<Up><Up><Up><Up><Up>',
     {
         noremap = true
     }
@@ -73,9 +69,7 @@ vim.keymap.set(
 vim.keymap.set(
     '',
     '<C-Down>',
-    function ()
-        move_cursor_linewise(5)
-    end,
+    '<Down><Down><Down><Down><Down>',
     {
         noremap = true
     }
@@ -84,9 +78,7 @@ vim.keymap.set(
 vim.keymap.set(
     'i',
     '<C-Down>',
-    function ()
-        move_cursor_linewise(5)
-    end,
+    '<Down><Down><Down><Down><Down>',
     {
         noremap = true
     }
@@ -181,7 +173,7 @@ api.nvim_set_keymap(
 api.nvim_set_keymap(
     '',
     '<S-Up>',
-    '<ScrollWheelUp>',
+    '5<C-y>',
     {
         noremap = true
     }
@@ -190,7 +182,7 @@ api.nvim_set_keymap(
 api.nvim_set_keymap(
     '',
     '<S-Down>',
-    '<ScrollWheelDown>',
+    '5<C-e>',
     {
         noremap = true
     }
@@ -279,7 +271,7 @@ api.nvim_set_keymap(
 api.nvim_set_keymap(
     '',
     '<C-r>',
-    ':redo<CR>',
+    '<Cmd>redo<CR>',
     {
         noremap = true
     }
@@ -288,7 +280,7 @@ api.nvim_set_keymap(
 api.nvim_set_keymap(
     'i',
     '<C-r>',
-    '<Esc>:redo<CR>i',
+    '<Esc><Cmd>redo<CR>i',
     {
         noremap = true
     }
@@ -314,10 +306,20 @@ vim.keymap.set(
     }
 )
 
-vim.keymap.set("", '<Leader>v', function ()
+vim.keymap.set(
+    "",
+    '<Leader>vv',
+    function ()
         vim.cmd('Inspect')
     end,
-    { noremap = true }
+    { noremap = true, desc = "Inspect" }
+)
+
+vim.keymap.set(
+    "",
+    '<Leader>vp',
+    "<Cmd>echo expand('%:p')<CR>",
+    { noremap = true, desc = "Show full path" }
 )
 
 --[[

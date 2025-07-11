@@ -11,15 +11,8 @@ return {
         event = "VeryLazy",
         config = function()
             require('config.dap')
+            require("config.debugger.config_init")
         end,
-    },
-
-    -- https://github.com/theHamsta/nvim-dap-virtual-text
-    -- nvim-dap-virtual-text: This plugin adds virtual text support to nvim-dap.
-    -- nvim-treesitter is used to find variable definitions.
-    {
-        'theHamsta/nvim-dap-virtual-text',
-        dependencies = { 'mfussenegger/nvim-dap', 'nvim-treesitter/nvim-treesitter' },
     },
 
     -- https://github.com/rcarriga/nvim-dap-ui
@@ -27,9 +20,18 @@ return {
     {
         "rcarriga/nvim-dap-ui",
         event = { 'BufReadPost', 'BufNewFile' },
-        dependencies = { "mfussenegger/nvim-dap", "nvim-dap-virtual-text", "nvim-neotest/nvim-nio", "folke/noice.nvim" },
+        dependencies = { "mfussenegger/nvim-dap",
+                         {
+                            -- https://github.com/theHamsta/nvim-dap-virtual-text
+                            -- nvim-dap-virtual-text: This plugin adds virtual text support to nvim-dap.
+                            -- nvim-treesitter is used to find variable definitions.
+                            "nvim-dap-virtual-text",
+                            dependencies = { 'mfussenegger/nvim-dap', 'nvim-treesitter/nvim-treesitter' },
+                         },
+                         "nvim-neotest/nvim-nio",
+                         "folke/noice.nvim" },
         config = function()
-            require('nvim-dap-virtual-text').setup() -- optional
+            require('nvim-dap-virtual-text').setup({}) -- optional
             require('config.dap-ui')
         end,
 

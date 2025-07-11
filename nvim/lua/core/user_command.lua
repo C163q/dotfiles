@@ -30,11 +30,17 @@ vim.api.nvim_create_augroup('NvimUFOIgnore', { clear = true })
 -- nvim-ufo ignore filetype
 vim.api.nvim_create_autocmd('FileType', {
     group = 'NvimUFOIgnore',
-    pattern = { 'neo-tree', 'notify', 'snacks_dashboard' },
+    pattern = '*',
     callback = function()
-        require('ufo').detach()
-        vim.opt_local.foldenable = false
-        vim.opt_local.foldcolumn = '0'
+        local buftype = {}
+        local filetype = { 'neo-tree', 'notify', 'snacks_dashboard' }
+        if vim.tbl_contains(buftype, vim.bo.buftype) or
+            vim.tbl_contains(filetype, vim.bo.filetype) then
+            require('ufo').detach()
+            vim.opt_local.foldenable = false
+            vim.opt_local.foldcolumn = '0'
+            print(1)
+        end
     end,
 })
 

@@ -16,7 +16,9 @@ return {
     {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
-        config = true
+        config = function ()
+            require('config.complement.autopairs')
+        end
     },
 
     -- https://github.com/nvim-tree/nvim-web-devicons
@@ -29,7 +31,9 @@ return {
     -- Library of 40+ independent Lua modules improving overall Neovim (version 0.9 and higher) experience with minimal effort.
     -- They all share same configuration approaches and general design principles.
     {
-        'echasnovski/mini.nvim', version = '*'
+        'echasnovski/mini.nvim',
+        event = "VeryLazy",
+        version = '*',
     },
 
     --[[

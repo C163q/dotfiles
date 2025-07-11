@@ -2,7 +2,8 @@ return {
     -- https://github.com/rafamadriz/friendly-snippets
     -- Friendly Snippets: Snippets collection for a set of different programming languages.
     {
-        "rafamadriz/friendly-snippets"
+        "rafamadriz/friendly-snippets",
+        event = { 'BufReadPost', 'BufNewFile' },
     },
 
     -- https://github.com/L3MON4D3/LuaSnip
@@ -11,6 +12,10 @@ return {
     	-- follow latest release.
 	    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
         dependencies = { "rafamadriz/friendly-snippets" },
+        event = { 'BufReadPost', 'BufNewFile' },
+        config = function ()
+            require('config.complement.luasnip')
+        end
     },
 
     -- https://github.com/folke/lazydev.nvim
