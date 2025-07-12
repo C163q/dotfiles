@@ -104,7 +104,8 @@ vim.keymap.set('i', '<C-e>', function ()
         focus = true,
         border = "rounded",
     })
-end)
+end,
+{ noremap = true, desc = 'Signature help' })
 
 vim.keymap.set('n', '<C-e>', function ()
     vim.lsp.buf.signature_help({
@@ -112,7 +113,31 @@ vim.keymap.set('n', '<C-e>', function ()
         focus = true,
         border = "rounded",
     })
-end)
+end,
+{ noremap = true, desc = 'Signature help' })
+
+local icons_diagnostic = require('core.config').icon.diagnostics
+-- Sets icons and styling for diagnostics
+vim.diagnostic.config({
+    virtual_text = { -- true
+        -- prefix = icons_diagnostic.virtual_text_prefix,
+    },
+    signs = { -- true
+        active = true,
+        text = {
+            [vim.diagnostic.severity.ERROR] = icons_diagnostic.error,
+            [vim.diagnostic.severity.WARN] = icons_diagnostic.warn,
+            [vim.diagnostic.severity.INFO] = icons_diagnostic.info,
+            [vim.diagnostic.severity.HINT] = icons_diagnostic.hint,
+        },
+    },
+    float = { -- true
+        source = true,
+        border = "border",
+    },
+    update_in_insert = false,
+    severity_sort = true,
+})
 
 
 -- Lsp attach config

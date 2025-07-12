@@ -39,7 +39,6 @@ vim.api.nvim_create_autocmd('FileType', {
             require('ufo').detach()
             vim.opt_local.foldenable = false
             vim.opt_local.foldcolumn = '0'
-            print(1)
         end
     end,
 })

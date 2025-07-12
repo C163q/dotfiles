@@ -9,7 +9,8 @@ api.nvim_set_keymap(
     '<C-z>',
     '<Undo>',
     {
-        noremap = true
+        noremap = true,
+        desc = "Undo",
     }
 )
 
@@ -18,7 +19,8 @@ api.nvim_set_keymap(
     '<C-z>',
     '<Esc><Undo>a',
     {
-        noremap = true
+        noremap = true,
+        desc = "Undo",
     }
 )
 
@@ -29,7 +31,8 @@ api.nvim_set_keymap(
     '<C-S-v>',
     '<C-V>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Paste',
     }
 )
 
@@ -52,7 +55,8 @@ vim.keymap.set(
     '<C-Up>',
     '<Up><Up><Up><Up><Up>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Go 5 lines up',
     }
 )
 
@@ -61,7 +65,8 @@ vim.keymap.set(
     '<C-Up>',
     '<Up><Up><Up><Up><Up>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Go 5 lines up',
     }
 )
 
@@ -71,7 +76,8 @@ vim.keymap.set(
     '<C-Down>',
     '<Down><Down><Down><Down><Down>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Go 5 lines down',
     }
 )
 
@@ -80,7 +86,8 @@ vim.keymap.set(
     '<C-Down>',
     '<Down><Down><Down><Down><Down>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Go 5 lines down',
     }
 )
 
@@ -90,7 +97,8 @@ api.nvim_set_keymap(
     '<S-W>',
     '<C-W>w',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Go to next window',
     }
 )
 
@@ -100,7 +108,8 @@ api.nvim_set_keymap(
     '<C-S-Left>',
     '0',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Go to beginning of the line',
     }
 )
 
@@ -109,7 +118,8 @@ api.nvim_set_keymap(
     '<C-S-Left>',
     '<Esc>0i',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Go to beginning of the line',
     }
 )
 
@@ -119,7 +129,8 @@ api.nvim_set_keymap(
     '<C-S-Right>',
     '$',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Go to end of the line',
     }
 )
 
@@ -128,7 +139,8 @@ api.nvim_set_keymap(
     '<C-S-Right>',
     '<Esc>$a',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Go te end of the line',
     }
 )
 
@@ -138,7 +150,8 @@ api.nvim_set_keymap(
     '<C-S-Up>',
     '<PageUp>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'PageUp',
     }
 )
 
@@ -147,7 +160,8 @@ api.nvim_set_keymap(
     '<C-S-Up>',
     '<PageUp>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'PageUp',
     }
 )
 
@@ -156,7 +170,8 @@ api.nvim_set_keymap(
     '<C-S-Down>',
     '<PageDown>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'PageDown',
     }
 )
 
@@ -165,7 +180,8 @@ api.nvim_set_keymap(
     '<C-S-Down>',
     '<PageDown>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'PageDown',
     }
 )
 
@@ -175,7 +191,8 @@ api.nvim_set_keymap(
     '<S-Up>',
     '5<C-y>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Scroll up',
     }
 )
 
@@ -184,7 +201,8 @@ api.nvim_set_keymap(
     '<S-Down>',
     '5<C-e>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Scroll down',
     }
 )
 
@@ -194,7 +212,8 @@ vim.keymap.set(
     'J',
     ":m '>+1<CR>gv=gv",
     {
-        noremap = true
+        noremap = true,
+        desc = 'Move selected lines down',
     }
 )
 
@@ -203,7 +222,8 @@ vim.keymap.set(
     'K',
     ":m '<-2<CR>gv=gv",
     {
-        noremap = true
+        noremap = true,
+        desc = 'Move selected lines up',
     }
 )
 
@@ -213,7 +233,8 @@ api.nvim_set_keymap(
     '<C-c>',
     'y',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Copy',
     }
 )
 
@@ -223,7 +244,8 @@ api.nvim_set_keymap(
     '<C-c>',
     '0Y$',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Copy current line',
     }
 )
 
@@ -233,7 +255,8 @@ api.nvim_set_keymap(
     '<C-c>',
     '<Esc>0Y$a',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Copy current line',
     }
 )
 
@@ -243,7 +266,8 @@ api.nvim_set_keymap(
     '<C-x>',
     'd',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Cut',
     }
 )
 
@@ -253,7 +277,8 @@ api.nvim_set_keymap(
     '<C-x>',
     'dd',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Cut current line',
     }
 )
 
@@ -263,7 +288,8 @@ api.nvim_set_keymap(
     '<C-x>',
     '<Esc>dda',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Cut current line',
     }
 )
 
@@ -273,7 +299,8 @@ api.nvim_set_keymap(
     '<C-r>',
     '<Cmd>redo<CR>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Redo',
     }
 )
 
@@ -282,7 +309,8 @@ api.nvim_set_keymap(
     '<C-r>',
     '<Esc><Cmd>redo<CR>i',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Redo',
     }
 )
 
@@ -292,7 +320,8 @@ api.nvim_set_keymap(
     '<Esc>',
     '<C-\\><C-n>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Exit terminal mode',
     }
 )
 
@@ -302,7 +331,8 @@ vim.keymap.set(
     '<M-Space>',
     '<Esc>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Exit insert mode'
     }
 )
 

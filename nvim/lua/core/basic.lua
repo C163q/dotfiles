@@ -30,7 +30,8 @@ opt.termguicolors = true
 opt.signcolumn = "yes"
 vim.o.winborder = "rounded"
 
-if _G.MyCustomSettings.relativeLineNumber then
+local custom_config = require('core.config')
+if custom_config.relativeLineNumber then
     opt.relativenumber = true
 end
 

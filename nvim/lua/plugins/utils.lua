@@ -47,34 +47,35 @@ return {
             -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
         },
         lazy = false, -- neo-tree will lazily load itself
-        ---@module "neo-tree"
-        ---@type neotree.Config?
-        opts = {
-            -- fill any relevant options here
-            close_if_last_window = false,
-            enable_git_status = true,
-            default_component_configs = {
-                git_status = {
-                    symbols = {
-                        -- Change type
-                        added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-                        modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
-                        deleted = "✖", -- this can only be used in the git_status source
-                        renamed = "󰁕", -- this can only be used in the git_status source
-                        -- Status type
-                        untracked = "",
-                        ignored = "",
-                        unstaged = "󰄱",
-                        staged = "",
-                        conflict = "",
+        config = function ()
+            local git_status_icon = require('core.config').icon.git_status
+            require('neo-tree').setup {
+                -- fill any relevant options here
+                close_if_last_window = false,
+                enable_git_status = true,
+                default_component_configs = {
+                    git_status = {
+                        symbols = {
+                            -- Change type
+                            added = git_status_icon.added,  -- or "✚", but this is redundant info if you use git_status_colors on the name
+                            modified = git_status_icon.modified,    -- or "", but this is redundant info if you use git_status_colors on the name
+                            deleted = git_status_icon.deleted,  -- this can only be used in the git_status source
+                            renamed = git_status_icon.renamed,  -- this can only be used in the git_status source
+                            -- Status type
+                            untracked = git_status_icon.untracked,
+                            ignored = git_status_icon.ignored,
+                            unstaged = git_status_icon.unstaged,
+                            staged = git_status_icon.staged,
+                            conflict = git_status_icon.conflict,
+                        },
                     },
-                },
-                window = {
-                    position = "left",
-                    width = 0.18,
+                    window = {
+                        position = "left",
+                        width = 0.18,
+                    }
                 }
             }
-        },
+        end,
     },
 
     -- https://github.com/nvim-treesitter/nvim-treesitter/tree/main
@@ -156,7 +157,8 @@ return {
                 },
                 diagnostics = "nvim_lsp",
                 diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                    local icon = level:match("error") and " " or " "
+                    local bufferline_icon = require('core.config').icon.bufferline
+                    local icon = level:match("error") and bufferline_icon.error or bufferline_icon.warn
                     return " " .. icon .. count
                 end,
                 -- 左侧让出 nvim-tree 的位置

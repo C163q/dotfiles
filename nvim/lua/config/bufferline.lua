@@ -8,7 +8,8 @@ vim.keymap.set(
         vim.cmd('BufferLineCyclePrev')
     end,
     {
-        noremap = true
+        noremap = true,
+        desc = 'BufferLineCyclePrev',
     }
 )
 
@@ -19,7 +20,8 @@ vim.keymap.set(
         vim.cmd('BufferLineCycleNext')
     end,
     {
-        noremap = true
+        noremap = true,
+        desc = 'BufferLineCycleNext',
     }
 )
 
@@ -28,7 +30,8 @@ vim.keymap.set(
     '<C-h>',
     '<Esc>:BufferLineCyclePrev<CR>i',
     {
-        noremap = true
+        noremap = true,
+        desc = 'BufferLineCyclePrev',
     }
 )
 
@@ -37,7 +40,8 @@ vim.keymap.set(
     '<C-l>',
     '<Esc>:BufferLineCycleNext<CR>i',
     {
-        noremap = true
+        noremap = true,
+        desc = 'BufferLineCycleNext',
     }
 )
 

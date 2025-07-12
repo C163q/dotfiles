@@ -3,27 +3,18 @@
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
--- Configuration option: forget the current snippet
--- https://github.com/L3MON4D3/LuaSnip/issues/656#issuecomment-1313310146
-local luasnip = require('luasnip')
-
-local unlinkgrp = vim.api.nvim_create_augroup(
-  'UnlinkSnippet',
-  { clear = true }
-)
-
-vim.api.nvim_create_autocmd('CursorMoved', {
-  group = unlinkgrp,
-  pattern = {'s:n', 'i:*'},
-  desc = 'Forget the current snippet',
-  callback = function(evt)
-    if
-      luasnip.session
-      and luasnip.session.current_nodes[evt.buf]
-      and not luasnip.session.jump_active
-    then
-      luasnip.unlink_current()
+-- https://github.com/L3MON4D3/LuaSnip/issues/258#issuecomment-1429989436
+-- stop snippet when go to normal mode
+-- Shouldn't going to normal mode cancel the "session"? #258
+vim.api.nvim_create_autocmd('ModeChanged', {
+    pattern = '*',
+    callback = function()
+        if (vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n')
+            and require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+            and not require('luasnip').session.jump_active
+        then
+            require('luasnip').unlink_current()
+        end
     end
-  end,
 })
 

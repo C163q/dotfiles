@@ -33,16 +33,19 @@ return {
                 end,
                 flavour = "mocha",
                 styles = {  -- Handles the styles of general hi groups (see `:h highlight-args`):
-                    comments = { "italic" },    -- Change the style of comments
+                    -- Change the style of comments
                 },
                 -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead.
                 -- Should work with the standard **StatusLine** and **LuaLine**.
                 hide_inactive_statusline = true,
                 integrations = {
-                    cmp = true,
+                    blink_cmp = {
+                        style = 'bordered',
+                    },
                     -- gitsigns = true,
                     -- nvimtree = true,
                     treesitter = true,
+                    treesitter_context = true,
                     -- notify = false,
                     mini = {
                         enabled = true,

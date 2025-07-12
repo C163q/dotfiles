@@ -12,16 +12,18 @@ vim.keymap.set(
         end
     end,
     {
-        noremap = true
+        noremap = true,
+        desc = 'Open neo-tree',
     }
 )
 
 api.nvim_set_keymap(
     'i',
     '<C-Q>',
-    '<Esc>:Neotree<CR>',
+    '<Esc><Cmd>Neotree<CR>',
     {
-        noremap = true
+        noremap = true,
+        desc = 'Open neo-tree',
     }
 )
 

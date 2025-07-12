@@ -1,5 +1,6 @@
 
-if _G.MyCustomSettings.basedpyrightTypeCheck then
+local custom_config = require('core.config')
+if custom_config.basedpyrightTypeCheck then
     vim.lsp.config('basedpyright', {
         settings = {
             basedpyright = {
