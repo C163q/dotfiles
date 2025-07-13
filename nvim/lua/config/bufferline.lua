@@ -49,7 +49,7 @@ vim.keymap.set(
 -- BufferLine Pick Close when press <Leader>N
 vim.keymap.set(
     '',
-    '<Leader>b',
+    '<Leader>bb',
     function ()
         vim.cmd('BufferLinePick')
     end,
@@ -61,7 +61,7 @@ vim.keymap.set(
 
 vim.keymap.set(
     '',
-    '<Leader>n',
+    '<Leader>bc',
     function ()
         vim.cmd('BufferLinePickClose')
     end,
@@ -74,7 +74,7 @@ vim.keymap.set(
 -- BufferLine Pin current file when press <Leader>P
 vim.keymap.set(
     '',
-    '<Leader>p',
+    '<Leader>bp',
     function ()
         vim.cmd('BufferLineTogglePin')
     end,
@@ -100,6 +100,29 @@ vim.keymap.set(
         desc = 'Close current window'
     }
 )
+
+-- BufferLineMovePrev
+vim.keymap.set(
+    '',
+    '<Leader>[',
+    '<Cmd>BufferLineMovePrev<CR>',
+    {
+        noremap = true,
+        desc = 'BufferLine move prev',
+    }
+)
+
+-- BufferLineMoveNext
+vim.keymap.set(
+    '',
+    '<Leader>]',
+    '<Cmd>BufferLineMoveNext<CR>',
+    {
+        noremap = true,
+        desc = 'BufferLine move next',
+    }
+)
+
 
 --[[
 local bufferline = require('bufferline')

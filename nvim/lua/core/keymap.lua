@@ -1,7 +1,20 @@
-vim.g.mapleader = ","
+vim.g.mapleader = require('core.config').mapleader
 
 local api = vim.api
 
+local mapleaderCompat = require('core.config').mapleaderCompat
+
+if mapleaderCompat.enable then
+    vim.keymap.set(
+        '',
+        mapleaderCompat.value,
+        '<Leader>',
+        {
+            remap = true,
+            desc = "Leader Compat",
+        }
+    )
+end
 
 -- Undo when press Ctrl+Z
 api.nvim_set_keymap(
@@ -352,6 +365,13 @@ vim.keymap.set(
     { noremap = true, desc = "Show full path" }
 )
 
+vim.keymap.set(
+    "",
+    '<Leader>vh',
+    '<Cmd>nohl<CR>',
+    { noremap = true, desc = "Clear highlight" }
+)
+
 --[[
 -- switch window with keypad Up Down Left Right
 vim.keymap.set(
@@ -390,5 +410,59 @@ vim.keymap.set(
     }
 )
 --]]
+
+vim.keymap.set(
+    '',
+    '<Leader>tn',
+    '<Cmd>tabnew<CR>',
+    {
+        noremap = true,
+        desc = 'Open a new tab',
+    }
+)
+
+vim.keymap.set(
+    '',
+    '<Leader>tN',
+    function ()
+        local file = vim.fn.input('Path to new file: ', vim.fn.getcwd() .. '/', 'file')
+        vim.cmd('tabnew ' .. file)
+    end,
+    {
+        noremap = true,
+        desc = 'Open a new tab with specified file',
+    }
+)
+
+vim.keymap.set(
+    '',
+    '<Leader>tc',
+    '<Cmd>tabclose<CR>',
+    {
+        noremap = true,
+        desc = 'Close current tab'
+    }
+)
+
+vim.keymap.set(
+    '',
+    '<Leader>th',
+    '<Cmd>tabprevious<CR>',
+    {
+        noremap = true,
+        desc = 'Go to prev tab'
+    }
+)
+
+vim.keymap.set(
+    '',
+    '<Leader>tl',
+    '<Cmd>tabnext<CR>',
+    {
+        noremap = true,
+        desc = 'Go to next tab',
+    }
+)
+
 
 

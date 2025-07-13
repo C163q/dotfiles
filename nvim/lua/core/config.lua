@@ -2,6 +2,11 @@
 return {
     basedpyrightTypeCheck = true,
     relativeLineNumber = true,
+    mapleader = " ",
+    mapleaderCompat = {
+        enable = true,
+        value = ",",
+    },
 
     icon = {
         diagnostics = {
