@@ -29,9 +29,13 @@ opt.splitbelow = true
 opt.termguicolors = true
 opt.signcolumn = "yes"
 vim.o.winborder = "rounded"
+opt.fillchars='foldopen:󰍝,foldclose:󰍟,foldsep:│'
 
 local custom_config = require('core.config')
 if custom_config.relativeLineNumber then
     opt.relativenumber = true
 end
+
+opt.statuscolumn = [[%!v:lua.require'core.modify.snacks-statuscolumn'.get()]]
+
 

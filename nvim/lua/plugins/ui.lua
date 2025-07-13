@@ -1,3 +1,4 @@
+local event_presets = require('core.config').event_presets
 
 return {
     -- https://github.com/nvim-lualine/lualine.nvim
@@ -29,7 +30,7 @@ return {
                 -- ... the rest of your lualine config
             }
         },
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = event_presets.start_edit,
     },
 
     -- https://github.com/akinsho/bufferline.nvim

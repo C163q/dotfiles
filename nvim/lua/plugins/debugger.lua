@@ -1,3 +1,5 @@
+local event_presets = require('core.config').event_presets
+
 require("lazydev").setup({
     library = { "nvim-dap-ui" },
 })
@@ -19,7 +21,7 @@ return {
     -- nvim-dap-ui: A UI for nvim-dap which provides a good out of the box configuration.
     {
         "rcarriga/nvim-dap-ui",
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = event_presets.start_edit,
         dependencies = { "mfussenegger/nvim-dap",
                          {
                             -- https://github.com/theHamsta/nvim-dap-virtual-text

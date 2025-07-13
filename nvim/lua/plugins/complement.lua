@@ -1,9 +1,11 @@
+local event_presets = require('core.config').event_presets
+
 return {
     -- https://github.com/rafamadriz/friendly-snippets
     -- Friendly Snippets: Snippets collection for a set of different programming languages.
     {
         "rafamadriz/friendly-snippets",
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = event_presets.start_edit,
     },
 
     -- https://github.com/L3MON4D3/LuaSnip
@@ -12,7 +14,7 @@ return {
     	-- follow latest release.
 	    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
         dependencies = { "rafamadriz/friendly-snippets" },
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = event_presets.start_edit,
         config = function ()
             require('config.complement.luasnip')
         end
@@ -25,7 +27,7 @@ return {
     {
         "folke/lazydev.nvim",
         ft = "lua", -- only load on lua files
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = event_presets.start_edit,
         opts = {
             library = {
                 -- See the configuration section for more details
@@ -40,7 +42,7 @@ return {
     {
         'saghen/blink.cmp',
         dependencies = { 'rafamadriz/friendly-snippets', "L3MON4D3/LuaSnip", { 'xzbdmw/colorful-menu.nvim', opts = {} } },
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = event_presets.start_edit,
         version = '1.*',
         opts = {
             completion = {

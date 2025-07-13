@@ -1,3 +1,5 @@
+local event_presets = require('core.config').event_presets
+
 -- Highlight color
 return {
 
@@ -5,7 +7,7 @@ return {
     -- // Comment.nvim: Smart and Powerful commenting plugin for neovim
     {
         'numToStr/Comment.nvim',
-        event = { 'BufReadPost', 'BufNewFile' },
+        event = event_presets.start_edit,
         opts = {
             -- add any options here
         }
@@ -64,7 +66,7 @@ return {
     -- colorizer.lua: A high-performance color highlighter for Neovim which has no external dependencies! Written in performant Luajit.
     {
         "catgoose/nvim-colorizer.lua",
-        event = "BufReadPre",
+        event = event_presets.start_edit,
         opts = { -- set to setup table
         },
     },

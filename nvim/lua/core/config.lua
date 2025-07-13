@@ -8,6 +8,9 @@ return {
         value = ",",
     },
 
+    event_presets = {
+        start_edit = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    },
     icon = {
         diagnostics = {
             warn = '',
