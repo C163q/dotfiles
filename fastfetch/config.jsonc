@@ -1,0 +1,138 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "raw",
+        "source": "~/custom/fastfetch/logo1.sixel",
+        "position": "left",
+        "height": 27,
+        "width": 37
+    },
+    "display": {
+        "constants": [
+            "──────────────────────",
+            "\u001b[106G│",
+            "\u001b[s",
+            "\u001b[u"
+        ],
+        "key": {
+            "width": 12,
+            "type": "string"
+        },
+        "bar": {
+            "width": 10,
+            "charElapsed": "■",
+            "charTotal": "─"
+        },
+        "percent": {
+            "type": 3,
+            "color": {
+                "green": "green",
+                "yellow": "light_yellow",
+                "red": "light_red"
+            }
+        }
+    },
+    "modules": [
+        {
+            "type": "title",
+            "format": "{#37}╭{$1}┤{user-name-colored>20}{at-symbol-colored}{host-name-colored<20}{#37}├{$1}╮",
+            "outputColor": "light_white",
+            "color": {
+                "host": "light_cyan",
+                "user": "light_blue",
+            }
+        },
+        {
+            "type": "os",
+            "key": "{#37}│{#95}OS{$3}{#37}{$2}{$4}",
+            "format": "{name} {version} {arch}"
+        },
+        {
+            "type": "host",
+            "key": "{#37}│{#95}Host{$3}{#37}{$2}{$4}",
+            "format": "{name} {version}"
+        },
+        {
+            "type": "kernel",
+            "key": "{#37}│{#95}Kernel{$3}{#37}{$2}{$4}",
+            "format": "{sysname} {release}"
+        },
+        {
+            "type": "uptime",
+            "key": "{#37}│{#95}Uptime{$3}{#37}{$2}{$4}"
+        },
+        {
+            "type": "shell",
+            "key": "{#37}│{#95}Shell{$3}{#37}{$2}{$4}"
+        },
+        {
+            "type": "display",
+            "key": "{#37}│{#95}Display{$3}{#37}{$2}{$4}"
+        },
+        {
+            "type": "wm",
+            "key": "{#37}│{#95}WM{$3}{#37}{$2}{$4}"
+        },
+        {
+            "type": "theme",
+            "key": "{#37}│{#95}Theme{$3}{#37}{$2}{$4}"
+        },
+        {
+            "type": "icons",
+            "key": "{#37}│{#95}Icons{$3}{#37}{$2}{$4}"
+        },
+        {
+            "type": "terminal",
+            "key": "{#37}│{#95}Terminal{$3}{#37}{$2}{$4}",
+            "format": "{pretty-name} {version}"
+        },
+        {
+            "type": "cpu",
+            "key": "{#37}│{#95}CPU{$3}{#37}{$2}{$4}"
+        },
+        {
+            "type": "gpu",
+            "key": "{#37}│{#95}GPU{?index}{index}{?}{$3}{#37}{$2}{$4}"
+        },
+        {
+            "type": "memory",
+            "key": "{#37}│{#95}Memory{$3}{#37}{$2}{$4}",
+            "format": "{used} / {total} ({percentage})"
+        },
+        {
+            "type": "swap",
+            "key": "{#37}│{#95}Swap{$3}{#37}{$2}{$4}",
+            "format": "{used} / {total} ({percentage})"
+        },
+        {
+            "type": "disk",
+            "key": "{#37}│{#95}Disk{$3}{#37}{$2}{$4}",
+            "format": "{size-used} / {size-total} ({size-percentage}) @ {mountpoint} - {filesystem}"
+        },
+        {
+            "type": "localip",
+            "key": "{#37}│{#95}Local IP{$3}{#37}{$2}{$4}",
+            "format": "{ipv4} {?speed}[{speed}] {?}({ifname})"
+        },
+        {
+            "type": "localip",
+            "key": "{#37}│{#95}Local IP{$3}{#37}{$2}{$4}",
+            "format": "{ipv6}{/ipv6}IPv6 address for {ifname} not found{/}"
+        },
+        {
+            "type": "battery",
+            "key": "{#37}│{#95}Battery{$3}{#37}{$2}{$4}",
+            "format": "{capacity}{?status} - {status}{?}{?temperature} ({temperature}){?}"
+        },
+        {
+            "type": "locale",
+            "key": "{#37}│{#95}Locale{$3}{#37}{$2}{$4}"
+        },
+        {
+            "type": "custom",
+            "format": "{#37}╰{$1}───────────────────{$1}╯"
+        },
+        "break",
+        "colors"
+    ]
+}

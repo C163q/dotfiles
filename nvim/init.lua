@@ -22,6 +22,8 @@ require('core.lsp_highlight')
 -- pylatexenc (Optional)
 -- ripgrep (https://github.com/BurntSushi/ripgrep)
 -- lua
+-- julia
+-- sqlite3
 --
 ---@Mason_extra_install:
 -- cpptools

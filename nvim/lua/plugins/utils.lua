@@ -62,7 +62,8 @@ return {
             local ensure_installed = {
                 'rust', 'javascript', 'c', 'lua',
                 'cmake', 'cpp', 'json', 'jsonc',
-                'markdown', 'python', 'regex', 'yaml', 'bash'
+                'markdown', 'python', 'regex',
+                'yaml', 'bash', 'vim',
             }
 
             require('nvim-treesitter').install(ensure_installed):wait(30000)
