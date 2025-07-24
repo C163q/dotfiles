@@ -24,8 +24,12 @@ require('core.lsp_highlight')
 -- lua
 -- julia
 -- sqlite3
+-- rust-analyzer (install manually instead of using mason for the requirement of rustaceanvim)
+--     | see https://github.com/mrcjkb/rustaceanvim?tab=readme-ov-file#masonnvim-and-nvim-lspconfig for more information
+--     | install: https://rust-analyzer.github.io/book/rust_analyzer_binary.html#rustup
 --
 ---@Mason_extra_install:
 -- cpptools
 -- debugpy
+-- codelldb
 

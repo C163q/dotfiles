@@ -7,6 +7,7 @@ return {
         enable = true,
         value = ",",
     },
+    homePath = "/home/c163q/",
 
     event_presets = {
         start_edit = { "BufReadPost", "BufNewFile", "BufWritePre" },

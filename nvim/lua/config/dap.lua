@@ -5,10 +5,16 @@
 -- https://github.com/patricorgi/dotfiles/blob/main/.config/nvim/lua/custom/config/dapui.lua
 
 local dap = require('dap')
+local homePath = require('core.config').homePath
 dap.adapters.cppdbg = {
     id = 'cppdbg',
     type = 'executable',
-    command = '/home/c163q/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+    command = vim.fs.joinpath(homePath, '.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7'),
+}
+
+dap.adapters.codelldb = {
+    type = "executable",
+    command = vim.fs.joinpath(homePath, ".local/share/nvim/mason/packages/codelldb/codelldb"),
 }
 
 -- set Breakpoint Color

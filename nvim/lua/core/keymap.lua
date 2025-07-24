@@ -464,5 +464,23 @@ vim.keymap.set(
     }
 )
 
+vim.keymap.set(
+    '',
+    '<Leader>vi',
+    function ()
+        local indent = tonumber(vim.fn.input('Indent: '))
+        if indent == nil then
+            indent = 4
+        else
+            indent = math.floor(indent)
+        end
+        vim.opt.tabstop = indent
+        vim.opt.shiftwidth = indent
+    end,
+    {
+        noremap = true,
+        desc = 'Set indent width',
+    }
+)
 
 
