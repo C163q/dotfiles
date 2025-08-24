@@ -59,6 +59,26 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
+-- Rust Specific
+vim.api.nvim_create_augroup('RustSpecialHighlight', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { "rust" },
+    callback = function ()
+        vim.schedule(function ()
+            vim.api.nvim_set_hl(0, 'rustMacro', { fg='#f7bf84' })
+            vim.api.nvim_set_hl(0, '@lsp.type.macro.rust', { link='rustMacro' })
+            vim.api.nvim_set_hl(0, '@lsp.typemod.macro.defaultLibrary', { fg='#efaa5f' })
+            vim.api.nvim_set_hl(0, '@lsp.type.struct.rust', { fg='#42ce9e' })
+            vim.api.nvim_set_hl(0, '@lsp.type.enum.rust', { link='@lsp.type.struct.rust' })
+            vim.api.nvim_set_hl(0, '@lsp.type.builtinType.rust', { fg='#63a7e4' })
+            vim.api.nvim_set_hl(0, '@lsp.typemod.enum.defaultLibrary.rust', { fg='#51d9ab' })
+            vim.api.nvim_set_hl(0, '@module', { fg='#abb6fe', italic=true })
+            vim.api.nvim_set_hl(0, '@lsp.type.attributeBracket.rust', { link='rustAttribute' })
+            vim.api.nvim_set_hl(0, 'StorageClass', { fg='#f9d0af', italic=true })
+        end)
+    end
+})
+
 vim.api.nvim_set_hl(0, 'SnacksIndentChunk', { fg="#faf4cd" })
 vim.api.nvim_set_hl(0, 'SnacksIndentScope', { fg="#dcd1da" })
 

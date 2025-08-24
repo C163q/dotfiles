@@ -25,6 +25,7 @@ return {
     -- nvim-lspconfig is a "data only" repo, providing basic, default Nvim LSP client configurations for various LSP servers.
     {
         "neovim/nvim-lspconfig",
+        version = "*",
     },
 
     -- https://github.com/mason-org/mason-lspconfig.nvim
@@ -47,6 +48,7 @@ return {
             "mason-org/mason.nvim",
             "neovim/nvim-lspconfig",
         },
+        version = "*",
     },
 
     -- https://github.com/folke/trouble.nvim

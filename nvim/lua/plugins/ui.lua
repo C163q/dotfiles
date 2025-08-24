@@ -39,6 +39,7 @@ return {
         'akinsho/bufferline.nvim',
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',
+        event = 'VeryLazy',
         opts = {
             options = {
                 close_command = "bdelete! %d",
@@ -76,7 +77,7 @@ return {
                     end
                 end,
             },
-            highlights = require("catppuccin.groups.integrations.bufferline").get()
+            highlights = require("catppuccin.groups.integrations.bufferline").get_theme()
         }
     },
 

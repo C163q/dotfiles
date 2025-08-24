@@ -116,6 +116,22 @@ vim.keymap.set('n', '<C-e>', function ()
 end,
 { noremap = true, desc = 'Signature help' })
 
+
+local function quickfix()
+    vim.lsp.buf.code_action({
+        filter = function(action) return action.isPreferred end,
+        apply = true
+    })
+end
+
+vim.keymap.set('n', '<Leader>li', quickfix, { noremap = true, silent = false, desc = "Quickfix automatically" })
+vim.keymap.set('n', '<Leader>lI', function ()
+    vim.lsp.buf.code_action({
+        apply = false
+    })
+end, { noremap = true, silent = false, desc = "Quickfix with choice" })
+
+
 local icons_diagnostic = require('core.config').icon.diagnostics
 -- Sets icons and styling for diagnostics
 vim.diagnostic.config({
