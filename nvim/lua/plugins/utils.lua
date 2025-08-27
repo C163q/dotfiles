@@ -403,6 +403,51 @@ return {
             end
         }
 
-    }
+    },
+
+
+    -- https://github.com/stevearc/overseer.nvim
+    -- overseer.nvim: A task runner and job management plugin for Neovim
+    {
+        'stevearc/overseer.nvim',
+        config = function ()
+            local opts = {
+                strategy = "toggleterm",
+            }
+            require('overseer').setup(opts)
+            vim.api.nvim_create_user_command("OverseerRestartLast", function()
+                local overseer = require("overseer")
+                local tasks = overseer.list_tasks({ recent_first = true })
+                if vim.tbl_isempty(tasks) then
+                    vim.notify("No tasks found", vim.log.levels.WARN)
+                else
+                    overseer.run_action(tasks[1], "restart")
+                end
+            end, {})
+
+            vim.keymap.set(
+                'n',
+                '<Leader>or',
+                '<Cmd>OverseerRun<CR>',
+                { noremap = true, desc = "Overseer run" }
+            )
+
+            vim.keymap.set(
+                'n',
+                '<Leader>oc',
+                '<Cmd>OverseerRunCmd<CR>',
+                { noremap = true, desc = "Overseer run cmd" }
+            )
+
+            vim.keymap.set(
+                'n',
+                '<Leader>ot',
+                '<Cmd>OverseerToggle<CR>',
+                { noremap = true, desc = "Overseer toggle task list" }
+            )
+        end,
+        event = event_presets.start_edit,
+        version = '*',
+    },
 
 }

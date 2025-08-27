@@ -27,6 +27,9 @@ require('core.lsp_highlight')
 -- rust-analyzer (install manually instead of using mason for the requirement of rustaceanvim)
 --     | see https://github.com/mrcjkb/rustaceanvim?tab=readme-ov-file#masonnvim-and-nvim-lspconfig for more information
 --     | install: https://rust-analyzer.github.io/book/rust_analyzer_binary.html#rustup
+-- win32yank.exe (if using WSL)
+--     | see https://github.com/neovim/neovim/issues/12092 for clipboard issue in WSL
+--     | see https://github.com/equalsraf/win32yank for win32yank.exe
 --
 ---@Mason_extra_install:
 -- cpptools

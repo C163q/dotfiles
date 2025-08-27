@@ -11,6 +11,7 @@ vim.lsp.enable('clangd')
 -- vim.lsp.enable('pyright')
 -- vim.lsp.enable('pylsp')
 vim.lsp.enable('basedpyright')
+vim.lsp.enable('asm_lsp')
 require('config.lsp.basedpyright')
 
 require("config.lsp.diagnostic")

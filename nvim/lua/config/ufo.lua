@@ -5,6 +5,7 @@ vim.o.foldenable = true
 
 -- Tell the server the capability of foldingRange,
 -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
+--[[    Notes: Unnecessary for nvim 0.11+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
@@ -17,6 +18,7 @@ for _, ls in ipairs(language_servers) do
         -- you can add other fields for setting up lsp server in this table
     })
 end
+--]]
 
 local handler = function(virtText, lnum, endLnum, width, truncate)
     local newVirtText = {}

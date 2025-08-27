@@ -23,7 +23,8 @@ return {
                             newfile = '[New]',
                         }
                     }
-                }
+                },
+                lualine_x = { "overseer" },
             },
             options = {
                 theme = "catppuccin"
