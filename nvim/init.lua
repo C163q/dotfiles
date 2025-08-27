@@ -30,6 +30,8 @@ require('core.lsp_highlight')
 -- win32yank.exe (if using WSL)
 --     | see https://github.com/neovim/neovim/issues/12092 for clipboard issue in WSL
 --     | see https://github.com/equalsraf/win32yank for win32yank.exe
+-- pkg-config
+-- npm
 --
 ---@Mason_extra_install:
 -- cpptools

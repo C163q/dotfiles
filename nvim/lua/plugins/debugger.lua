@@ -27,7 +27,7 @@ return {
                             -- https://github.com/theHamsta/nvim-dap-virtual-text
                             -- nvim-dap-virtual-text: This plugin adds virtual text support to nvim-dap.
                             -- nvim-treesitter is used to find variable definitions.
-                            "nvim-dap-virtual-text",
+                            "theHamsta/nvim-dap-virtual-text",
                             dependencies = { 'mfussenegger/nvim-dap', 'nvim-treesitter/nvim-treesitter' },
                          },
                          "nvim-neotest/nvim-nio",
@@ -59,5 +59,16 @@ return {
         'mrcjkb/rustaceanvim',
         version = '^6', -- Recommended
         lazy = false, -- This plugin is already lazy
+    },
+
+    -- https://github.com/theHamsta/nvim-dap-virtual-text
+    -- nvim-dap-virtual-text: This plugin adds virtual text support to nvim-dap.
+    -- nvim-treesitter is used to find variable definitions.
+    {
+        'theHamsta/nvim-dap-virtual-text',
+        event = event_presets.start_edit,
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
     }
 }
