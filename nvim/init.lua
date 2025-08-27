@@ -32,9 +32,21 @@ require('core.lsp_highlight')
 --     | see https://github.com/equalsraf/win32yank for win32yank.exe
 -- pkg-config
 -- npm
+-- luarocks
+-- lazygit
+-- fd
 --
 ---@Mason_extra_install:
 -- cpptools
 -- debugpy
 -- codelldb
+--
+---@WSL_install
+-- win32yank.exe
+--     | Install it on Windows and put it in PATH
+--     | e.g. ln -s /mnt/d/path/to/win32yank.exe /usr/local/bin/win32yank.exe
+--     | If you can't execute it in WSL, here is the solution (a bug in WSL):
+--     | https://github.com/microsoft/WSL/issues/8952#issuecomment-1568212651
+--     |     sudo sh -c 'echo :WSLInterop:M::MZ::/init:PF > /usr/lib/binfmt.d/WSLInterop.conf'
+--     |     sudo systemctl restart systemd-binfmt
 

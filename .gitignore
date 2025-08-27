@@ -1,4 +1,5 @@
 *.old
 *.bak
 nvim/lazy-lock.json
+nvim/.exrc
 
