@@ -40,6 +40,10 @@ require('core.lsp_highlight')
 -- cpptools
 -- debugpy
 -- codelldb
+-- stylua
+-- isort
+-- black
+-- rustfmt
 --
 ---@WSL_install
 -- win32yank.exe

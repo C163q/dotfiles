@@ -12,6 +12,7 @@ vim.lsp.enable('clangd')
 -- vim.lsp.enable('pylsp')
 vim.lsp.enable('basedpyright')
 vim.lsp.enable('asm_lsp')
+vim.lsp.enable('neocmake')
 require('config.lsp.basedpyright')
 
 require("config.lsp.diagnostic")

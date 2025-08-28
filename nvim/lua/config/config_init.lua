@@ -4,5 +4,5 @@ require("config.toggleterm")
 -- require("config.telescope")
 -- require("config.noise")
 require("config.snacks")
-
+require("config.conform")
 

@@ -43,6 +43,7 @@ return {
                 'lua_ls',
                 'vtsls',
                 'asm_lsp',
+                'neocmake',
             },
         },
         dependencies = {

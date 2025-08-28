@@ -71,4 +71,32 @@ return {
         },
     },
 
+    -- https://github.com/stevearc/conform.nvim
+    -- conform.nvim: Lightweight yet powerful formatter plugin for Neovim
+    {
+        'stevearc/conform.nvim',
+        opts = {
+            formatters_by_ft = {
+                -- You can customize some of the format options for the filetype (:help conform.format)
+                lua = { "stylua" },
+                -- Conform will run multiple formatters sequentially
+                python = { "isort", "black" },
+                rust = { "rustfmt", lsp_format = "fallback" },
+                cpp = { "clang-format" },
+            },
+        },
+        event = event_presets.start_edit,
+        version = '*',
+    },
+
+    -- https://github.com/zapling/mason-conform.nvim
+    -- mason-conform.nvim: Automatically install formatters registered with conform.nvim via Mason.
+    {
+        'zapling/mason-conform.nvim',
+        event = event_presets.start_edit,
+        dependencies = {
+            "mason-org/mason.nvim",
+            "stevearc/conform.nvim",
+        },
+    }
 }
