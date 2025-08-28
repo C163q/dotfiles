@@ -7,7 +7,13 @@ local float_window_action = {
     group = "DiagnosticFloatWindow",
     pattern = '*',
     callback = function()
-        vim.diagnostic.open_float(nil, { focus=false, focusable = false, border = "rounded" })
+        vim.diagnostic.open_float({
+            focus = false,
+            focusable = false,
+            border = "rounded",
+            close_events = { "CursorMoved", "CursorMovedI", "CursorMovedC", "BufLeave" },
+            severity_sort = true,
+        })
     end,
 }
 -- CursorHoldI will show diagnostics on Insert mode
