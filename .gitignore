@@ -2,4 +2,6 @@
 *.bak
 nvim/lazy-lock.json
 nvim/.exrc
+**/.zshrc.*
+vim/.vim/.netrwhist
 
