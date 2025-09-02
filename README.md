@@ -4,7 +4,8 @@ Personal dotfile repository. Collect all my configs.
 
 ## Placement
 
-- [nvim](./nvim/) should be placed at `~/.config/nvim`
+- [nvim](./nvim/)
+    - [config](./nvim/config/) should be placed at `~/.config/nvim`
 - [tmux](./tmux/)
     - [tmux.conf](./tmux/tmux.conf) should be placed at `~/.config/tmux/tmux.conf`
 - [vim](./vim/)

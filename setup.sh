@@ -10,7 +10,7 @@ mkdir ~/.cache/zsh
 ZDOTDIR="$HOME/.local/share/zsh"
 CFG_PWD="$(pwd)"
 
-ln -s ${CFG_PWD}/nvim ~/.config/nvim
+ln -s ${CFG_PWD}/nvim/config ~/.config/nvim
 ln -s ${CFG_PWD}/tmux/tmux.conf ~/.config/tmux/tmux.conf
 ln -s ${CFG_PWD}/vim/.vimrc ~/.vimrc
 ln -s ${CFG_PWD}/vim/.vim ~/.vim
