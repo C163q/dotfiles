@@ -104,6 +104,9 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+# ensure always show dotfiles for file completion
+_comp_options+=(globdots)  
+
 export XDG_CONFIG_HOME="$HOME/.config"
 export MANPATH="/usr/local/man:$MANPATH"
 
@@ -145,4 +148,5 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+fastfetch
 

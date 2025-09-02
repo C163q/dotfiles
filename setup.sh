@@ -23,3 +23,5 @@ sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools
 chmod u+x ${CFG_PWD}/config/aliases.zsh
 chmod u+x ${CFG_PWD}/config/functions.zsh
 
+unset CFG_PWD
+

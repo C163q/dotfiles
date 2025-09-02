@@ -9,8 +9,8 @@
     },
     "display": {
         "constants": [
-            "──────────────────────",
-            "\u001b[106G│",
+            "───────────────────────",
+            "\u001b[108G│",
             "\u001b[s",
             "\u001b[u"
         ],
@@ -20,8 +20,10 @@
         },
         "bar": {
             "width": 10,
-            "charElapsed": "■",
-            "charTotal": "─"
+            "char": {
+                "elapsed": "■",
+                "total": "─"
+            }
         },
         "percent": {
             "type": 3,
@@ -39,7 +41,7 @@
             "outputColor": "light_white",
             "color": {
                 "host": "light_cyan",
-                "user": "light_blue",
+                "user": "light_blue"
             }
         },
         {
