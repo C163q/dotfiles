@@ -1,6 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
 # Path to your Oh My Zsh installation.
 export ZDOTDIR="$HOME/.local/share/zsh"
 export ZSH="$HOME/.local/share/zsh/ohmyzsh"
@@ -85,6 +82,9 @@ if [ -f $HOME/.local/share/zsh/.zshrc ]; then
     source $HOME/.local/share/zsh/.zshrc
 fi
 
+# Fallback to default setting if not compatible
+export PS1="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c %{$fg[white]%}%# %{$reset_color%}"
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.local/share/zsh/.histfile
 HISTSIZE=1000
@@ -107,9 +107,6 @@ compinit
 # ensure always show dotfiles for file completion
 _comp_options+=(globdots)  
 
-export XDG_CONFIG_HOME="$HOME/.config"
-export MANPATH="/usr/local/man:$MANPATH"
-
 # You may need to manually set your language environment
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
@@ -120,7 +117,6 @@ export LC_ALL="en_US.UTF-8"
 # else
 #   export EDITOR='nvim'
 # fi
-export EDITOR='vim'
 
 # Compilation flags
 export ARCHFLAGS="-arch $(uname -m)"

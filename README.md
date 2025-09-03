@@ -14,6 +14,7 @@ Personal dotfile repository. Collect all my configs.
 - [fastfetch](./fastfetch/) should be placed at `~/.config/fastfetch`
 - [zsh](./zsh/)
     - [.zshrc](./zsh/.zshrc) should be placed at `~/.zshrc`
+    - [.zshenv](./zsh/.zshenv) should be placed at `~/.zshenv`
     - [config](./zsh/config/) should be placed at `~/.config/zsh`
     - [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) should be placed at `~/.local/share/zsh/ohmyzsh`
     - require `~/.cache/zsh/` to place `.zcompdump` file
