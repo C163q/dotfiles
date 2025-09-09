@@ -15,7 +15,7 @@ ln -s ${CFG_PWD}/tmux/tmux.conf ${HOME}/.config/tmux/tmux.conf
 ln -s ${CFG_PWD}/vim/.vimrc ${HOME}/.vimrc
 ln -s ${CFG_PWD}/vim/.vim ${HOME}/.vim
 ln -s ${CFG_PWD}/fastfetch ${HOME}/.config/fastfetch
-ln -s ${CFG_PWD}/zsh/.zshrc ${HOME}/.zshrc
+ln -s ${CFG_PWD}/zsh/.zshrc ${HOME}/.local/share/zsh/.zshrc
 ln -s ${CFG_PWD}/zsh/.zshenv ${HOME}/.zshenv
 ln -s ${CFG_PWD}/zsh/config ${HOME}/.config/zsh
 

@@ -1,7 +1,17 @@
-# Path to your Oh My Zsh installation.
-export ZDOTDIR="$HOME/.local/share/zsh"
-export ZSH="$HOME/.local/share/zsh/ohmyzsh"
-export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.local/share/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+# ^^^ I disable zsh to lazy load for unknown bugs that the shell can't run
+# probably it loads slower than the normal .zshrc
+
+# To customize prompt, run `p10k configure` or edit ~/.local/share/zsh/.p10k.zsh.
+[[ ! -f ~/.local/share/zsh/.p10k.zsh ]] || source ~/.local/share/zsh/.p10k.zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -75,13 +85,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-if [ -f $HOME/.local/share/zsh/.zshrc ]; then
-    source $HOME/.local/share/zsh/.zshrc
-fi
-
 # Fallback to default setting if not compatible
 export PS1="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c %{$fg[white]%}%# %{$reset_color%}"
 
@@ -144,5 +147,7 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-fastfetch
+if [[ $- == *l* ]]; then
+    fastfetch
+fi
 
