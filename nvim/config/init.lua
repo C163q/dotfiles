@@ -18,7 +18,7 @@ require('core.lsp_highlight')
 -- tar
 -- gzip
 -- tree-sitter CLI (https://github.com/tree-sitter/tree-sitter)
--- node (Node.js)
+-- node (Node.js) 20 or higher
 -- pylatexenc (Optional)
 -- ripgrep (https://github.com/BurntSushi/ripgrep)
 -- lua
@@ -35,6 +35,7 @@ require('core.lsp_highlight')
 -- luarocks
 -- lazygit
 -- fd
+-- jq
 --
 ---@Mason_extra_install:
 -- cpptools

@@ -24,7 +24,13 @@ return {
                         }
                     }
                 },
-                lualine_x = { "overseer" },
+                lualine_x = {
+                    { "copilot", show_colors = true, show_loading = true },
+                    "encoding",
+                    "overseer",
+                },
+                lualine_y = { "filetype" },
+                lualine_z = { "progress", "location" },
             },
             options = {
                 theme = "catppuccin"
@@ -83,7 +89,7 @@ return {
     },
 
     -- https://github.com/folke/noice.nvim
-    -- Noice (Nice, Noise, Notice): Highly experimental plugin that 
+    -- Noice (Nice, Noise, Notice): Highly experimental plugin that
     -- completely replaces the UI for messages, cmdline and the popupmenu.
     {
         "folke/noice.nvim",

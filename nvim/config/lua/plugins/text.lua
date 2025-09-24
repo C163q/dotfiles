@@ -38,6 +38,18 @@ return {
         version = '*',
     },
 
+    -- https://github.com/nvim-mini/mini.diff
+    -- mini.diff: Work with diff hunks
+    -- Although part of `mini.nvim`, but `olimorris/codecompanion.nvim` can't recognize properly
+    {
+        "echasnovski/mini.diff",
+        config = function()
+            local diff = require("mini.diff")
+            diff.setup({})
+        end,
+        event = "VeryLazy"
+    },
+
     --[[
     -- https://github.com/lukas-reineke/indent-blankline.nvim
     -- Indent Blankline: This plugin adds indentation guides to Neovim.

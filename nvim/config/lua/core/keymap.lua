@@ -483,4 +483,15 @@ vim.keymap.set(
     }
 )
 
+vim.keymap.set(
+    'n',
+    '<Leader>lr',
+    function ()
+        vim.lsp.buf.rename()
+    end,
+    {
+        noremap = true,
+        desc = 'LSP rename',
+    }
+)
 

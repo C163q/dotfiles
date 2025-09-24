@@ -20,6 +20,10 @@ return {
         priority = 1000,
         config = function()
             require("catppuccin").setup({
+                float = {
+                    transparent = false, -- enable transparent floating windows
+                    solid = false, -- use solid styling for floating windows, see |winborder|
+                },
                 custom_highlights = function ()
                     return {
                         RainbowRed = { fg = "#D66F77" },

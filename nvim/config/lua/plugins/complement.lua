@@ -41,8 +41,13 @@ return {
     -- Blink Completion (blink.cmp): Performant, batteries-included completion plugin for Neovim
     {
         'saghen/blink.cmp',
-        dependencies = { 'rafamadriz/friendly-snippets', "L3MON4D3/LuaSnip", { 'xzbdmw/colorful-menu.nvim', opts = {} } },
-        event = event_presets.start_edit,
+        dependencies = {
+            'rafamadriz/friendly-snippets',
+            "L3MON4D3/LuaSnip",
+            { 'xzbdmw/colorful-menu.nvim', opts = {} },
+            "fang2hou/blink-copilot",
+        },
+        event = event_presets.start_insert,
         version = '1.*',
         opts = {
             completion = {
@@ -83,8 +88,13 @@ return {
 
                 ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
                 ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+                ['<C-Tab>'] = { function (cmp) return cmp.select_next({ count = 3 }) end, 'fallback' },
+                ['<C-S-Tab>'] = { function (cmp) return cmp.select_prev({ count = 3 }) end, 'fallback' },
+
                 ['<Up>'] = { 'select_prev', 'fallback' },
                 ['<Down>'] = { 'select_next', 'fallback' },
+                ['<C-Down>'] = { function(cmp) return cmp.select_next({ count = 3 }) end, 'fallback' },
+                ['<C-Up>'] = { function(cmp) return cmp.select_prev({ count = 3 }) end, 'fallback' },
 
                 ['<CR>'] = { 'accept', 'fallback' },
                 ['<C-y>'] = { 'select_and_accept' },
@@ -110,18 +120,42 @@ return {
                     },
                 },
             },
-            snippets = { preset = 'luasnip' },
+            snippets = {
+                preset = 'luasnip',
+                -- SOLVE: snippet_forward is still triggerable after user has moved on
+                -- see: https://github.com/Saghen/blink.cmp/issues/1805#issuecomment-2919327795
+                active = function(filter)
+                    local snippet = require "luasnip"
+                    local blink = require "blink.cmp"
+                    if snippet.in_snippet() and not blink.is_visible() then
+                        return true
+                    else
+                        if not snippet.in_snippet() and vim.fn.mode() == "n" then snippet.unlink_current() end
+                        return false
+                    end
+                end,
+            },
             sources = {
                 -- add lazydev to your completion providers
-                default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+                default = { "copilot", "lazydev", "lsp", "path", "snippets", "buffer" },
                 providers = {
+                    copilot = {
+                        name = "Copilot",
+                        module = "blink-copilot",
+                        score_offset = 100,
+                        async = true,
+                    },
                     lazydev = {
                         name = "LazyDev",
                         module = "lazydev.integrations.blink",
                         -- make lazydev completions top priority (see `:h blink.cmp`)
-                        score_offset = 100,
+                        score_offset = 96,
+                        async = true,
                     },
                 },
+                per_filetype = {
+                    codecompanion = { "codecompanion" },
+                }
             }
         },
     }

@@ -11,6 +11,7 @@ return {
 
     event_presets = {
         start_edit = { "BufReadPost", "BufNewFile", "BufWritePre" },
+        start_insert = { "InsertEnter" },
     },
     icon = {
         diagnostics = {

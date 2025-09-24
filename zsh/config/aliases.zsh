@@ -14,6 +14,8 @@ alias egrep='egrep --color=auto'
 
 alias rm='\rm -I'
 alias cp='\cp -i'
+
 alias yf='yazi_chdir'
 alias n='nvim'
+alias ze='zellij'
 
