@@ -11,3 +11,6 @@ export ZDOTDIR="$HOME/.local/share/zsh"
 export ZSH="$HOME/.local/share/zsh/ohmyzsh"
 export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
+export PYENV_ROOT="$HOME/.local/extra/pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"

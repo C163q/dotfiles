@@ -5,7 +5,7 @@ return {
     -- Copilot LSP: Copilot LSP Configuration for Neovim
     {
         "copilotlsp-nvim/copilot-lsp",
-        event = event_presets.start_insert,
+        event = event_presets.load_ai,
         config = function ()
             vim.g.copilot_nes_debounce = 500
             vim.lsp.enable("copilot_ls")
@@ -34,7 +34,7 @@ return {
     {
     	"zbirenbaum/copilot.lua",
         dependencies = { "copilotlsp-nvim/copilot-lsp" },   -- (optional) for NES functionality
-        event = event_presets.start_insert,
+        event = event_presets.load_ai,
         config = function ()
             require("copilot").setup({
                 suggestion = { enabled = false },
@@ -53,7 +53,7 @@ return {
     {
         "fang2hou/blink-copilot",
         dependencies = { "zbirenbaum/copilot.lua" },
-        event = event_presets.start_insert,
+        event = event_presets.load_ai,
         config = {}
     },
 
@@ -64,7 +64,7 @@ return {
         dependencies = {
             "nvim-lualine/lualine.nvim",
         },
-        event = event_presets.start_insert,
+        event = event_presets.load_ai,
     },
 
     -- https://github.com/ravitemer/mcphub.nvim
@@ -94,7 +94,7 @@ return {
             { "nvim-lua/plenary.nvim", branch = "master" },
             "nvim-treesitter/nvim-treesitter",
             "ravitemer/mcphub.nvim",
-            "echasnovski/mini.diff",
+            "ravitemer/codecompanion-history.nvim",
         },
         config = function ()
             require("codecompanion").setup({
@@ -105,6 +105,30 @@ return {
                             make_vars = true,
                             make_slash_commands = true,
                             show_result_in_chat = true
+                        }
+                    },
+                    history = {
+                        enabled = true,
+                        opts = {
+                            keymap = "<Leader>ah",  -- Keymap to open history from chat buffer (default: gh)
+                            save_chat_keymap = "<Leader>as", -- Keymap to save the current chat manually
+                            auto_save = false, -- Save all chats by default
+                            expiration_days = 0,    -- Number of days after which chats are automatically deleted (0 to disable)
+                            picker = "snacks", --- ("telescope", "snacks", "fzf-lua", or "default")
+                            picker_keymaps = {
+                                rename = { n = "r", i = "<M-r>" },
+                                delete = { n = "d", i = "<M-d>" },
+                                duplicate = { n = "<C-y>", i = "<C-y>" },
+                            },
+                            ---Directory path to save the chats
+                            dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+                            -- Summary system
+                            summary = {
+                                -- Keymap to generate summary for current chat (default: "gcs")
+                                create_summary_keymap = "<Leader>aU",
+                                -- Keymap to browse summaries (default: "gbs")
+                                browse_summaries_keymap = "<Leader>au",
+                            },
                         }
                     }
                 },
@@ -222,8 +246,33 @@ return {
             })
             require("config.ai.codecompanion")
         end,
-        event = event_presets.start_insert,
+        event = event_presets.load_ai,
+        version = "*",
     },
 
+    -- https://github.com/Davidyz/VectorCode
+    -- VectorCode: VectorCode is a code repository indexing tool. It helps you build better prompt for
+    -- your coding LLMs by indexing and providing information about the code repository you're working on.
+    {
+        "Davidyz/VectorCode",
+        version = "*",
+        build = "uv tool upgrade vectorcode", -- This helps keeping the CLI up-to-date
+        -- build = "pipx upgrade vectorcode", -- If you used pipx to install the CLI
+        dependencies = { "nvim-lua/plenary.nvim" },
+        event = event_presets.load_ai,
+    },
+
+
+    -- https://github.com/ravitemer/codecompanion-history.nvim
+    -- CodeCompanion History Extension: A history management extension for codecompanion.nvim that
+    -- enables saving, browsing and restoring chat sessions.
+    {
+        "ravitemer/codecompanion-history.nvim",
+        dependencies = {
+            "Davidyz/VectorCode",
+            "folke/snacks.nvim",
+        },
+        event = event_presets.load_ai,
+    },
 }
 

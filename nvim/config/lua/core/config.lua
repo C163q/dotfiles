@@ -1,6 +1,6 @@
 
 return {
-    basedpyrightTypeCheck = true,
+    basedpyrightTypeCheck = false,
     relativeLineNumber = true,
     mapleader = " ",
     mapleaderCompat = {
@@ -12,6 +12,7 @@ return {
     event_presets = {
         start_edit = { "BufReadPost", "BufNewFile", "BufWritePre" },
         start_insert = { "InsertEnter" },
+        load_ai = { "InsertEnter" },
     },
     icon = {
         diagnostics = {
