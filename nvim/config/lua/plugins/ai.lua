@@ -110,8 +110,8 @@ return {
                     history = {
                         enabled = true,
                         opts = {
-                            keymap = "<Leader>ah",  -- Keymap to open history from chat buffer (default: gh)
-                            save_chat_keymap = "<Leader>as", -- Keymap to save the current chat manually
+                            keymap = "gh",  -- Keymap to open history from chat buffer (default: gh)
+                            save_chat_keymap = "sc", -- Keymap to save the current chat manually
                             auto_save = false, -- Save all chats by default
                             expiration_days = 0,    -- Number of days after which chats are automatically deleted (0 to disable)
                             picker = "snacks", --- ("telescope", "snacks", "fzf-lua", or "default")
@@ -125,9 +125,9 @@ return {
                             -- Summary system
                             summary = {
                                 -- Keymap to generate summary for current chat (default: "gcs")
-                                create_summary_keymap = "<Leader>aU",
+                                create_summary_keymap = "gcs",
                                 -- Keymap to browse summaries (default: "gbs")
-                                browse_summaries_keymap = "<Leader>au",
+                                browse_summaries_keymap = "gbs",
                             },
                         }
                     }
