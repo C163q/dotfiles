@@ -36,6 +36,7 @@ return {
         bufferline = {
             error = " ",
             warn = " ",
+            info = " "
         },
         keys = {
             Up = '↑ ',

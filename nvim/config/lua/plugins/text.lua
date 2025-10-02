@@ -17,7 +17,7 @@ return {
     -- nvim-autopairs: A super powerful autopair plugin for Neovim that supports multiple characters.
     {
         'windwp/nvim-autopairs',
-        event = "InsertEnter",
+        event = event_presets.start_insert,
         config = function ()
             require('config.complement.autopairs')
         end

@@ -43,6 +43,7 @@ return {
                 }
             }
         end,
+        cmd = "Neotree",
     },
 
     -- https://github.com/nvim-treesitter/nvim-treesitter/tree/main

@@ -47,45 +47,53 @@ return {
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',
         event = 'VeryLazy',
-        opts = {
-            options = {
-                close_command = "bdelete! %d",
-                hover = {
-                    enabled = true,
-                    delay = 200,
-                    reveal = {'close'}
-                },
-                indicator = {
-                    style = 'underline',
-                    icon = "_"
-                },
-                pick = {
-                    alphabet = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                },
-                diagnostics = "nvim_lsp",
-                diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                    local bufferline_icon = require('core.config').icon.bufferline
-                    local icon = level:match("error") and bufferline_icon.error or bufferline_icon.warn
-                    return " " .. icon .. count
-                end,
-                -- 左侧让出 nvim-tree 的位置
-                offsets = {{
-                    filetype = "neo-tree",
-                    text = "File Explorer",
-                    highlight = "Directory",
-                    text_align = "center"
-                }},
-                custom_filter = function(buf_number, buf_numbers)
-                    -- filter out filetypes you don't want to see
-                    if vim.bo[buf_number].filetype ~= "neotree"
-                        and vim.bo[buf_number].buftype ~= "terminal"
-                    then
-                        return true
-                    end
-                end,
-            },
-            highlights = require("catppuccin.special.bufferline").get_theme()
-        }
+        config = function ()
+            require("bufferline").setup({
+                options = {
+                    close_command = "bdelete! %d",
+                    hover = {
+                        enabled = true,
+                        delay = 100,
+                        reveal = {'close'}
+                    },
+                    indicator = {
+                        style = 'underline',
+                        icon = "_"
+                    },
+                    pick = {
+                        alphabet = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    },
+                    diagnostics = "nvim_lsp",
+                    diagnostics_indicator = function(count, level, diagnostics_dict, context)
+                        local bufferline_icon = require('core.config').icon.bufferline
+                        local s = ""
+                        for e, n in pairs(diagnostics_dict) do
+                            local sym = e == "error" and bufferline_icon.error
+                            or (e == "warning" and bufferline_icon.warn or bufferline_icon.info)
+                            s = s .. n .. sym
+                        end
+                        return s
+                    end,
+                    -- 左侧让出 nvim-tree 的位置
+                    offsets = {{
+                        filetype = "neo-tree",
+                        text = "File Explorer",
+                        highlight = "Directory",
+                        text_align = "center"
+                    }},
+                    custom_filter = function(buf_number, buf_numbers)
+                        -- filter out filetypes you don't want to see
+                        if vim.bo[buf_number].filetype ~= "neotree"
+                            and vim.bo[buf_number].buftype ~= "terminal"
+                            then
+                                return true
+                            end
+                            return false
+                        end,
+                    },
+                    highlights = require("catppuccin.special.bufferline").get_theme()
+                })
+        end,
     },
 
     -- https://github.com/folke/noice.nvim

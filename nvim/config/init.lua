@@ -36,6 +36,7 @@ require('core.lsp_highlight')
 -- lazygit
 -- fd
 -- jq
+-- vectorcode (uv tool install vectorcode)
 --
 ---@Mason_extra_install:
 -- cpptools
