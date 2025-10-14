@@ -11,6 +11,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 })
 
 vim.api.nvim_set_hl(0, 'SnacksIndent', { fg = "#636779" })
+vim.api.nvim_set_hl(0, 'CursorColumn', { bg = '#282935' })
 
 vim.api.nvim_set_hl(0, 'Type', { fg='#63a7e4' })
 vim.api.nvim_set_hl(0, 'Function', { fg='#f4efa3' })
@@ -75,6 +76,8 @@ vim.api.nvim_create_autocmd('FileType', {
             vim.api.nvim_set_hl(0, '@module', { fg='#abb6fe', italic=true })
             vim.api.nvim_set_hl(0, '@lsp.type.attributeBracket.rust', { link='rustAttribute' })
             vim.api.nvim_set_hl(0, 'StorageClass', { fg='#f9d0af', italic=true })
+            vim.api.nvim_set_hl(0, '@lsp.type.typeAlias.rust', { fg='#42ce9e', italic=true })
+            vim.api.nvim_set_hl(0, '@lsp.typemod.typeAlias.defaultLibrary.rust', { fg='#51d9ab', italic=true })
         end)
     end
 })
