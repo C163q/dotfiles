@@ -1,4 +1,4 @@
-local event_presets = require('core.config').event_presets
+local event_presets = require("core.config").event_presets
 
 return {
     -- https://github.com/nvim-neo-tree/neo-tree.nvim
@@ -14,9 +14,9 @@ return {
             -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
         },
         lazy = false, -- neo-tree will lazily load itself
-        config = function ()
-            local git_status_icon = require('core.config').icon.git_status
-            require('neo-tree').setup {
+        config = function()
+            local git_status_icon = require("core.config").icon.git_status
+            require("neo-tree").setup({
                 -- fill any relevant options here
                 close_if_last_window = false,
                 enable_git_status = true,
@@ -24,10 +24,10 @@ return {
                     git_status = {
                         symbols = {
                             -- Change type
-                            added = git_status_icon.added,  -- or "✚", but this is redundant info if you use git_status_colors on the name
-                            modified = git_status_icon.modified,    -- or "", but this is redundant info if you use git_status_colors on the name
-                            deleted = git_status_icon.deleted,  -- this can only be used in the git_status source
-                            renamed = git_status_icon.renamed,  -- this can only be used in the git_status source
+                            added = git_status_icon.added, -- or "✚", but this is redundant info if you use git_status_colors on the name
+                            modified = git_status_icon.modified, -- or "", but this is redundant info if you use git_status_colors on the name
+                            deleted = git_status_icon.deleted, -- this can only be used in the git_status source
+                            renamed = git_status_icon.renamed, -- this can only be used in the git_status source
                             -- Status type
                             untracked = git_status_icon.untracked,
                             ignored = git_status_icon.ignored,
@@ -39,9 +39,9 @@ return {
                     window = {
                         position = "left",
                         width = 0.18,
-                    }
-                }
-            }
+                    },
+                },
+            })
         end,
         cmd = "Neotree",
     },
@@ -52,48 +52,59 @@ return {
     --   a collection of queries for enabling tree-sitter features built into Neovim for these languages;
     --   a staging ground for treesitter-based features considered for upstreaming to Neovim.
     {
-        'nvim-treesitter/nvim-treesitter',
+        "nvim-treesitter/nvim-treesitter",
         lazy = false,
-        branch = 'main',
+        branch = "main",
         build = ":TSUpdate",
         config = function()
-            require('nvim-treesitter.config').setup(opts)
-            require('nvim-treesitter').setup()
+            require("nvim-treesitter.config").setup(opts)
+            require("nvim-treesitter").setup()
 
             local ensure_installed = {
-                'rust', 'javascript', 'c', 'lua',
-                'cmake', 'cpp', 'json', 'jsonc',
-                'markdown', 'python', 'regex',
-                'yaml', 'bash', 'vim',
+                "rust",
+                "javascript",
+                "c",
+                "lua",
+                "cmake",
+                "cpp",
+                "json",
+                "jsonc",
+                "markdown",
+                "python",
+                "regex",
+                "yaml",
+                "bash",
+                "vim",
             }
 
-            require('nvim-treesitter').install(ensure_installed):wait(30000)
+            require("nvim-treesitter").install(ensure_installed):wait(30000)
 
             -- enable highlight
-            vim.api.nvim_create_autocmd('FileType', {
-                pattern = { '<filetype>' },
-                callback = function() vim.treesitter.start() end,
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = { "<filetype>" },
+                callback = function()
+                    vim.treesitter.start()
+                end,
             })
 
             -- enable folds
-            vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-
-        end
+            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        end,
     },
 
     -- https://github.com/nvim-treesitter/nvim-treesitter-context
     -- nvim-treesitter-context: Lightweight alternative to context.vim
     {
-        'nvim-treesitter/nvim-treesitter-context',
+        "nvim-treesitter/nvim-treesitter-context",
         opts = {
-            enable = true,  -- Enable this plugin (Can be enabled/disabled later via commands)
-            multiwindow = false,    -- Enable multiwindow support.
-            max_lines = 6,  -- How many lines the window should span. Values <= 0 mean no limit.
-            min_window_height = 0,  -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+            enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+            multiwindow = false, -- Enable multiwindow support.
+            max_lines = 6, -- How many lines the window should span. Values <= 0 mean no limit.
+            min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
             line_numbers = true,
-            multiline_threshold = 3,   -- Maximum number of lines to show for a single context
-            trim_scope = 'inner', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-            mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+            multiline_threshold = 3, -- Maximum number of lines to show for a single context
+            trim_scope = "inner", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+            mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
             -- Separator between context and content. Should be a single character string, like '-'.
             -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
             separator = nil,
@@ -106,9 +117,9 @@ return {
     -- https://github.com/MeanderingProgrammer/render-markdown.nvim
     -- render-markdown.nvim: Plugin to improve viewing Markdown files in Neovim
     {
-        'MeanderingProgrammer/render-markdown.nvim',
-        ft = { 'markdown', "codecompanion" },
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = { "markdown", "codecompanion" },
+        dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
         -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
         -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
         ---@module 'render-markdown'
@@ -120,44 +131,44 @@ return {
     -- https://github.com/akinsho/toggleterm.nvim
     -- toggleterm.nvim: A neovim plugin to persist and toggle multiple terminals during an editing session
     {
-        'akinsho/toggleterm.nvim',
+        "akinsho/toggleterm.nvim",
         event = event_presets.start_edit,
         version = "*",
-        opts = {}
+        opts = {},
     },
 
     -- https://github.com/nvim-lua/plenary.nvim
     -- plenary.nvim: All the lua functions I don't want to write twice.
     {
-        'nvim-lua/plenary.nvim',
+        "nvim-lua/plenary.nvim",
         opt = {},
     },
 
     -- https://github.com/nvim-telescope/telescope.nvim
     -- telescope.nvim: Gaze deeply into unknown regions using the power of the moon.
     {
-        'nvim-telescope/telescope.nvim',
+        "nvim-telescope/telescope.nvim",
         -- branch = '0.1.x',
-        dependencies = { 'nvim-lua/plenary.nvim' },
-        event = 'VeryLazy',
-        config = function ()
-            require('config.telescope')
-        end
+        dependencies = { "nvim-lua/plenary.nvim" },
+        event = "VeryLazy",
+        config = function()
+            require("config.telescope")
+        end,
     },
 
     -- https://github.com/kevinhwang91/nvim-ufo
     -- nvim-ufo: The goal of nvim-ufo is to make Neovim's fold look modern and keep high performance.
     {
-        'kevinhwang91/nvim-ufo',
-        event = 'VeryLazy',
+        "kevinhwang91/nvim-ufo",
+        event = "VeryLazy",
         -- event = { 'BufReadPost', 'BufNewFile' }, -- Don't Lazy load to enable specific autocommands
-        dependencies = { 'kevinhwang91/promise-async' },
+        dependencies = { "kevinhwang91/promise-async" },
         config = function()
-            require('config.ufo')
-        end
+            require("config.ufo")
+        end,
     },
 
---[[
+    --[[
     -- https://github.com/rcarriga/nvim-notify
     -- nvim-notify: A fancy, configurable, notification manager for NeoVim
     -- DISABLED for messages truncated when `max_width` set.
@@ -201,7 +212,7 @@ return {
                     char = "│",
                     underline = false, -- underline the start of the scope
                     only_current = false, -- only show scope in the current window
-                    hl = {  ---@type string|string[] hl group for scopes
+                    hl = { ---@type string|string[] hl group for scopes
                         "RainbowRed",
                         "RainbowYellow",
                         "RainbowBlue",
@@ -209,7 +220,7 @@ return {
                         "RainbowGreen",
                         "RainbowViolet",
                         "RainbowCyan",
-                    }
+                    },
                 },
             },
             input = { enabled = true },
@@ -217,10 +228,10 @@ return {
             notifier = { enabled = true },
             quickfile = { enabled = true },
             scope = { enabled = true },
-            scroll = {  -- NOT good for using keyboard
+            scroll = { -- NOT good for using keyboard
                 enabled = false,
             },
-            statuscolumn = {    -- override by nvim-ufo
+            statuscolumn = { -- override by nvim-ufo
                 enabled = true,
                 left = { "mark", "sign" },
                 right = { "fold", "git" },
@@ -260,47 +271,294 @@ return {
         keys = {
             -- picker overwrite windows for winfixbuf is set!!!!!!
             -- May solve: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
-            { "<leader>gf", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
-            { "<leader>m", function() Snacks.picker.buffers() end, desc = "Buffers" },
-            { "<leader>gn", function() Snacks.picker.notifications() end, desc = "Notification History" },
-            { "<leader>g:", function() Snacks.picker.command_history() end, desc = "Command History" },
-            { "<leader>g/", function() Snacks.picker.grep() end, desc = "Grep" },
-            { "<leader>ge", function() Snacks.explorer() end, desc = "File Explorer" },
-            { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
-            { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
-            { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
-            { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
-            { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
-            { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
-            { "<leader>go", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
-            { "gx", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
-            { "gX", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
-            { "gR", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
-            { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
-            { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
-            { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
-            { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
-            { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
-            { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
-            { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
-            { "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
-            { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
-            { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
-            { "<leader>sj", function() Snacks.picker.jumps() end, desc = "Jumps" },
-            { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
-            { "<leader>sl", function() Snacks.picker.loclist() end, desc = "Location List" },
-            { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
-            { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
-            { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
-            { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
-            { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
-            { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
-            { "<leader>fB", function() Snacks.picker.buffers() end, desc = "Buffers" },
-            { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
-            { "<leader>fF", function() Snacks.picker.files() end, desc = "Find Files" },
-            { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
-            { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
-            { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
+            {
+                "<leader>gf",
+                function()
+                    Snacks.picker.smart()
+                end,
+                desc = "Smart Find Files",
+            },
+            {
+                "<leader>m",
+                function()
+                    Snacks.picker.buffers()
+                end,
+                desc = "Buffers",
+            },
+            {
+                "<leader>gn",
+                function()
+                    Snacks.picker.notifications()
+                end,
+                desc = "Notification History",
+            },
+            {
+                "<leader>g:",
+                function()
+                    Snacks.picker.command_history()
+                end,
+                desc = "Command History",
+            },
+            {
+                "<leader>g/",
+                function()
+                    Snacks.picker.grep()
+                end,
+                desc = "Grep",
+            },
+            {
+                "<leader>ge",
+                function()
+                    Snacks.explorer()
+                end,
+                desc = "File Explorer",
+            },
+            {
+                "<leader>gb",
+                function()
+                    Snacks.picker.git_branches()
+                end,
+                desc = "Git Branches",
+            },
+            {
+                "<leader>gl",
+                function()
+                    Snacks.picker.git_log()
+                end,
+                desc = "Git Log",
+            },
+            {
+                "<leader>gL",
+                function()
+                    Snacks.picker.git_log_line()
+                end,
+                desc = "Git Log Line",
+            },
+            {
+                "<leader>gs",
+                function()
+                    Snacks.picker.git_status()
+                end,
+                desc = "Git Status",
+            },
+            {
+                "<leader>gS",
+                function()
+                    Snacks.picker.git_stash()
+                end,
+                desc = "Git Stash",
+            },
+            {
+                "<leader>gd",
+                function()
+                    Snacks.picker.git_diff()
+                end,
+                desc = "Git Diff (Hunks)",
+            },
+            {
+                "<leader>go",
+                function()
+                    Snacks.picker.git_log_file()
+                end,
+                desc = "Git Log File",
+            },
+            {
+                "gx",
+                function()
+                    Snacks.picker.lsp_definitions()
+                end,
+                desc = "Goto Definition",
+            },
+            {
+                "gX",
+                function()
+                    Snacks.picker.lsp_declarations()
+                end,
+                desc = "Goto Declaration",
+            },
+            {
+                "gR",
+                function()
+                    Snacks.picker.lsp_references()
+                end,
+                nowait = true,
+                desc = "References",
+            },
+            {
+                "gI",
+                function()
+                    Snacks.picker.lsp_implementations()
+                end,
+                desc = "Goto Implementation",
+            },
+            {
+                "gy",
+                function()
+                    Snacks.picker.lsp_type_definitions()
+                end,
+                desc = "Goto T[y]pe Definition",
+            },
+            {
+                '<leader>s"',
+                function()
+                    Snacks.picker.registers()
+                end,
+                desc = "Registers",
+            },
+            {
+                "<leader>s/",
+                function()
+                    Snacks.picker.search_history()
+                end,
+                desc = "Search History",
+            },
+            {
+                "<leader>sa",
+                function()
+                    Snacks.picker.autocmds()
+                end,
+                desc = "Autocmds",
+            },
+            {
+                "<leader>sC",
+                function()
+                    Snacks.picker.commands()
+                end,
+                desc = "Commands",
+            },
+            {
+                "<leader>sd",
+                function()
+                    Snacks.picker.diagnostics()
+                end,
+                desc = "Diagnostics",
+            },
+            {
+                "<leader>sD",
+                function()
+                    Snacks.picker.diagnostics_buffer()
+                end,
+                desc = "Buffer Diagnostics",
+            },
+            {
+                "<leader>sh",
+                function()
+                    Snacks.picker.help()
+                end,
+                desc = "Help Pages",
+            },
+            {
+                "<leader>sH",
+                function()
+                    Snacks.picker.highlights()
+                end,
+                desc = "Highlights",
+            },
+            {
+                "<leader>sj",
+                function()
+                    Snacks.picker.jumps()
+                end,
+                desc = "Jumps",
+            },
+            {
+                "<leader>sk",
+                function()
+                    Snacks.picker.keymaps()
+                end,
+                desc = "Keymaps",
+            },
+            {
+                "<leader>sl",
+                function()
+                    Snacks.picker.loclist()
+                end,
+                desc = "Location List",
+            },
+            {
+                "<leader>sq",
+                function()
+                    Snacks.picker.qflist()
+                end,
+                desc = "Quickfix List",
+            },
+            {
+                "<leader>sR",
+                function()
+                    Snacks.picker.resume()
+                end,
+                desc = "Resume",
+            },
+            {
+                "<leader>su",
+                function()
+                    Snacks.picker.undo()
+                end,
+                desc = "Undo History",
+            },
+            {
+                "<leader>ss",
+                function()
+                    Snacks.picker.lsp_symbols()
+                end,
+                desc = "LSP Symbols",
+            },
+            {
+                "<leader>sS",
+                function()
+                    Snacks.picker.lsp_workspace_symbols()
+                end,
+                desc = "LSP Workspace Symbols",
+            },
+            {
+                "<leader>sb",
+                function()
+                    Snacks.picker.lines()
+                end,
+                desc = "Buffer Lines",
+            },
+            {
+                "<leader>fB",
+                function()
+                    Snacks.picker.buffers()
+                end,
+                desc = "Buffers",
+            },
+            {
+                "<leader>fc",
+                function()
+                    Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+                end,
+                desc = "Find Config File",
+            },
+            {
+                "<leader>fF",
+                function()
+                    Snacks.picker.files()
+                end,
+                desc = "Find Files",
+            },
+            {
+                "<leader>fg",
+                function()
+                    Snacks.picker.git_files()
+                end,
+                desc = "Find Git Files",
+            },
+            {
+                "<leader>fp",
+                function()
+                    Snacks.picker.projects()
+                end,
+                desc = "Projects",
+            },
+            {
+                "<leader>fr",
+                function()
+                    Snacks.picker.recent()
+                end,
+                desc = "Recent",
+            },
         },
         picker = {
             jump = {
@@ -316,10 +574,10 @@ return {
     -- https://github.com/lewis6991/gitsigns.nvim
     -- gitsigns.nvim: Deep buffer integration for Git
     {
-        'lewis6991/gitsigns.nvim',
+        "lewis6991/gitsigns.nvim",
         event = event_presets.start_edit,
         opts = {
-            sign_priority=100,
+            sign_priority = 100,
             signs = {
                 add = { text = "▎" },
                 change = { text = "▎" },
@@ -336,7 +594,7 @@ return {
                 changedelete = { text = "▎" },
             },
             on_attach = function(bufnr)
-                local gitsigns = require('gitsigns')
+                local gitsigns = require("gitsigns")
 
                 local function map(mode, l, r, opts)
                     opts = opts or {}
@@ -346,76 +604,76 @@ return {
                 end
 
                 -- Navigation
-                map('n', ']c', function()
+                map("n", "]c", function()
                     if vim.wo.diff then
-                        vim.cmd.normal({']c', bang = true})
+                        vim.cmd.normal({ "]c", bang = true })
                     else
-                        gitsigns.nav_hunk('next')
+                        gitsigns.nav_hunk("next")
                     end
                 end)
 
-                map('n', '[c', function()
+                map("n", "[c", function()
                     if vim.wo.diff then
-                        vim.cmd.normal({'[c', bang = true})
+                        vim.cmd.normal({ "[c", bang = true })
                     else
-                        gitsigns.nav_hunk('prev')
+                        gitsigns.nav_hunk("prev")
                     end
                 end)
 
                 -- Actions
-                map('n', '<leader>hs', gitsigns.stage_hunk, { desc = "Git stage current hunk" })
-                map('n', '<leader>hr', gitsigns.reset_hunk, { desc = "Git recover from staged hunk" })
+                map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Git stage current hunk" })
+                map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Git recover from staged hunk" })
 
-                map('v', '<leader>hs', function()
-                    gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }, { desc = "Git stage selected line" })
+                map("v", "<leader>hs", function()
+                    gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }, { desc = "Git stage selected line" })
                 end)
 
-                map('v', '<leader>hr', function()
-                    gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }, { desc = "Git recover selected line from staged" })
+                map("v", "<leader>hr", function()
+                    gitsigns.reset_hunk(
+                        { vim.fn.line("."), vim.fn.line("v") },
+                        { desc = "Git recover selected line from staged" }
+                    )
                 end)
 
-                map('n', '<leader>hS', gitsigns.stage_buffer, { desc = "Git stage current file" })
-                map('n', '<leader>hR', gitsigns.reset_buffer, { desc = "Git recover from staged file" })
-                map('n', '<leader>hp', gitsigns.preview_hunk, { desc = "Git preview current hunk (float window)" })
-                map('n', '<leader>hi', gitsigns.preview_hunk_inline, { desc = "Git preview current hunk (inline)" })
+                map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Git stage current file" })
+                map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Git recover from staged file" })
+                map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "Git preview current hunk (float window)" })
+                map("n", "<leader>hi", gitsigns.preview_hunk_inline, { desc = "Git preview current hunk (inline)" })
 
-                map('n', '<leader>hb', function()
+                map("n", "<leader>hb", function()
                     gitsigns.blame_line({ full = true })
-                end,
-                { desc = "Git show blame of current line" })
+                end, { desc = "Git show blame of current line" })
 
-                map('n', '<leader>hd', gitsigns.diffthis, { desc = "Git show diff from staged" })
+                map("n", "<leader>hd", gitsigns.diffthis, { desc = "Git show diff from staged" })
 
-                map('n', '<leader>hD', function()
-                    gitsigns.diffthis('~')
-                end,
-                { desc = "Git show diff from committed" })
+                map("n", "<leader>hD", function()
+                    gitsigns.diffthis("~")
+                end, { desc = "Git show diff from committed" })
 
-                map('n', '<leader>hQ', function() gitsigns.setqflist('all') end, { desc = "Show unstaged hunk list (all)" })
-                map('n', '<leader>hq', gitsigns.setqflist, { desc = "Show unstaged hunk list (current file)" })
+                map("n", "<leader>hQ", function()
+                    gitsigns.setqflist("all")
+                end, { desc = "Show unstaged hunk list (all)" })
+                map("n", "<leader>hq", gitsigns.setqflist, { desc = "Show unstaged hunk list (current file)" })
 
                 -- Toggles
-                map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = "Toggle inline blame" })
-                map('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = "Toggle highlight of changes (git)" })
+                map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle inline blame" })
+                map("n", "<leader>tw", gitsigns.toggle_word_diff, { desc = "Toggle highlight of changes (git)" })
 
                 -- Text object
-                map({'o', 'x'}, 'ih', gitsigns.select_hunk, { desc = "Select hunk" })
-
-            end
-        }
-
+                map({ "o", "x" }, "ih", gitsigns.select_hunk, { desc = "Select hunk" })
+            end,
+        },
     },
-
 
     -- https://github.com/stevearc/overseer.nvim
     -- overseer.nvim: A task runner and job management plugin for Neovim
     {
-        'stevearc/overseer.nvim',
-        config = function ()
+        "stevearc/overseer.nvim",
+        config = function()
             local opts = {
                 strategy = "toggleterm",
             }
-            require('overseer').setup(opts)
+            require("overseer").setup(opts)
             vim.api.nvim_create_user_command("OverseerRestartLast", function()
                 local overseer = require("overseer")
                 local tasks = overseer.list_tasks({ recent_first = true })
@@ -426,29 +684,18 @@ return {
                 end
             end, {})
 
-            vim.keymap.set(
-                'n',
-                '<Leader>or',
-                '<Cmd>OverseerRun<CR>',
-                { noremap = true, desc = "Overseer run" }
-            )
+            vim.keymap.set("n", "<Leader>or", "<Cmd>OverseerRun<CR>", { noremap = true, desc = "Overseer run" })
+
+            vim.keymap.set("n", "<Leader>oc", "<Cmd>OverseerRunCmd<CR>", { noremap = true, desc = "Overseer run cmd" })
 
             vim.keymap.set(
-                'n',
-                '<Leader>oc',
-                '<Cmd>OverseerRunCmd<CR>',
-                { noremap = true, desc = "Overseer run cmd" }
-            )
-
-            vim.keymap.set(
-                'n',
-                '<Leader>ot',
-                '<Cmd>OverseerToggle<CR>',
+                "n",
+                "<Leader>ot",
+                "<Cmd>OverseerToggle<CR>",
                 { noremap = true, desc = "Overseer toggle task list" }
             )
         end,
         event = event_presets.start_edit,
-        version = '*',
+        version = "*",
     },
-
 }

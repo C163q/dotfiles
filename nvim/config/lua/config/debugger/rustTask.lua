@@ -1,4 +1,4 @@
-local dap = require('dap')
+local dap = require("dap")
 dap.configurations.rust = {
     {
         name = "Launch file (codelldb)",
@@ -49,7 +49,7 @@ dap.configurations.rust = {
             vim.notify("DAP launching: " .. exec_path, vim.log.levels.INFO)
             return exec_path
         end,
-        cwd = '${workspaceFolder}',
+        cwd = "${workspaceFolder}",
         stopAtEntry = true,
     },
 }

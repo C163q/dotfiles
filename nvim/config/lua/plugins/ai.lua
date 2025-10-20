@@ -1,4 +1,4 @@
-local event_presets = require('core.config').event_presets
+local event_presets = require("core.config").event_presets
 
 return {
     -- https://github.com/copilotlsp-nvim/copilot-lsp
@@ -6,7 +6,7 @@ return {
     {
         "copilotlsp-nvim/copilot-lsp",
         event = event_presets.load_ai,
-        config = function ()
+        config = function()
             vim.g.copilot_nes_debounce = 500
             vim.lsp.enable("copilot_ls")
             vim.keymap.set("n", "<Tab>", function()
@@ -26,16 +26,16 @@ return {
                     return "<C-i>"
                 end
             end, { desc = "Accept Copilot NES suggestion", expr = true })
-        end
+        end,
     },
 
     -- https://github.com/zbirenbaum/copilot.lua
     -- copilot.lua: This plugin is the pure lua replacement for github/copilot.vim.
     {
-    	"zbirenbaum/copilot.lua",
-        dependencies = { "copilotlsp-nvim/copilot-lsp" },   -- (optional) for NES functionality
+        "zbirenbaum/copilot.lua",
+        dependencies = { "copilotlsp-nvim/copilot-lsp" }, -- (optional) for NES functionality
         event = event_presets.load_ai,
-        config = function ()
+        config = function()
             require("copilot").setup({
                 suggestion = { enabled = false },
                 panel = { enabled = false },
@@ -43,9 +43,11 @@ return {
                     markdown = false,
                     help = false,
                 },
-                disable_limit_reached_message = true,  -- Set to `true` to suppress completion limit reached popup
+                disable_limit_reached_message = true, -- Set to `true` to suppress completion limit reached popup
             })
-        end
+            vim.keymap.set("n", "<Leader>ad", "<Cmd>Copilot disable<CR>", { desc = "Disable Copilot", noremap = true })
+            vim.keymap.set("n", "<Leader>ae", "<Cmd>Copilot enable<CR>", { desc = "Enable Copilot", noremap = true })
+        end,
     },
 
     -- https://github.com/fang2hou/blink-copilot
@@ -54,13 +56,13 @@ return {
         "fang2hou/blink-copilot",
         dependencies = { "zbirenbaum/copilot.lua" },
         event = event_presets.load_ai,
-        config = {}
+        config = {},
     },
 
     -- https://github.com/AndreM222/copilot-lualine
     -- copilot-lualine: Component for lualine with the purpose of recieving and previewing status of copilot.lua
     {
-        'AndreM222/copilot-lualine',
+        "AndreM222/copilot-lualine",
         dependencies = {
             "nvim-lualine/lualine.nvim",
         },
@@ -76,10 +78,10 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-        build = "bundled_build.lua",    -- Bundles `mcp-hub` binary along with the neovim plugin
+        build = "bundled_build.lua", -- Bundles `mcp-hub` binary along with the neovim plugin
         config = function()
             require("mcphub").setup({
-                use_bundled_binary = true   -- Use local `mcp-hub` binary
+                use_bundled_binary = true, -- Use local `mcp-hub` binary
             })
         end,
         event = event_presets.start_edit,
@@ -96,7 +98,7 @@ return {
             "ravitemer/mcphub.nvim",
             "ravitemer/codecompanion-history.nvim",
         },
-        config = function ()
+        config = function()
             require("codecompanion").setup({
                 extensions = {
                     mcphub = {
@@ -104,16 +106,16 @@ return {
                         opts = {
                             make_vars = true,
                             make_slash_commands = true,
-                            show_result_in_chat = true
-                        }
+                            show_result_in_chat = true,
+                        },
                     },
                     history = {
                         enabled = true,
                         opts = {
-                            keymap = "gh",  -- Keymap to open history from chat buffer (default: gh)
+                            keymap = "gh", -- Keymap to open history from chat buffer (default: gh)
                             save_chat_keymap = "sc", -- Keymap to save the current chat manually
                             auto_save = false, -- Save all chats by default
-                            expiration_days = 0,    -- Number of days after which chats are automatically deleted (0 to disable)
+                            expiration_days = 0, -- Number of days after which chats are automatically deleted (0 to disable)
                             picker = "snacks", --- ("telescope", "snacks", "fzf-lua", or "default")
                             picker_keymaps = {
                                 rename = { n = "r", i = "<M-r>" },
@@ -129,8 +131,8 @@ return {
                                 -- Keymap to browse summaries (default: "gbs")
                                 browse_summaries_keymap = "gbs",
                             },
-                        }
-                    }
+                        },
+                    },
                 },
                 display = {
                     action_palette = {
@@ -227,7 +229,7 @@ return {
                             prompt_decorator = function(message, adapter, context)
                                 return string.format([[<prompt>%s</prompt>]], message)
                             end,
-                        }
+                        },
                     },
                     inline = {
                         keymaps = {
@@ -242,7 +244,7 @@ return {
                             },
                         },
                     },
-                }
+                },
             })
             require("config.ai.codecompanion")
         end,
@@ -262,7 +264,6 @@ return {
         event = event_presets.load_ai,
     },
 
-
     -- https://github.com/ravitemer/codecompanion-history.nvim
     -- CodeCompanion History Extension: A history management extension for codecompanion.nvim that
     -- enables saving, browsing and restoring chat sessions.
@@ -275,4 +276,3 @@ return {
         event = event_presets.load_ai,
     },
 }
-

@@ -1,4 +1,4 @@
-local event_presets = require('core.config').event_presets
+local event_presets = require("core.config").event_presets
 
 -- Highlight color
 return {
@@ -6,36 +6,37 @@ return {
     -- https://github.com/numToStr/Comment.nvim
     -- // Comment.nvim: Smart and Powerful commenting plugin for neovim
     {
-        'numToStr/Comment.nvim',
+        "numToStr/Comment.nvim",
         event = event_presets.start_edit,
         opts = {
             -- add any options here
-        }
+        },
     },
 
     -- https://github.com/windwp/nvim-autopairs
     -- nvim-autopairs: A super powerful autopair plugin for Neovim that supports multiple characters.
     {
-        'windwp/nvim-autopairs',
+        "windwp/nvim-autopairs",
         event = event_presets.start_insert,
-        config = function ()
-            require('config.complement.autopairs')
-        end
+        config = function()
+            require("config.complement.autopairs")
+        end,
     },
 
     -- https://github.com/nvim-tree/nvim-web-devicons
     -- Nvim-web-devicons: Provides Nerd Font icons (glyphs) for use by Neovim plugins
     {
-        "nvim-tree/nvim-web-devicons", opts = {}
+        "nvim-tree/nvim-web-devicons",
+        opts = {},
     },
 
     -- https://github.com/echasnovski/mini.nvim
     -- Library of 40+ independent Lua modules improving overall Neovim (version 0.9 and higher) experience with minimal effort.
     -- They all share same configuration approaches and general design principles.
     {
-        'echasnovski/mini.nvim',
+        "echasnovski/mini.nvim",
         event = "VeryLazy",
-        version = '*',
+        version = "*",
     },
 
     --[[
@@ -74,7 +75,7 @@ return {
     -- https://github.com/stevearc/conform.nvim
     -- conform.nvim: Lightweight yet powerful formatter plugin for Neovim
     {
-        'stevearc/conform.nvim',
+        "stevearc/conform.nvim",
         opts = {
             formatters_by_ft = {
                 -- You can customize some of the format options for the filetype (:help conform.format)
@@ -86,17 +87,17 @@ return {
             },
         },
         event = event_presets.start_edit,
-        version = '*',
+        version = "*",
     },
 
     -- https://github.com/zapling/mason-conform.nvim
     -- mason-conform.nvim: Automatically install formatters registered with conform.nvim via Mason.
     {
-        'zapling/mason-conform.nvim',
+        "zapling/mason-conform.nvim",
         event = event_presets.start_edit,
         dependencies = {
             "mason-org/mason.nvim",
             "stevearc/conform.nvim",
         },
-    }
+    },
 }

@@ -1,4 +1,3 @@
-
 -- On Neovim 0.11+ with vim.lsp.config, you may skip configuring LSP Capabilities.
 
 require("luasnip.loaders.from_vscode").lazy_load()
@@ -9,31 +8,31 @@ require("luasnip.loaders.from_vscode").lazy_load()
 --
 -- NOTE: solved because of blink.cmp config
 --[[
-vim.api.nvim_create_autocmd('ModeChanged', {
-    pattern = '*',
+vim.api.nvim_create_autocmd("ModeChanged", {
+    pattern = "*",
     callback = function()
-        if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n')
-            or (vim.v.event.old_mode == 'i' and vim.v.event.new_mode == 'n'))
-            and require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
-            and not require('luasnip').session.jump_active
+        if
+            (
+                (vim.v.event.old_mode == "s" and vim.v.event.new_mode == "n")
+                or (vim.v.event.old_mode == "i" and vim.v.event.new_mode == "n")
+            )
+            and require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+            and not require("luasnip").session.jump_active
         then
-            require('luasnip').unlink_current()
+            require("luasnip").unlink_current()
         end
-    end
+    end,
 })
 --]]
 
-vim.keymap.set('n', '<Leader>z', function ()
-    if require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
-    then
-        require('luasnip').unlink_current()
+vim.keymap.set("n", "<Leader>z", function()
+    if require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] then
+        require("luasnip").unlink_current()
     end
 end, { noremap = true, desc = "clear snippet jump" })
 
-vim.keymap.set({ 'i', 'n' }, '<C-Tab>', function ()
-    if require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
-    then
-        require('luasnip').unlink_current()
+vim.keymap.set({ "i", "n" }, "<C-Tab>", function()
+    if require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] then
+        require("luasnip").unlink_current()
     end
 end)
-

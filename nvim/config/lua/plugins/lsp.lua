@@ -4,21 +4,21 @@ return {
     --   Easily install and manage LSP servers, DAP servers, linters, and formatters.
     {
         "mason-org/mason.nvim",
-        event = 'VeryLazy',
+        event = "VeryLazy",
         dependencies = {
             -- Install or upgrade all of your third-party tools.
             -- Link: https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
-            'WhoIsSethDaniel/mason-tool-installer.nvim',
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
         },
         opts = {
             ui = {
                 icons = {
                     package_installed = "✓",
                     package_pending = "➜",
-                    package_uninstalled = "✗"
-                }
-            }
-        }
+                    package_uninstalled = "✗",
+                },
+            },
+        },
     },
 
     -- https://github.com/neovim/nvim-lspconfig
@@ -32,18 +32,18 @@ return {
     -- mason-lspconfig bridges mason.nvim with the lspconfig plugin - making it easier to use both plugins together.
     {
         "mason-org/mason-lspconfig.nvim",
-        event = 'VeryLazy',
+        event = "VeryLazy",
         opts = {
             ensure_installed = {
-                'basedpyright',
-                'bashls',
-                'clangd',
-                'jdtls',
-                'jsonls',
-                'lua_ls',
-                'vtsls',
-                'asm_lsp',
-                'neocmake',
+                "basedpyright",
+                "bashls",
+                "clangd",
+                "jdtls",
+                "jsonls",
+                "lua_ls",
+                "vtsls",
+                "asm_lsp",
+                "neocmake",
             },
         },
         dependencies = {
@@ -93,5 +93,4 @@ return {
             },
         },
     },
-
 }

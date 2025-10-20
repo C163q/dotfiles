@@ -21,7 +21,7 @@ opt.mouse:append("a")
 
 -- 系统剪贴板
 opt.clipboard:append("unnamedplus")
-vim.g.clipboard="win32yank"
+vim.g.clipboard = "win32yank"
 
 -- 默认新窗口右和下
 opt.splitright = true
@@ -31,13 +31,11 @@ opt.splitbelow = true
 opt.termguicolors = true
 opt.signcolumn = "yes"
 vim.o.winborder = "rounded"
-opt.fillchars='foldopen:󰍝,foldclose:󰍟,foldsep:│'
+opt.fillchars = "foldopen:󰍝,foldclose:󰍟,foldsep:│"
 
-local custom_config = require('core.config')
-if custom_config.relativeLineNumber then
+local custom_config = require("core.config")
+if custom_config.relative_line_number then
     opt.relativenumber = true
 end
 
 opt.statuscolumn = [[%!v:lua.require'core.modify.snacks-statuscolumn'.get()]]
-
-

@@ -1,3 +1,4 @@
+-- stylua: ignore start
 require('core.preload')
 require('core.keymap')
 require('config.lazy')
@@ -6,6 +7,7 @@ require('config.config_init')
 require('core.lsp_enable')
 require('core.user_command')
 require('core.lsp_highlight')
+-- stylua: ignore end
 
 ---@requirement:
 -- curl
@@ -61,4 +63,3 @@ require('core.lsp_highlight')
 --     | path: $HOME/Documents/dict/ultimate.db
 -- festival festvox-kallpc16k (Optional for auto_play of Trans.nvim)
 -- translate-shell (https://github.com/soimort/translate-shell)
-

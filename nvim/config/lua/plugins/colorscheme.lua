@@ -1,4 +1,3 @@
-
 return {
     --[[
     -- https://github.com/olimorris/onedarkpro.nvim
@@ -24,7 +23,7 @@ return {
                     transparent = false, -- enable transparent floating windows
                     solid = false, -- use solid styling for floating windows, see |winborder|
                 },
-                custom_highlights = function ()
+                custom_highlights = function()
                     return {
                         RainbowRed = { fg = "#D66F77" },
                         RainbowYellow = { fg = "#D5C356" },
@@ -36,7 +35,7 @@ return {
                     }
                 end,
                 flavour = "mocha",
-                styles = {  -- Handles the styles of general hi groups (see `:h highlight-args`):
+                styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
                     -- Change the style of comments
                 },
                 -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead.
@@ -44,7 +43,7 @@ return {
                 hide_inactive_statusline = true,
                 integrations = {
                     blink_cmp = {
-                        style = 'bordered',
+                        style = "bordered",
                     },
                     -- gitsigns = true,
                     -- nvimtree = true,
@@ -103,9 +102,11 @@ return {
                                 fg = colors.text,
                             },
                             Classes = {
+                                ---@diagnostic disable-next-line
                                 fg = colors.darkgreen,
                             },
                             Enums = {
+                                ---@diagnostic disable-next-line
                                 fg = colors.darkgreen,
                             },
                             EscapeSequences = {
@@ -115,22 +116,21 @@ return {
                                 fg = colors.rosewater,
                             },
                             Macros = {
-                                fg = colors.pink
+                                fg = colors.pink,
                             },
                             Keyword = {
                                 fg = colors.mauve,
-                            }
+                            },
                         }
-                    end
+                    end,
                 },
                 color_overrides = {
                     mocha = {
                         text = "#e4eff4",
                     },
-                }
+                },
             })
-            vim.cmd.colorscheme "catppuccin-mocha"
-        end
+            vim.cmd.colorscheme("catppuccin-mocha")
+        end,
     },
 }
-

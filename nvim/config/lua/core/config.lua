@@ -1,14 +1,22 @@
-
 return {
-    basedpyrightTypeCheck = false,
-    relativeLineNumber = true,
+    -- LSP Settings
+    basedpyright_disable_annotation_missing_check = true,
+    basedpyright_unused_warning = true,
+    basedpyright_deprecated_warning = true,
+    basedpyright_allow_unused_return = true,
+
+    -- Basic Settings
+    relative_line_number = true,
     mapleader = " ",
-    mapleaderCompat = {
+    mapleader_compat = {
         enable = true,
         value = ",",
     },
-    homePath = "/home/c163q/",
 
+    -- Environment Settings
+    home_path = os.getenv("HOME"),
+
+    -- Presets
     event_presets = {
         start_edit = { "BufReadPost", "BufNewFile", "BufWritePre" },
         start_insert = { "InsertEnter" },
@@ -16,10 +24,10 @@ return {
     },
     icon = {
         diagnostics = {
-            warn = '',
-            error = '',
-            info = '',
-            hint = '󰌶',
+            warn = "",
+            error = "",
+            info = "",
+            hint = "󰌶",
         },
         git_status = {
             added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
@@ -36,25 +44,24 @@ return {
         bufferline = {
             error = " ",
             warn = " ",
-            info = " "
+            info = " ",
         },
         keys = {
-            Up = '↑ ',
-            Down = '↓ ',
-            Left = '← ',
-            Right = '→ ',
-            C = '󰘴 ',
-            M = '󰘳 ',
-            S = '󰘶 ',
-            CR = '󰌑 ',
-            Esc = '󱊷 ',
-            ScrollWheelDown = '󱕐 ',
-            ScrollWheelUp = '󱕑 ',
-            NL = '󰼧',
-            BS = '󰌍 ',
-            Space = '󱁐 ',
-            Tab = '󰌒 ',
-        }
-    }
+            Up = "↑ ",
+            Down = "↓ ",
+            Left = "← ",
+            Right = "→ ",
+            C = "󰘴 ",
+            M = "󰘳 ",
+            S = "󰘶 ",
+            CR = "󰌑 ",
+            Esc = "󱊷 ",
+            ScrollWheelDown = "󱕐 ",
+            ScrollWheelUp = "󱕑 ",
+            NL = "󰼧",
+            BS = "󰌍 ",
+            Space = "󱁐 ",
+            Tab = "󰌒 ",
+        },
+    },
 }
-

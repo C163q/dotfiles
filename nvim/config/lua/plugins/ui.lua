@@ -1,28 +1,28 @@
-local event_presets = require('core.config').event_presets
+local event_presets = require("core.config").event_presets
 
 return {
     -- https://github.com/nvim-lualine/lualine.nvim
     -- lualine: A blazing fast and easy to configure Neovim statusline written in Lua.
     {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        "nvim-lualine/lualine.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {
             sections = {
                 lualine_c = {
                     {
-                        'filename',
+                        "filename",
                         file_status = true,
                         newfile_status = true,
                         path = 0,
 
                         shorting_target = 40,
                         symbols = {
-                            modified = '[+]',
-                            readonly = '[-]',
-                            unnamed = '[No Name]',
-                            newfile = '[New]',
-                        }
-                    }
+                            modified = "[+]",
+                            readonly = "[-]",
+                            unnamed = "[No Name]",
+                            newfile = "[New]",
+                        },
+                    },
                 },
                 lualine_x = {
                     { "copilot", show_colors = true, show_loading = true },
@@ -33,9 +33,9 @@ return {
                 lualine_z = { "progress", "location" },
             },
             options = {
-                theme = "catppuccin"
+                theme = "catppuccin",
                 -- ... the rest of your lualine config
-            }
+            },
         },
         event = event_presets.start_edit,
     },
@@ -43,56 +43,56 @@ return {
     -- https://github.com/akinsho/bufferline.nvim
     -- bufferline.nvim: A snazzy buffer line (with tabpage integration) for Neovim built using lua.
     {
-        'akinsho/bufferline.nvim',
+        "akinsho/bufferline.nvim",
         version = "*",
-        dependencies = 'nvim-tree/nvim-web-devicons',
-        event = 'VeryLazy',
-        config = function ()
+        dependencies = "nvim-tree/nvim-web-devicons",
+        event = "VeryLazy",
+        config = function()
             require("bufferline").setup({
                 options = {
                     close_command = "bdelete! %d",
                     hover = {
                         enabled = true,
                         delay = 100,
-                        reveal = {'close'}
+                        reveal = { "close" },
                     },
                     indicator = {
-                        style = 'underline',
-                        icon = "_"
+                        style = "underline",
+                        icon = "_",
                     },
                     pick = {
-                        alphabet = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        alphabet = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
                     },
                     diagnostics = "nvim_lsp",
                     diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                        local bufferline_icon = require('core.config').icon.bufferline
+                        local bufferline_icon = require("core.config").icon.bufferline
                         local s = ""
                         for e, n in pairs(diagnostics_dict) do
                             local sym = e == "error" and bufferline_icon.error
-                            or (e == "warning" and bufferline_icon.warn or bufferline_icon.info)
+                                or (e == "warning" and bufferline_icon.warn or bufferline_icon.info)
                             s = s .. n .. sym
                         end
                         return s
                     end,
                     -- 左侧让出 nvim-tree 的位置
-                    offsets = {{
-                        filetype = "neo-tree",
-                        text = "File Explorer",
-                        highlight = "Directory",
-                        text_align = "center"
-                    }},
+                    offsets = {
+                        {
+                            filetype = "neo-tree",
+                            text = "File Explorer",
+                            highlight = "Directory",
+                            text_align = "center",
+                        },
+                    },
                     custom_filter = function(buf_number, buf_numbers)
                         -- filter out filetypes you don't want to see
-                        if vim.bo[buf_number].filetype ~= "neotree"
-                            and vim.bo[buf_number].buftype ~= "terminal"
-                            then
-                                return true
-                            end
-                            return false
-                        end,
-                    },
-                    highlights = require("catppuccin.special.bufferline").get_theme()
-                })
+                        if vim.bo[buf_number].filetype ~= "neotree" and vim.bo[buf_number].buftype ~= "terminal" then
+                            return true
+                        end
+                        return false
+                    end,
+                },
+                highlights = require("catppuccin.special.bufferline").get_theme(),
+            })
         end,
     },
 
@@ -102,8 +102,8 @@ return {
     {
         "folke/noice.nvim",
         event = "VeryLazy",
-        config = function ()
-            require('noice').setup {
+        config = function()
+            require("noice").setup({
                 -- add any options here
                 --[[
                 lsp = {
@@ -116,19 +116,19 @@ return {
                 },
                 --]]
                 presets = {
-                    bottom_search = false,  -- use a classic bottom cmdline for search
+                    bottom_search = false, -- use a classic bottom cmdline for search
                     command_palette = true, -- position the cmdline and popupmenu together
-                    long_message_to_split = true,   -- long messages will be sent to a split
-                    inc_rename = false,     -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = true,  -- add a border to hover docs and signature help
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = true, -- add a border to hover docs and signature help
                 },
                 messages = {
                     -- NOTE: If you enable messages, then the cmdline is enabled automatically.
                     -- This is a current Neovim limitation.
-                    enabled = true,        -- enables the Noice messages UI
-                    view = "mini",          -- view for messages
-                    view_error = "mini",    -- view for errors
-                    view_warn = "mini",     -- view for warnings
+                    enabled = true, -- enables the Noice messages UI
+                    view = "mini", -- view for messages
+                    view_error = "mini", -- view for errors
+                    view_warn = "mini", -- view for warnings
                     view_history = "messages", -- view for :messages
                     view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
                 },
@@ -146,16 +146,13 @@ return {
                         enabled = false,
                     },
                 },
-            }
+            })
             require("telescope").load_extension("noice")
         end,
         dependencies = {
             -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
             "MunifTanjim/nui.nvim",
             "nvim-treesitter/nvim-treesitter",
-        }
+        },
     },
 }
-
-
-
