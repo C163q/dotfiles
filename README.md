@@ -20,3 +20,10 @@ Personal dotfile repository. Collect all my configs.
     - require `~/.cache/zsh/` to place `.zcompdump` file
     - require `~/.local/share/zsh/` to place `.histfile` file
 
+## Credit
+
+This project incorporates code from the following open-source project:
+
+- [folke/snacks.nvim](https://github.com/folke/snacks.nvim) by [folke](https://github.com/folke) -
+    licensed under [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0). For more information,
+    see [the modified file](./nvim/config/lua/core/modify/snacks-statuscolumn.lua).

@@ -6,37 +6,42 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {
-            sections = {
-                lualine_c = {
-                    {
-                        "filename",
-                        file_status = true,
-                        newfile_status = true,
-                        path = 0,
+        config = function()
+            local indent_size = function()
+                return vim.opt.shiftwidth:get()
+            end
+            require("lualine").setup({
+                sections = {
+                    lualine_c = {
+                        {
+                            "filename",
+                            file_status = true,
+                            newfile_status = true,
+                            path = 0,
 
-                        shorting_target = 40,
-                        symbols = {
-                            modified = "[+]",
-                            readonly = "[-]",
-                            unnamed = "[No Name]",
-                            newfile = "[New]",
+                            shorting_target = 40,
+                            symbols = {
+                                modified = "[+]",
+                                readonly = "[-]",
+                                unnamed = "[No Name]",
+                                newfile = "[New]",
+                            },
                         },
                     },
+                    lualine_x = {
+                        { "copilot", show_colors = true, show_loading = true },
+                        "encoding",
+                        "overseer",
+                    },
+                    lualine_y = { "filetype", indent_size },
+                    lualine_z = { "progress", "location" },
                 },
-                lualine_x = {
-                    { "copilot", show_colors = true, show_loading = true },
-                    "encoding",
-                    "overseer",
+                options = {
+                    theme = "catppuccin",
+                    -- ... the rest of your lualine config
                 },
-                lualine_y = { "filetype" },
-                lualine_z = { "progress", "location" },
-            },
-            options = {
-                theme = "catppuccin",
-                -- ... the rest of your lualine config
-            },
-        },
+            })
+        end,
         event = event_presets.start_edit,
     },
 

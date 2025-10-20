@@ -1,3 +1,14 @@
+--- This file is based on the [folke/snacks.nvim](https://github.com/folke/snacks.nvim)
+--- The original code is licensed under the Apache-2.0 License.
+---
+--- Original source: https://github.com/folke/snacks.nvim/blob/main/lua/snacks/statuscolumn.lua
+---
+--- Modifications made by [C163q/dotfiles](https://github.com/C163q/dotfiles)
+--- - add vertical bars when foldlevel > 0
+--- - show open fold icons and use Git Signs hl by default
+
+
+-- stylua: ignore start
 local Snacks = require("snacks")
 
 ---@class snacks.statuscolumn
