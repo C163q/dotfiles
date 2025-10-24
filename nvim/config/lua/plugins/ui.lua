@@ -87,10 +87,18 @@ return {
                             highlight = "Directory",
                             text_align = "center",
                         },
+                        {
+                            filetype = "codecompanion",
+                            text = "AI Chat",
+                            highlight = "Directory",
+                            text_align = "center",
+                        },
                     },
                     custom_filter = function(buf_number, buf_numbers)
                         -- filter out filetypes you don't want to see
-                        if vim.bo[buf_number].filetype ~= "neotree" and vim.bo[buf_number].buftype ~= "terminal" then
+                        if vim.bo[buf_number].filetype ~= "neotree" and
+                            vim.bo[buf_number].buftype ~= "terminal" and
+                            vim.bo[buf_number].buftype ~= "quickfix" then
                             return true
                         end
                         return false
@@ -98,6 +106,7 @@ return {
                 },
                 highlights = require("catppuccin.special.bufferline").get_theme(),
             })
+            require('config.bufferline')
         end,
     },
 

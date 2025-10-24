@@ -1,7 +1,6 @@
 vim.g.mapleader = require("core.config").mapleader
 
 local mapleader_compat = require("core.config").mapleader_compat
-local api = vim.api
 
 if mapleader_compat.enable then
     vim.keymap.set("", mapleader_compat.value, "<Leader>", {

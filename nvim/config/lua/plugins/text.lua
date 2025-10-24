@@ -76,16 +76,19 @@ return {
     -- conform.nvim: Lightweight yet powerful formatter plugin for Neovim
     {
         "stevearc/conform.nvim",
-        opts = {
-            formatters_by_ft = {
-                -- You can customize some of the format options for the filetype (:help conform.format)
-                lua = { "stylua" },
-                -- Conform will run multiple formatters sequentially
-                python = { "isort", "black" },
-                rust = { "rustfmt", lsp_format = "fallback" },
-                cpp = { "clang-format" },
-            },
-        },
+        config = function()
+            require("conform").setup({
+                formatters_by_ft = {
+                    -- You can customize some of the format options for the filetype (:help conform.format)
+                    lua = { "stylua" },
+                    -- Conform will run multiple formatters sequentially
+                    python = { "isort", "black" },
+                    rust = { "rustfmt", lsp_format = "fallback" },
+                    cpp = { "clang-format" },
+                },
+            })
+            require("config.conform")
+        end,
         event = event_presets.start_edit,
         version = "*",
     },

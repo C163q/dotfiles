@@ -66,8 +66,20 @@ vim.keymap.set("", "<Leader>[", "<Cmd>BufferLineMovePrev<CR>", {
     desc = "BufferLine move prev",
 })
 
+-- BufferLineMovePrev
+vim.keymap.set("", "<C-J>", "<Cmd>BufferLineMovePrev<CR>", {
+    noremap = true,
+    desc = "BufferLine move prev",
+})
+
 -- BufferLineMoveNext
 vim.keymap.set("", "<Leader>]", "<Cmd>BufferLineMoveNext<CR>", {
+    noremap = true,
+    desc = "BufferLine move next",
+})
+
+-- BufferLineMoveNext
+vim.keymap.set("", "<C-K>", "<Cmd>BufferLineMoveNext<CR>", {
     noremap = true,
     desc = "BufferLine move next",
 })

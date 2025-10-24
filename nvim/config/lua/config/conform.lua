@@ -22,3 +22,8 @@ end, { noremap = true, desc = "Format selected line" })
 vim.keymap.set("", "<Leader>fA", function()
     conform.format({ async = true, bufnr = vim.api.nvim_get_current_buf() })
 end, { noremap = true, desc = "Format current file" })
+
+vim.keymap.set("", "<Leader>f=", function()
+    conform.format({ async = false, bufnr = vim.api.nvim_get_current_buf() })
+    vim.cmd("write")
+end, { noremap = true, desc = "Format current file and save" })

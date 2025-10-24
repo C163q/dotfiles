@@ -42,6 +42,7 @@ return {
                     },
                 },
             })
+            require("config.neo-tree")
         end,
         cmd = "Neotree",
     },
@@ -134,7 +135,10 @@ return {
         "akinsho/toggleterm.nvim",
         event = event_presets.start_edit,
         version = "*",
-        opts = {},
+        config = function()
+            require("toggleterm").setup({})
+            require("config.toggleterm")
+        end,
     },
 
     -- https://github.com/nvim-lua/plenary.nvim
@@ -188,86 +192,88 @@ return {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
-        ---@type snacks.Config
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-            bigfile = { enabled = true },
-            dashboard = { enabled = true },
-            explorer = { enabled = true },
-            indent = {
-                enabled = true,
+        config = function()
+            require("snacks").setup({
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+                bigfile = { enabled = true },
+                dashboard = { enabled = true },
+                explorer = { enabled = true },
                 indent = {
-                    priority = 1,
-                    enabled = true, -- enable indent guides
-                    char = "│",
-                    only_scope = false, -- only show indent guides of the scope
-                    only_current = false, -- only show indent guides in the current window
-                    hl = "SnacksIndent", ---@type string|string[] hl groups for indent guides
-                },
-                scope = {
-                    enabled = true, -- enable highlighting the current scope
-                    priority = 200,
-                    char = "│",
-                    underline = false, -- underline the start of the scope
-                    only_current = false, -- only show scope in the current window
-                    hl = { ---@type string|string[] hl group for scopes
-                        "RainbowRed",
-                        "RainbowYellow",
-                        "RainbowBlue",
-                        "RainbowOrange",
-                        "RainbowGreen",
-                        "RainbowViolet",
-                        "RainbowCyan",
+                    enabled = true,
+                    indent = {
+                        priority = 1,
+                        enabled = true, -- enable indent guides
+                        char = "│",
+                        only_scope = false, -- only show indent guides of the scope
+                        only_current = false, -- only show indent guides in the current window
+                        hl = "SnacksIndent", ---@type string|string[] hl groups for indent guides
+                    },
+                    scope = {
+                        enabled = true, -- enable highlighting the current scope
+                        priority = 200,
+                        char = "│",
+                        underline = false, -- underline the start of the scope
+                        only_current = false, -- only show scope in the current window
+                        hl = { ---@type string|string[] hl group for scopes
+                            "RainbowRed",
+                            "RainbowYellow",
+                            "RainbowBlue",
+                            "RainbowOrange",
+                            "RainbowGreen",
+                            "RainbowViolet",
+                            "RainbowCyan",
+                        },
                     },
                 },
-            },
-            input = { enabled = true },
-            picker = { enabled = true },
-            notifier = { enabled = true },
-            quickfile = { enabled = true },
-            scope = { enabled = true },
-            scroll = { -- NOT good for using keyboard
-                enabled = false,
-            },
-            statuscolumn = { -- override by nvim-ufo
-                enabled = true,
-                left = { "mark", "sign" },
-                right = { "fold", "git" },
-                git = {
-                    -- patterns to match Git signs
-                    patterns = { "GitSign", "MiniDiffSign" },
+                input = { enabled = true },
+                picker = { enabled = true },
+                notifier = { enabled = true },
+                quickfile = { enabled = true },
+                scope = { enabled = true },
+                scroll = { -- NOT good for using keyboard
+                    enabled = false,
                 },
-                folds = {
-                    open = true, -- show open fold icons
-                    git_hl = true, -- use Git Signs hl for fold icons
-                },
-            },
-            words = { enabled = true },
-            lazygit = { enable = true },
-            -- Can't use sixel for cost too much time rendering.
-            --[[
-            dashboard = {
-                sections = {
-                    {
-                        section = "terminal",
-                        cmd = "cat ~/custom/neovim/dashboard_ascii_art_1.txt; sleep .1s",
-                        height = 14,
-                        width = 30,
-                        padding = 1,
-                        indent = 20,
+                statuscolumn = { -- override by nvim-ufo
+                    enabled = true,
+                    left = { "mark", "sign" },
+                    right = { "fold", "git" },
+                    git = {
+                        -- patterns to match Git signs
+                        patterns = { "GitSign", "MiniDiffSign" },
                     },
-                    {
-                        pane = 2,
-                        { section = "header" },
-                        { section = "keys", gap = 1, padding = 1 },
-                        { section = "startup" },
+                    folds = {
+                        open = true, -- show open fold icons
+                        git_hl = true, -- use Git Signs hl for fold icons
                     },
                 },
-            }
-            --]]
-        },
+                words = { enabled = true },
+                lazygit = { enable = true },
+                -- Can't use sixel for cost too much time rendering.
+                --[[
+                dashboard = {
+                    sections = {
+                        {
+                            section = "terminal",
+                            cmd = "cat ~/custom/neovim/dashboard_ascii_art_1.txt; sleep .1s",
+                            height = 14,
+                            width = 30,
+                            padding = 1,
+                            indent = 20,
+                        },
+                        {
+                            pane = 2,
+                            { section = "header" },
+                            { section = "keys", gap = 1, padding = 1 },
+                            { section = "startup" },
+                        },
+                    },
+                }
+                --]]
+            })
+            require("config.snacks")
+        end,
         keys = {
             -- picker overwrite windows for winfixbuf is set!!!!!!
             -- May solve: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
