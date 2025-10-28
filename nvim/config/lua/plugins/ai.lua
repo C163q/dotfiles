@@ -35,18 +35,54 @@ return {
         "zbirenbaum/copilot.lua",
         dependencies = { "copilotlsp-nvim/copilot-lsp" }, -- (optional) for NES functionality
         event = event_presets.load_ai,
+        cmd = "Copilot",
         config = function()
+            local enable_nes = require("core.config").enable_copilot_nes
+            local enable_suggestions = require("core.config").enable_copilot_immediate_suggestions
             require("copilot").setup({
-                suggestion = { enabled = false },
+                nes = {
+                    enabled = enable_nes,
+                    keymap = {
+                        accept_and_goto = false,
+                        accept = false,
+                        dismiss = false,
+                    },
+                },
+                suggestion = { enabled = enable_suggestions },
                 panel = { enabled = false },
                 filetypes = {
                     markdown = false,
                     help = false,
+                    text = false,
+                    conf = false,
                 },
                 disable_limit_reached_message = true, -- Set to `true` to suppress completion limit reached popup
             })
             vim.keymap.set("n", "<Leader>ad", "<Cmd>Copilot disable<CR>", { desc = "Disable Copilot", noremap = true })
             vim.keymap.set("n", "<Leader>ae", "<Cmd>Copilot enable<CR>", { desc = "Enable Copilot", noremap = true })
+
+            if enable_nes then
+                local nes_api = require("copilot.nes.api")
+                local function accept_suggestion(goto_end)
+                    local result = nes_api.nes_apply_pending_nes()
+
+                    if goto_end and result then
+                        nes_api.nes_walk_cursor_end_edit()
+                    end
+
+                    return result
+                end
+
+                vim.keymap.set("n", "<Leader>zz", function()
+                    return accept_suggestion(true)
+                end, { desc = "[AI completion] accept suggestion", noremap = true })
+                vim.keymap.set({ "n", "i" }, "<C-p>", function()
+                    return accept_suggestion(true)
+                end, { desc = "[AI completion] accept suggestion", noremap = true })
+                vim.keymap.set("n", "<Leader>zx", function()
+                    return nes_api.nes_clear()
+                end, { desc = "[AI completion] dismiss suggestion", noremap = true })
+            end
         end,
     },
 
@@ -56,7 +92,12 @@ return {
         "fang2hou/blink-copilot",
         dependencies = { "zbirenbaum/copilot.lua" },
         event = event_presets.load_ai,
-        config = {},
+        config = {
+            auto_refresh = {
+                backward = true,
+                forward = true,
+            },
+        },
     },
 
     -- https://github.com/AndreM222/copilot-lualine
@@ -100,6 +141,9 @@ return {
         },
         config = function()
             require("codecompanion").setup({
+                opts = {
+                    language = "Chinese",
+                },
                 extensions = {
                     mcphub = {
                         callback = "mcphub.extensions.codecompanion",

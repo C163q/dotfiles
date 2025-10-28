@@ -13,6 +13,11 @@ return {
         value = ",",
     },
 
+    -- Since it is async, error may occur when the original content is changed.
+    -- I recommend to disable it if you don't need it.
+    enable_copilot_nes = true,
+    enable_copilot_immediate_suggestions = false,
+
     -- Environment Settings
     home_path = os.getenv("HOME"),
 
