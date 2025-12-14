@@ -169,4 +169,13 @@ return {
             "nvim-treesitter/nvim-treesitter",
         },
     },
+
+    -- https://github.com/j-hui/fidget.nvim
+    -- Extensible UI for Neovim notifications and LSP progress messages.
+    {
+        "j-hui/fidget.nvim",
+        opts = {},
+        version = "*",
+        event = event_presets.start_edit,
+    }
 }

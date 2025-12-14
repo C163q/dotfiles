@@ -1,6 +1,6 @@
-# My Configs
+# Dotfiles
 
-Personal dotfile repository. Collect all my configs.
+Personal dotfile repository.
 
 ## Placement
 

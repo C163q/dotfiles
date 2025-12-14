@@ -79,8 +79,10 @@ return {
                 },
             },
             keymap = {
-                ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-                ["<C-g>"] = { "scroll_documentation_up", "fallback" },
+                -- unknown bug that `"scroll_documentation_up"` doesn't work properly,
+                -- but `cmp.scroll_documentation_up(num)` works fine.
+                ["<C-f>"] = { function(cmp) cmp.scroll_documentation_up(5) end, "fallback" },
+                ["<C-g>"] = { function(cmp) cmp.scroll_documentation_down(5) end, "fallback" },
 
                 ["<C-s>"] = { "hide" },
                 ["<C-b>"] = { "show", "show_documentation", "hide_documentation" },
