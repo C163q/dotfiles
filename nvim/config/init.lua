@@ -4,7 +4,7 @@ require('core.keymap')
 require('config.lazy')
 require('core.basic')
 require('config.config_init')
-require('core.lsp_enable')
+require('core.lsp')
 require('core.user_command')
 require('core.lsp_highlight')
 -- stylua: ignore end

@@ -1,3 +1,5 @@
+local lsp_core = require('config.lsp.core')
+
 -- Show line diagnostics automatically in hover window
 vim.o.updatetime = 250
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus=false, focusable = false })]]
@@ -151,6 +153,30 @@ vim.keymap.set("n", "<Leader>lI", function()
         apply = false,
     })
 end, { noremap = true, silent = false, desc = "Quickfix with choice" })
+
+-- LSP dynamic configurations
+-- This will show a selection menu of available LSP configurations
+vim.keymap.set("n", "<Leader>L", function()
+    local selections = lsp_core.get_lsp_selections()
+    if #selections.items == 0 then
+        vim.notify("No LSP configurations available", vim.log.levels.INFO)
+        return
+    end
+    vim.ui.select(selections.items, {
+        prompt = "LSP Configurations:",
+        format_item = function(item)
+            return selections.displays[item]
+        end,
+    }, function(selected)
+        if selected == nil then
+            return
+        end
+        local callback = selections.callbacks[selected]
+        if callback ~= nil then
+            callback()
+        end
+    end)
+end, { noremap = true, desc = "LSP configs" })
 
 local icons_diagnostic = require("core.config").icon.diagnostics
 -- Sets icons and styling for diagnostics

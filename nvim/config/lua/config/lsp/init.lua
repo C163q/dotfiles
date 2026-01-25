@@ -5,6 +5,7 @@
 
 -- The first link tells you how `vim.lsp.config()` and `lsp/` merged.
 local config = require("core.config")
+require('config.lsp.core').setup()
 
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("clangd")
@@ -13,7 +14,9 @@ vim.lsp.enable("basedpyright")
 vim.lsp.enable("asm_lsp")
 vim.lsp.enable("neocmake")
 
-require("config.lsp.lua_ls")
+require("config.lsp.lua_ls").setup()
+require("config.lsp.rust_analyzer").setup()
+
 local basedpyright_settings = require("config.lsp.basedpyright")
 basedpyright_settings.basedpyright_disable_annotation_missing_check(
     config.basedpyright_disable_annotation_missing_check

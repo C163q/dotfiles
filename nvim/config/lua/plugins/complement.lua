@@ -81,6 +81,8 @@ return {
             keymap = {
                 -- unknown bug that `"scroll_documentation_up"` doesn't work properly,
                 -- but `cmp.scroll_documentation_up(num)` works fine.
+                --
+                -- unknown bug that you have to press `<C-g>` twice to scroll down.
                 ["<C-f>"] = { function(cmp) cmp.scroll_documentation_up(5) end, "fallback" },
                 ["<C-g>"] = { function(cmp) cmp.scroll_documentation_down(5) end, "fallback" },
 

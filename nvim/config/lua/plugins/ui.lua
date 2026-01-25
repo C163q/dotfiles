@@ -97,6 +97,7 @@ return {
                     custom_filter = function(buf_number, buf_numbers)
                         -- filter out filetypes you don't want to see
                         if vim.bo[buf_number].filetype ~= "neotree" and
+                            vim.bo[buf_number].filetype ~= "checkhealth" and
                             vim.bo[buf_number].buftype ~= "terminal" and
                             vim.bo[buf_number].buftype ~= "quickfix" then
                             return true
