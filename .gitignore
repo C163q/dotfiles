@@ -2,7 +2,9 @@
 *.old
 *.bak
 
-# Neovim lazy-lock.json file, can be pushed, but not necessary.
+# Neovim lazy-lock.json file, this keeps track of installed plugins and their branches.
+# We don't want to commit it because it changes frequently. And our configs actually
+# record the plugins and their branches.
 nvim/config/lazy-lock.json
 
 # Zsh configs that are related to the specific environment.
@@ -14,5 +16,22 @@ nvim/.exrc
 vim/.vim/.netrwhist
 
 # Vim plugins, should be installed with `:PlugInstall`
-vim/.vim/plugged
+vim/.vim/plugged/
+
+# Yazi flavors and plugins should be managed with official package manager.
+yazi/flavors/
+yazi/plugins/
+
+# `whoosh` can't be managed by official package manager yet.
+# Extra configs are also needed.
+!yazi/plugins/whoosh.yazi/
+
+# We commit the `package.toml` to keep track of installed plugins.
+#
+# However, we **should not** commit it until we actually change flavors or plugins.
+# Because those commits would be useless.
+#
+# This is different from Neovim's lazy-lock.json, because you should install them
+# with package manager manually and no file record the plugins and flavors to install.
+# yazi/package.toml
 

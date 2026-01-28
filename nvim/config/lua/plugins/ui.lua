@@ -39,6 +39,14 @@ return {
                 options = {
                     theme = "catppuccin",
                     -- ... the rest of your lualine config
+                    disabled_filetypes = {  -- Filetypes to disable lualine for.
+                        -- only ignores the ft for statusline.
+                        statusline = {
+                            "neo-tree"
+                        },
+                        -- only ignores the ft for winbar.
+                        winbar = {},
+                    },
                 },
             })
         end,

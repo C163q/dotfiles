@@ -4,3 +4,6 @@
 [submodule "vim/module/molokai"]
 	path = vim/module/molokai
 	url = https://github.com/tomasr/molokai
+[submodule "yazi/plugins/whoosh.yazi"]
+	path = yazi/plugins/whoosh.yazi
+	url = https://gitlab.com/WhoSowSee/whoosh.yazi.git

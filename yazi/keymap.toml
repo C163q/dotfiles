@@ -1,0 +1,31 @@
+# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
+# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+[mgr]
+
+prepend_keymap = [
+    # Operation
+    { on = "H", run = "hidden toggle", desc = "Toggle the visibility of hidden files" },
+
+    # Seeking
+    { on = "<S-Up>", run = "seek -5", desc = "Seek up 5 units in the preview" },
+    { on = "<S-Down>", run = "seek 5", desc = "Seek down 5 units in the preview" },
+
+    # Hopping
+    { on = "<C-Up>", run = "arrow -5", desc = "Cursor moves up 5 steps" },
+    { on = "<C-Down>", run = "arrow 5", desc = "Cursor moves down 5 steps" },
+
+    # Plugin whoosh
+    { on = [ ".", "." ], run = "plugin whoosh jump_by_key", desc = "Jump bookmark by key" },
+    { on = [ ".", "," ], run = "plugin whoosh jump_by_fzf", desc = "Direct fuzzy search for bookmarks" },
+    { on = [ ".", "a" ], run = "plugin whoosh save", desc = "Add bookmark (hovered file/directory)" },
+    { on = [ ".", "A" ], run = "plugin whoosh save_cwd", desc = "Add bookmark (current directory)" },
+    { on = [ ".", "t" ], run = "plugin whoosh save_temp", desc = "Add temporary bookmark (hovered file/directory)" },
+    { on = [ ".", "T" ], run = "plugin whoosh save_cwd_temp", desc = "Add temporary bookmark (current directory)" },
+    { on = [ ".", "d" ], run = "plugin whoosh delete_by_key", desc = "Delete bookmark by key" },
+    { on = [ ".", "D" ], run = "plugin whoosh delete_by_fzf", desc = "Delete bookmark by fzf (use TAB to select multiple)" },
+    { on = [ ".", "f" ], run = "plugin whoosh jump_by_fzf", desc = "Jump bookmark by fzf" },
+    { on = [ ".", "r" ], run = "plugin whoosh rename_by_key", desc = "Rename bookmark by key" },
+    { on = [ ".", "R" ], run = "plugin whoosh rename_by_fzf", desc = "Rename bookmark by fzf" },
+]

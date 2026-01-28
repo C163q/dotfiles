@@ -24,13 +24,16 @@ By default, `XDG_CONFIG_HOME` is `~/.config`
 
 ## Usage
 
-- place files in the proper directories, see [Placement](#Placement)
+- Place files in the proper directories, see [Placement](#Placement).
+  [`setup.sh`](./setup.sh) may help you do this thing.
 - `vim`:
     - open vim, and use `:PlugInstall` to install plugins
     - enter `./vim/.vim/plugged/youcompleteme` and run `./install.py`
       (To install for the specific languages, see [Full Installation Guide](https://github.com/ycm-core/YouCompleteMe/wiki/Full-Installation-Guide))
 - `neovim`:
     - see [README.md in `nvim`](./nvim/README.md)
+- `yazi`:
+    - see [README.md in `yazi`](./yazi/README.md)
 
 ## Credit
 
