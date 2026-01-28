@@ -1,8 +1,18 @@
+# Out-of-date configs
 *.old
 *.bak
+
+# Neovim lazy-lock.json file, can be pushed, but not necessary.
 nvim/config/lazy-lock.json
-nvim/.exrc
+
+# Zsh configs that are related to the specific environment.
 **/.zshrc.*
-vim/.vim/.netrwhist
 zsh/config/opt.zsh
+
+# Files aren't related to configs and are automatically generated.
+nvim/.exrc
+vim/.vim/.netrwhist
+
+# Vim plugins, should be installed with `:PlugInstall`
+vim/.vim/plugged
 

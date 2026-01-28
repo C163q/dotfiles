@@ -22,6 +22,14 @@ By default, `XDG_CONFIG_HOME` is `~/.config`
     - require `~/.cache/zsh/` to place `.zcompdump` file
     - require `~/.local/share/zsh/` to place `.histfile` file
 
+## Usage
+
+- place files in the proper directories, see [Placement](#Placement)
+- `vim`:
+    - open vim, and use `:PlugInstall` to install plugins
+    - enter `./vim/.vim/plugged/youcompleteme` and run `./install.py`
+      (To install for the specific languages, see [Full Installation Guide](https://github.com/ycm-core/YouCompleteMe/wiki/Full-Installation-Guide))
+
 ## Credit
 
 This project incorporates code from the following open-source project:
@@ -29,3 +37,4 @@ This project incorporates code from the following open-source project:
 - [folke/snacks.nvim](https://github.com/folke/snacks.nvim) by [folke](https://github.com/folke) -
     licensed under [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0). For more information,
     see [the modified file](./nvim/config/lua/core/modify/snacks-statuscolumn.lua).
+
