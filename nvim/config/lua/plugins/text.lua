@@ -23,22 +23,6 @@ return {
         end,
     },
 
-    -- https://github.com/nvim-tree/nvim-web-devicons
-    -- Nvim-web-devicons: Provides Nerd Font icons (glyphs) for use by Neovim plugins
-    {
-        "nvim-tree/nvim-web-devicons",
-        opts = {},
-    },
-
-    -- https://github.com/echasnovski/mini.nvim
-    -- Library of 40+ independent Lua modules improving overall Neovim (version 0.9 and higher) experience with minimal effort.
-    -- They all share same configuration approaches and general design principles.
-    {
-        "echasnovski/mini.nvim",
-        event = "VeryLazy",
-        version = "*",
-    },
-
     --[[
     -- https://github.com/lukas-reineke/indent-blankline.nvim
     -- Indent Blankline: This plugin adds indentation guides to Neovim.
@@ -102,5 +86,76 @@ return {
             "mason-org/mason.nvim",
             "stevearc/conform.nvim",
         },
+    },
+
+    -- https://github.com/nvim-treesitter/nvim-treesitter/tree/main
+    -- The nvim-treesitter plugin provides
+    --   functions for installing, updating, and removing tree-sitter parsers;
+    --   a collection of queries for enabling tree-sitter features built into Neovim for these languages;
+    --   a staging ground for treesitter-based features considered for upstreaming to Neovim.
+    {
+        "nvim-treesitter/nvim-treesitter",
+        lazy = false,
+        branch = "main",
+        build = ":TSUpdate",
+        config = function()
+            require("nvim-treesitter.config").setup(opts)
+            require("nvim-treesitter").setup()
+
+            local ensure_installed = {
+                "rust",
+                "javascript",
+                "c",
+                "lua",
+                "cmake",
+                "cpp",
+                "json",
+                "markdown",
+                "python",
+                "regex",
+                "yaml",
+                "bash",
+                "vim",
+            }
+
+            require("nvim-treesitter").install(ensure_installed):wait(30000)
+
+            -- enable highlight
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = { "<filetype>" },
+                callback = function()
+                    vim.treesitter.start()
+                end,
+            })
+
+            -- enable folds
+            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        end,
+    },
+
+    -- https://github.com/MeanderingProgrammer/render-markdown.nvim
+    -- render-markdown.nvim: Plugin to improve viewing Markdown files in Neovim
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = { "markdown", "codecompanion" },
+        dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
+        opts = {},
+        version = "*",
+    },
+
+    -- https://github.com/kevinhwang91/nvim-ufo
+    -- nvim-ufo: The goal of nvim-ufo is to make Neovim's fold look modern and keep high performance.
+    {
+        "kevinhwang91/nvim-ufo",
+        event = "VeryLazy",
+        -- event = { 'BufReadPost', 'BufNewFile' }, -- Don't Lazy load to enable specific autocommands
+        dependencies = { "kevinhwang91/promise-async" },
+        config = function()
+            require("config.ufo")
+        end,
     },
 }

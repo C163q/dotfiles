@@ -29,6 +29,8 @@ By default, `XDG_CONFIG_HOME` is `~/.config`
     - open vim, and use `:PlugInstall` to install plugins
     - enter `./vim/.vim/plugged/youcompleteme` and run `./install.py`
       (To install for the specific languages, see [Full Installation Guide](https://github.com/ycm-core/YouCompleteMe/wiki/Full-Installation-Guide))
+- `neovim`:
+    - see [README.md in `nvim`](./nvim/README.md)
 
 ## Credit
 

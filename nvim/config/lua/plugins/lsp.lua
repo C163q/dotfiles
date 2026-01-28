@@ -93,4 +93,13 @@ return {
             },
         },
     },
+
+    -- https://github.com/mrcjkb/rustaceanvim
+    -- rustaceanvim: Supercharge your Rust experience in Neovim! A heavily modified fork of rust-tools.nvim
+    {
+        -- This plugin automatically configures the rust-analyzer builtin LSP client and integrates with other Rust tools.
+        "mrcjkb/rustaceanvim",
+        version = "^6", -- Recommended
+        lazy = false, -- This plugin is already lazy
+    },
 }
