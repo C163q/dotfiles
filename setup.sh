@@ -25,8 +25,8 @@ ln -s ${CFG_PWD}/yazi ${CONFIG_DIR}/yazi
 
 sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-chmod u+x ${CFG_PWD}/config/aliases.zsh
-chmod u+x ${CFG_PWD}/config/functions.zsh
+chmod u+x ${CFG_PWD}/zsh/config/aliases.zsh
+chmod u+x ${CFG_PWD}/zsh/config/functions.zsh
 
 unset CFG_PWD
 unset CONFIG_DIR
