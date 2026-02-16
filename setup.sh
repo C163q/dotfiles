@@ -22,6 +22,7 @@ ln -s "${CFG_PWD}/zsh/.zshrc" "${HOME}/.local/share/zsh/.zshrc"
 ln -s "${CFG_PWD}/zsh/.zshenv" "${HOME}/.zshenv"
 ln -s "${CFG_PWD}/zsh/config" "${CONFIG_DIR}/zsh"
 ln -s "${CFG_PWD}/yazi" "${CONFIG_DIR}/yazi"
+ln -s "${CFG_PWD}/kitty" "${CONFIG_DIR}/kitty"
 
 git clone https://github.com/ohmyzsh/ohmyzsh.git "${HOME}/.local/share/zsh"
 git clone https://github.com/romkatv/powerlevel10k.git "${HOME}/.local/share/zsh/ohmyzsh/themes"
