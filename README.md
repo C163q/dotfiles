@@ -19,6 +19,7 @@ By default, `XDG_CONFIG_HOME` is `~/.config`
     - [.zshenv](./zsh/.zshenv) should be placed at `~/.zshenv`
     - [config](./zsh/config/) should be placed at `${XDG_CONFIG_HOME}/zsh`
     - [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) should be placed at `~/.local/share/zsh/ohmyzsh`
+    - [powerlevel10k](https://github.com/romkatv/powerlevel10k) should be placed at `~/.local/share/zsh/ohmyzsh/themes/powerlevel10k`
     - require `~/.cache/zsh/` to place `.zcompdump` file
     - require `~/.local/share/zsh/` to place `.histfile` file
 - [yazi](./yazi/) should be placed at `${XDG_CONFIG_HOME}/yazi`

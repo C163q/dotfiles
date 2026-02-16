@@ -131,3 +131,9 @@ Use the `rustaceanvim` plugin.
 It will automatically search for `rust-analyzer.json` or `.rust-analyzer.json` in the root of the project and
 apply the configs.
 
+4. `Mason` can't install packages with `npm` properly.
+
+This problem has been solved in [Mason#1670](https://github.com/mason-org/mason.nvim/issues/1670).
+
+Sometimes, this is your `npm` goes wrong. You can check [github/orgs/community](https://github.com/orgs/community/discussions/169704).
+For example, you may mistakenly set `HTTPS_PROXY` to `127.0.0.1:7890`, which is wrong and may be `127.0.0.1:7897`.
