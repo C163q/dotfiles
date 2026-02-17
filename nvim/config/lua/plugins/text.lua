@@ -240,12 +240,7 @@ return {
         config = function()
             -- optional setup call to override plugin options
             -- alternatively you can set options with vim.g.grug_far = { ... }
-            vim.keymap.set(
-                { "n", "v" },
-                "<Leader>sr",
-                ":GrugFar<CR>",
-                { desc = "Search and Replace", noremap = true }
-            )
+            vim.keymap.set({ "n", "v" }, "<Leader>sr", ":GrugFar<CR>", { desc = "Search and Replace", noremap = true })
 
             vim.keymap.set(
                 "v",
@@ -296,6 +291,29 @@ return {
                 --]]
             })
         end,
+    },
+
+    -- https://github.com/lukas-reineke/virt-column.nvim
+    -- virt-column.nvim: Display a character as the colorcolumn.
+    {
+        "lukas-reineke/virt-column.nvim",
+        event = event_presets.start_edit,
+        config = (function()
+            local enable = true
+            return function()
+                require("virt-column").setup({
+                    enabled = enable,
+                    char = "│",
+                    virtcolumn = "100",
+                })
+                vim.keymap.set("n", "<Leader>vl", function()
+                    enable = not enable
+                    require("virt-column").update({
+                        enabled = enable,
+                    })
+                end, { desc = "Toggle virtual column", noremap = true })
+            end
+        end)(),
     },
 
     --[[

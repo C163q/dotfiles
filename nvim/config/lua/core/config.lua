@@ -16,7 +16,9 @@ return {
         enable = true,
         highlight_color = "#c00000",
         highlight_cterm_color = "red",
-        disabled_filetypes = {},
+        -- toggleterm's vim.bo.buftype is empty when opening for the first time,
+        -- and then changes to "terminal".
+        disabled_filetypes = { "toggleterm" },
     },
 
     -- Buffer Settings

@@ -1,3 +1,5 @@
+local event_presets = require("core.config").event_presets
+
 return {
     -- https://github.com/mason-org/mason.nvim
     -- mason.nvim: Portable package manager for Neovim that runs everywhere Neovim runs.
@@ -101,5 +103,31 @@ return {
         "mrcjkb/rustaceanvim",
         version = "^6", -- Recommended
         lazy = false, -- This plugin is already lazy
+    },
+
+    -- https://github.com/mfussenegger/nvim-lint
+    -- nvim-lint: An asynchronous linter plugin for Neovim (>= 0.9.5) complementary to
+    -- the built-in Language Server Protocol support.
+    --
+    -- nvim-lint complements the built-in language server client for languages where there are
+    -- no language servers, or where standalone linters provide better results.
+    {
+        "mfussenegger/nvim-lint",
+        event = event_presets.start_edit,
+        config = function()
+            -- See https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters
+            -- for available linters
+            require('lint').linters_by_ft = {
+                markdown = { 'markdownlint-cli2' },
+            }
+
+            vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+                callback = function()
+                    -- try_lint without arguments runs the linters defined in `linters_by_ft`
+                    -- for the current filetype
+                    require("lint").try_lint()
+                end,
+            })
+        end
     },
 }

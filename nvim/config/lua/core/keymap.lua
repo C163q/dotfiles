@@ -179,6 +179,12 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", {
     desc = "Exit terminal mode",
 })
 
+-- Press Ctrl+Backslash and ESC to send ESC to terminal
+vim.keymap.set("t", "<C-\\><Esc>", "<Esc>", {
+    noremap = true,
+    desc = "Send ESC to terminal",
+})
+
 -- exit insert mode when press Alt+Space
 vim.keymap.set("i", "<M-Space>", "<Esc>", {
     noremap = true,

@@ -44,7 +44,7 @@ The following tools will not be automatically installed by `Mason`, so you may i
 - `stylua`
 - `isort`
 - `black`
-- `rustfmt`
+- `rustfmt` (use `rustup`)
 
 For translation plugins, there are extra requirements:
 

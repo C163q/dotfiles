@@ -40,10 +40,10 @@ return {
                 options = {
                     theme = "catppuccin",
                     -- ... the rest of your lualine config
-                    disabled_filetypes = {  -- Filetypes to disable lualine for.
+                    disabled_filetypes = { -- Filetypes to disable lualine for.
                         -- only ignores the ft for statusline.
                         statusline = {
-                            "neo-tree"
+                            "neo-tree",
                         },
                         -- only ignores the ft for winbar.
                         winbar = {},
@@ -108,8 +108,10 @@ return {
                         local filetypes = user_config.bufferline_filter.filetypes
                         local buftypes = user_config.bufferline_filter.buftypes
 
-                        if vim.tbl_contains(buftypes, vim.bo[buf_number].buftype) or
-                            vim.tbl_contains(filetypes, vim.bo[buf_number].filetype) then
+                        if
+                            vim.tbl_contains(buftypes, vim.bo[buf_number].buftype)
+                            or vim.tbl_contains(filetypes, vim.bo[buf_number].filetype)
+                        then
                             return false
                         end
                         return true
@@ -117,7 +119,7 @@ return {
                 },
                 highlights = require("catppuccin.special.bufferline").get_theme(),
             })
-            require('config.bufferline')
+            require("config.bufferline")
         end,
     },
 
@@ -171,8 +173,27 @@ return {
                         enabled = false,
                     },
                 },
+                commands = {
+                    allpop = {
+                        view = "popup",
+                        opts = { enter = true, format = "details" },
+                        filter = {},
+                    },
+                },
+                views = {
+                    -- see https://github.com/folke/noice.nvim/blob/main/lua/noice/config/views.lua
+                    mini = {
+                        timeout = 3000, -- timeout in ms
+                    },
+                }
             })
             require("telescope").load_extension("noice")
+            vim.keymap.set(
+                "n",
+                "<Leader>em",
+                "<Cmd>Noice allpop<CR>",
+                { desc = "Explore Messages (Noice)", noremap = true }
+            )
         end,
         dependencies = {
             -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -188,5 +209,5 @@ return {
         opts = {},
         version = "*",
         event = event_presets.start_edit,
-    }
+    },
 }

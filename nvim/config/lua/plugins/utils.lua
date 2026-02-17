@@ -1,5 +1,16 @@
 local event_presets = require("core.config").event_presets
 
+local snacks_buffer_picker_cfg = {
+    win = {
+        input = {
+            keys = {
+                ["<C-d>"] = { "bufdelete", mode = { "i", "n" } },
+            },
+        },
+        list = { keys = { ["<C-d>"] = "bufdelete" } },
+    },
+}
+
 return {
     -- https://github.com/nvim-neo-tree/neo-tree.nvim
     -- Neo-tree is a Neovim plugin to browse the file system and other tree like structures in whatever style suits you,
@@ -217,14 +228,14 @@ return {
             {
                 "<leader>m",
                 function()
-                    Snacks.picker.buffers()
+                    Snacks.picker.buffers(snacks_buffer_picker_cfg)
                 end,
                 desc = "Buffers",
             },
             {
                 "<leader>eb",
                 function()
-                    Snacks.picker.buffers()
+                    Snacks.picker.buffers(snacks_buffer_picker_cfg)
                 end,
                 desc = "Explore Buffers",
             },
