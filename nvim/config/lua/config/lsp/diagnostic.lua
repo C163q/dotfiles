@@ -147,8 +147,8 @@ local function quickfix()
     })
 end
 
-vim.keymap.set("n", "<Leader>li", quickfix, { noremap = true, silent = false, desc = "Quickfix automatically" })
-vim.keymap.set("n", "<Leader>lI", function()
+vim.keymap.set("n", "<Leader>lI", quickfix, { noremap = true, silent = false, desc = "Quickfix automatically" })
+vim.keymap.set("n", "<Leader>lq", function()
     vim.lsp.buf.code_action({
         apply = false,
     })
@@ -210,6 +210,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local client = vim.lsp.get_client_by_id(event.data.client_id)
 
         -- [basic keymaps]
+
+        --[[ Use picker for better UI
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
             buffer = event.buf,
             noremap = true,
@@ -221,6 +223,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
             noremap = true,
             desc = "Go to declaration",
         })
+        --]]
 
         vim.keymap.set("n", "gF", function()
             local org_path = vim.api.nvim_buf_get_name(0)

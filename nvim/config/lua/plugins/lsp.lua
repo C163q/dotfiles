@@ -64,32 +64,32 @@ return {
             {
                 "<leader>lx",
                 "<cmd>Trouble diagnostics toggle<cr>",
-                desc = "Diagnostics (Trouble)",
+                desc = "Trouble: Diagnostics",
             },
             {
                 "<leader>lX",
                 "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-                desc = "Buffer Diagnostics (Trouble)",
+                desc = "Trouble: Buffer Diagnostics",
             },
             {
                 "<leader>ls",
                 "<cmd>Trouble symbols toggle focus=false<cr>",
-                desc = "Symbols (Trouble)",
+                desc = "Trouble: Symbols",
             },
             {
                 "<leader>ll",
                 "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-                desc = "LSP Definitions / references / ... (Trouble)",
+                desc = "Trouble: LSP Definitions / references / ...",
             },
             {
                 "<leader>lL",
                 "<cmd>Trouble loclist toggle<cr>",
-                desc = "Location List (Trouble)",
+                desc = "Trouble: Location List",
             },
             {
                 "<leader>lQ",
                 "<cmd>Trouble qflist toggle<cr>",
-                desc = "Quickfix List (Trouble)",
+                desc = "Trouble: Quickfix List",
             },
         },
     },

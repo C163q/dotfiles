@@ -32,6 +32,7 @@ Usually, this folder should be placed at `${XDG_CONFIG_HOME}`.
 - `fd`
 - `jq`
 - `vectorcode` (`uv tool install vectorcode`)
+- `ast-grep` (Optional)
 
 The following tools will not be automatically installed by `Mason`, so you may install manually with `Mason`:
 

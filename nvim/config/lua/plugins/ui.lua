@@ -106,6 +106,8 @@ return {
                         -- filter out filetypes you don't want to see
                         if vim.bo[buf_number].filetype ~= "neotree" and
                             vim.bo[buf_number].filetype ~= "checkhealth" and
+                            vim.bo[buf_number].filetype ~= "grug-far" and
+                            vim.bo[buf_number].filetype ~= "grug-far-history" and
                             vim.bo[buf_number].buftype ~= "terminal" and
                             vim.bo[buf_number].buftype ~= "quickfix" then
                             return true

@@ -208,11 +208,11 @@ return {
             -- picker overwrite windows for winfixbuf is set!!!!!!
             -- May solve: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
             {
-                "<leader>gf",
+                "<leader>fF",
                 function()
                     Snacks.picker.smart()
                 end,
-                desc = "Smart Find Files",
+                desc = "Files Find (Smart)",
             },
             {
                 "<leader>m",
@@ -222,28 +222,35 @@ return {
                 desc = "Buffers",
             },
             {
-                "<leader>gn",
+                "<leader>eb",
+                function()
+                    Snacks.picker.buffers()
+                end,
+                desc = "Explore Buffers",
+            },
+            {
+                "<leader>en",
                 function()
                     Snacks.picker.notifications()
                 end,
-                desc = "Notification History",
+                desc = "Explore Notification History",
             },
             {
-                "<leader>g:",
+                "<leader>e:",
                 function()
                     Snacks.picker.command_history()
                 end,
-                desc = "Command History",
+                desc = "Explore Command History",
             },
             {
-                "<leader>g/",
+                "<leader>fg",
                 function()
                     Snacks.picker.grep()
                 end,
-                desc = "Grep",
+                desc = "File Grep",
             },
             {
-                "<leader>ge",
+                "<leader>fe",
                 function()
                     Snacks.explorer()
                 end,
@@ -254,63 +261,63 @@ return {
                 function()
                     Snacks.picker.git_branches()
                 end,
-                desc = "Git Branches",
+                desc = "Picker: Git Branches",
             },
             {
                 "<leader>gl",
                 function()
                     Snacks.picker.git_log()
                 end,
-                desc = "Git Log",
+                desc = "Picker: Git Log",
             },
             {
                 "<leader>gL",
                 function()
                     Snacks.picker.git_log_line()
                 end,
-                desc = "Git Log Line",
+                desc = "Picker: Git Log Line",
             },
             {
                 "<leader>gs",
                 function()
                     Snacks.picker.git_status()
                 end,
-                desc = "Git Status",
+                desc = "Picker: Git Status",
             },
             {
                 "<leader>gS",
                 function()
                     Snacks.picker.git_stash()
                 end,
-                desc = "Git Stash",
+                desc = "Picker: Git Stash",
             },
             {
                 "<leader>gd",
                 function()
                     Snacks.picker.git_diff()
                 end,
-                desc = "Git Diff (Hunks)",
+                desc = "Picker: Git Diff (Hunks)",
             },
             {
                 "<leader>go",
                 function()
                     Snacks.picker.git_log_file()
                 end,
-                desc = "Git Log File",
+                desc = "Picker: Git Log File",
             },
             {
-                "gx",
+                "gd",
                 function()
                     Snacks.picker.lsp_definitions()
                 end,
-                desc = "Goto Definition",
+                desc = "Go to Definition",
             },
             {
-                "gX",
+                "gD",
                 function()
                     Snacks.picker.lsp_declarations()
                 end,
-                desc = "Goto Declaration",
+                desc = "Go to Declaration",
             },
             {
                 "gR",
@@ -318,147 +325,140 @@ return {
                     Snacks.picker.lsp_references()
                 end,
                 nowait = true,
-                desc = "References",
+                desc = "Go to References",
             },
             {
                 "gI",
                 function()
                     Snacks.picker.lsp_implementations()
                 end,
-                desc = "Goto Implementation",
+                desc = "Go to Implementation",
             },
             {
                 "gy",
                 function()
                     Snacks.picker.lsp_type_definitions()
                 end,
-                desc = "Goto T[y]pe Definition",
+                desc = "Go to T[y]pe Definition",
             },
             {
-                '<leader>s"',
+                '<leader>e"',
                 function()
                     Snacks.picker.registers()
                 end,
-                desc = "Registers",
+                desc = "Explore Registers",
             },
             {
-                "<leader>s/",
+                "<leader>e/",
                 function()
                     Snacks.picker.search_history()
                 end,
-                desc = "Search History",
+                desc = "Explore Search History",
             },
             {
-                "<leader>sa",
+                "<leader>ea",
                 function()
                     Snacks.picker.autocmds()
                 end,
-                desc = "Autocmds",
+                desc = "Explore Autocmds",
             },
             {
-                "<leader>sC",
+                "<leader>eC",
                 function()
                     Snacks.picker.commands()
                 end,
-                desc = "Commands",
+                desc = "Explore Commands",
             },
             {
-                "<leader>sd",
+                "<leader>ed",
                 function()
                     Snacks.picker.diagnostics()
                 end,
-                desc = "Diagnostics",
+                desc = "Explore Diagnostics",
             },
             {
-                "<leader>sD",
+                "<leader>eD",
                 function()
                     Snacks.picker.diagnostics_buffer()
                 end,
-                desc = "Buffer Diagnostics",
+                desc = "Explore Buffer Diagnostics",
             },
             {
-                "<leader>sh",
+                "<leader>eh",
                 function()
                     Snacks.picker.help()
                 end,
-                desc = "Help Pages",
+                desc = "Explore Help Pages",
             },
             {
-                "<leader>sH",
+                "<leader>eH",
                 function()
                     Snacks.picker.highlights()
                 end,
-                desc = "Highlights",
+                desc = "Explore Highlights",
             },
             {
-                "<leader>sj",
+                "<leader>ej",
                 function()
                     Snacks.picker.jumps()
                 end,
-                desc = "Jumps",
+                desc = "Explore Jump Stack",
             },
             {
-                "<leader>sk",
+                "<leader>ek",
                 function()
                     Snacks.picker.keymaps()
                 end,
-                desc = "Keymaps",
+                desc = "Explore Keymaps",
             },
             {
-                "<leader>sl",
+                "<leader>el",
                 function()
                     Snacks.picker.loclist()
                 end,
-                desc = "Location List",
+                desc = "Explore Location List",
             },
             {
-                "<leader>sq",
+                "<leader>li",
                 function()
                     Snacks.picker.qflist()
                 end,
-                desc = "Quickfix List",
+                desc = "Picker: Quickfix List",
             },
             {
-                "<leader>sR",
+                "<leader>fr",
                 function()
                     Snacks.picker.resume()
                 end,
-                desc = "Resume",
+                desc = "Resume Last Picker",
             },
             {
-                "<leader>su",
+                "<leader>eu",
                 function()
                     Snacks.picker.undo()
                 end,
-                desc = "Undo History",
+                desc = "Explore Undo History",
             },
             {
-                "<leader>ss",
+                "<leader>es",
                 function()
                     Snacks.picker.lsp_symbols()
                 end,
-                desc = "LSP Symbols",
+                desc = "Explore LSP Symbols",
             },
             {
-                "<leader>sS",
+                "<leader>eS",
                 function()
                     Snacks.picker.lsp_workspace_symbols()
                 end,
-                desc = "LSP Workspace Symbols",
+                desc = "Explore LSP Workspace Symbols",
             },
             {
-                "<leader>sb",
+                "<leader>fb",
                 function()
                     Snacks.picker.lines()
                 end,
-                desc = "Buffer Lines",
-            },
-            {
-                "<leader>fB",
-                function()
-                    Snacks.picker.buffers()
-                end,
-                desc = "Buffers",
+                desc = "File Buffer Lines",
             },
             {
                 "<leader>fc",
@@ -468,32 +468,32 @@ return {
                 desc = "Find Config File",
             },
             {
-                "<leader>fF",
+                "<leader>ff",
                 function()
                     Snacks.picker.files()
                 end,
                 desc = "Find Files",
             },
             {
-                "<leader>fg",
+                "<leader>gf",
                 function()
                     Snacks.picker.git_files()
                 end,
-                desc = "Find Git Files",
+                desc = "Picker: Git Find Files",
             },
             {
-                "<leader>fp",
+                "<leader>ep",
                 function()
                     Snacks.picker.projects()
                 end,
-                desc = "Projects",
+                desc = "Explore and Open Projects",
             },
             {
-                "<leader>fr",
+                "<leader>er",
                 function()
                     Snacks.picker.recent()
                 end,
-                desc = "Recent",
+                desc = "Explore Recent",
             },
         },
         picker = {
