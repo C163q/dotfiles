@@ -1,4 +1,5 @@
 local event_presets = require("core.config").event_presets
+local browser = require("core.config").browser
 
 -- Highlight color
 return {
@@ -99,7 +100,7 @@ return {
         branch = "main",
         build = ":TSUpdate",
         config = function()
-            require("nvim-treesitter.config").setup(opts)
+            require("nvim-treesitter.config").setup()
             require("nvim-treesitter").setup()
 
             local ensure_installed = {
@@ -145,6 +146,23 @@ return {
         ---@type render.md.UserConfig
         opts = {},
         version = "*",
+    },
+
+    -- https://github.com/iamcco/markdown-preview.nvim
+    -- markdown-preview.nvim: Markdown Preview for (Neo)vim
+    {
+        "iamcco/markdown-preview.nvim",
+        -- Start the preview
+        -- :MarkdownPreview
+        -- Stop the preview
+        -- :MarkdownPreviewStop
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        build = "cd app && yarn install",
+        config = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+            vim.g.mkdp_browser = browser
+        end,
+        ft = { "markdown" },
     },
 
     -- https://github.com/kevinhwang91/nvim-ufo
@@ -279,4 +297,32 @@ return {
             })
         end,
     },
+
+    --[[
+    -- https://github.com/cappyzawa/trim.nvim
+    -- trim.nvim: This plugin trims trailing whitespace and lines.
+    {
+        "cappyzawa/trim.nvim",
+        event = event_presets.start_edit,
+        config = function()
+            -- We just use this plugin to highlight the trailing whitespaces.
+            local config = {
+                trim_on_write = false,
+                trim_trailing = false,
+                trim_last_line = false,
+                trim_first_line = false,
+                trim_current_line = false,
+                highlight = true,
+                highlight_bg = '#c00000',
+                highlight_ctermbg = 'red',
+                notifications = true,
+            }
+            require("trim").setup(config)
+            -- :TrimToggle
+            -- Toggle trim on save.
+            -- :Trim
+            -- Trim the buffer right away. Supports range selection (e.g., :'<,'>Trim to trim only selected lines).
+        end,
+    },
+    --]]
 }

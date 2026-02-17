@@ -12,11 +12,38 @@ return {
         enable = true,
         value = ",",
     },
+    trailing_whitespace_highlight = {
+        enable = true,
+        highlight_color = "#c00000",
+        highlight_cterm_color = "red",
+        disabled_filetypes = {},
+    },
+
+    -- Buffer Settings
+    irreplaceable_windows = {
+        filetypes = { "neo-tree", "dap-float" },
+        buftypes = { "terminal", "quickfix" },
+    },
+    ufo_plugin_ignore = {
+        filetypes = { "neo-tree", "notify", "snacks_dashboard" },
+        buftypes = {},
+    },
+    easy_exit_windows = {
+        filetypes = {},
+        buftypes = { "quickfix" },
+    },
+    bufferline_filter = {
+        filetypes = { "neo-tree", "checkhealth", "grug-far", "grug-far-history" },
+        buftypes = { "terminal", "quickfix" },
+    },
 
     -- Since it is async, error may occur when the original content is changed.
     -- I recommend to disable it if you don't need it.
     enable_copilot_nes = false,
     enable_copilot_immediate_suggestions = false,
+
+    -- Default browser. empty string means using system default browser.
+    browser = "",
 
     -- Environment Settings
     home_path = os.getenv("HOME"),

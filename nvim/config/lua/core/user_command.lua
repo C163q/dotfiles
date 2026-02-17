@@ -1,3 +1,5 @@
+local config = require("core.config")
+
 vim.api.nvim_create_user_command("ComplieCommandsFix", function()
     vim.cmd('1,$s/"-ftree-loop-vectorize"/"-Rpass=loop-vectorize"/g')
     vim.cmd('1,$s/"-flto=[0-9]*"/"-flto=auto"/g')
@@ -11,8 +13,8 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     group = "IrreplaceableWindows",
     pattern = "*",
     callback = function()
-        local filetypes_or = { "neo-tree", "dap-float" }
-        local buftypes_or = { "terminal" }
+        local filetypes_or = config.irreplaceable_windows.filetypes
+        local buftypes_or = config.irreplaceable_windows.buftypes
         -- DO NOT put 'nofile' buftype HERE!!!!!!!!!!!!!!!!!!
         -- or snacks.picker WILL OVERWRITE current file for 'winfixbuf' set.
         if vim.tbl_contains(buftypes_or, vim.bo.buftype) or vim.tbl_contains(filetypes_or, vim.bo.filetype) then
@@ -27,8 +29,8 @@ vim.api.nvim_create_autocmd("FileType", {
     group = "NvimUFOIgnore",
     pattern = "*",
     callback = function()
-        local buftype = {}
-        local filetype = { "neo-tree", "notify", "snacks_dashboard" }
+        local buftype = config.ufo_plugin_ignore.buftypes
+        local filetype = config.ufo_plugin_ignore.filetypes
         if vim.tbl_contains(buftype, vim.bo.buftype) or vim.tbl_contains(filetype, vim.bo.filetype) then
             require("ufo").detach()
             vim.opt_local.foldenable = false
@@ -80,8 +82,8 @@ vim.api.nvim_create_autocmd("FileType", {
     group = "WinEasyExitBufType",
     pattern = "*",
     callback = function()
-        local filetypes = {}
-        local buftypes = { "quickfix" }
+        local filetypes = config.easy_exit_windows.filetypes
+        local buftypes = config.easy_exit_windows.buftypes
         if vim.tbl_contains(buftypes, vim.bo.buftype) or vim.tbl_contains(filetypes, vim.bo.filetype) then
             local buffer_id = vim.fn.bufnr()
             vim.keymap.set("n", "<Esc>", function()
@@ -93,3 +95,25 @@ vim.api.nvim_create_autocmd("FileType", {
         end
     end,
 })
+
+-- Highlight trailing whitespaces
+-- inspired by [trim.nvim](https://github.com/cappyzawa/trim.nvim)
+if config.trailing_whitespace_highlight.enable then
+    local augroup = vim.api.nvim_create_augroup("TrailingWhitespaceHighlight", { clear = true })
+    vim.api.nvim_create_autocmd("FileType", {
+        group = augroup,
+        callback = function()
+            -- vim.bo.buftype == '' means normal file buffer, not terminal, quickfix, etc.
+            if
+                vim.bo.buftype == ""
+                and not vim.tbl_contains(config.trailing_whitespace_highlight.disabled_filetypes, vim.bo.filetype)
+            then
+                vim.fn.matchadd("TrailingWhitespace", "\\s\\+$")
+            end
+        end,
+    })
+    vim.api.nvim_set_hl(0, "TrailingWhitespace", {
+        bg = config.trailing_whitespace_highlight.highlight_color,
+        ctermbg = config.trailing_whitespace_highlight.highlight_cterm_color,
+    })
+end

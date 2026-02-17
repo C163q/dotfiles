@@ -1,4 +1,5 @@
 local event_presets = require("core.config").event_presets
+local user_config = require("core.config")
 
 return {
     -- https://github.com/nvim-lualine/lualine.nvim
@@ -104,15 +105,14 @@ return {
                     },
                     custom_filter = function(buf_number, buf_numbers)
                         -- filter out filetypes you don't want to see
-                        if vim.bo[buf_number].filetype ~= "neotree" and
-                            vim.bo[buf_number].filetype ~= "checkhealth" and
-                            vim.bo[buf_number].filetype ~= "grug-far" and
-                            vim.bo[buf_number].filetype ~= "grug-far-history" and
-                            vim.bo[buf_number].buftype ~= "terminal" and
-                            vim.bo[buf_number].buftype ~= "quickfix" then
-                            return true
+                        local filetypes = user_config.bufferline_filter.filetypes
+                        local buftypes = user_config.bufferline_filter.buftypes
+
+                        if vim.tbl_contains(buftypes, vim.bo[buf_number].buftype) or
+                            vim.tbl_contains(filetypes, vim.bo[buf_number].filetype) then
+                            return false
                         end
-                        return false
+                        return true
                     end,
                 },
                 highlights = require("catppuccin.special.bufferline").get_theme(),
