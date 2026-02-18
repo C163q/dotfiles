@@ -213,4 +213,82 @@ return {
             },
         },
     },
+
+    -- https://github.com/folke/persistence.nvim
+    -- Persistence: Persistence is a simple lua plugin for automated session management.
+    {
+        "folke/persistence.nvim",
+        event = "BufReadPre",
+        opts = {},
+        keys = {
+            {
+                "<leader>sl",
+                function()
+                    require("persistence").load()
+                end,
+                desc = "Load Session for current dir",
+            },
+            {
+                "<leader>ss",
+                function()
+                    require("persistence").select()
+                end,
+                desc = "Select Session",
+            },
+            {
+                "<leader>sa",
+                function()
+                    require("persistence").load({ last = true })
+                end,
+                desc = "Restore Last Session",
+            },
+            {
+                "<leader>sx",
+                function()
+                    require("persistence").stop()
+                end,
+                desc = "Don't Save Current Session",
+            },
+        },
+    },
+
+    -- https://github.com/leath-dub/snipe.nvim
+    -- Snipe.nvim: Efficient targetted menu built for fast buffer navigation
+    {
+        "leath-dub/snipe.nvim",
+        keys = {
+            {
+                "<Leader>z",
+                function()
+                    require("snipe").open_buffer_menu()
+                end,
+                desc = "Open Snipe buffer menu",
+            },
+        },
+        opts = {
+            ui = {
+                position = "topright",
+                open_win_override = {
+                    border = "rounded",
+                },
+                -- Preselect the currently open buffer
+                ---@type boolean
+                preselect_current = true,
+            },
+            hints = {
+                -- Charaters to use for hints (NOTE: make sure they don't collide with the navigation keymaps)
+                ---@type string
+                dictionary = "sadflewcmpghio",
+                -- Character used to disambiguate tags when 'persist_tags' option is set
+                prefix_key = ".",
+            },
+            navigate = {
+                -- When the list is too long it is split into pages
+                -- `[next|prev]_page` options allow you to navigate
+                -- this list
+                next_page = "J",
+                prev_page = "K",
+            },
+        },
+    },
 }

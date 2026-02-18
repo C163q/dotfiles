@@ -35,7 +35,7 @@ return {
         buftypes = {},
     },
     easy_exit_windows = {
-        filetypes = { "Trans" },
+        filetypes = { "Trans", "snipe-menu" },
         buftypes = { "quickfix" },
     },
     bufferline_filter = {
