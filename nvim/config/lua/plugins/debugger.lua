@@ -1,9 +1,5 @@
 local event_presets = require("core.config").event_presets
 
-require("lazydev").setup({
-    library = { "nvim-dap-ui" },
-})
-
 return {
 
     -- https://github.com/mfussenegger/nvim-dap
@@ -35,9 +31,82 @@ return {
             "folke/noice.nvim",
         },
         config = function()
-            require("nvim-dap-virtual-text").setup({}) -- optional
-            require("config.dap-ui")
+            require("lazydev").setup({
+                library = { "nvim-dap-ui" },
+            })
+
+            local dap, dapui = require("dap"), require("dapui")
+            dap.listeners.before.attach.dapui_config = function()
+                dapui.open()
+            end
+            dap.listeners.before.launch.dapui_config = function()
+                dapui.open()
+            end
+            dap.listeners.before.event_terminated.dapui_config = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited.dapui_config = function()
+                dapui.close()
+            end
+
+            require("dapui").setup({
+                layouts = {
+                    {
+                        elements = {
+                            {
+                                id = "scopes",
+                                size = 0.4,
+                            },
+                            {
+                                id = "breakpoints",
+                                size = 0.15,
+                            },
+                            {
+                                id = "stacks",
+                                size = 0.15,
+                            },
+                            {
+                                id = "watches",
+                                size = 0.3,
+                            },
+                        },
+                        position = "left",
+                        size = 0.25,
+                    },
+                    {
+                        elements = {
+                            {
+                                id = "repl",
+                                size = 0.5,
+                            },
+                            {
+                                id = "console",
+                                size = 0.5,
+                            },
+                        },
+                        position = "bottom",
+                        size = 0.2,
+                    },
+                },
+            })
+
+            -- Don't move these keymaps to `keys` since dapui isn't loaded before editing
+            vim.keymap.set("n", "<Leader>du", dapui.toggle, { noremap = true, desc = "Toggle debugger UI" })
+            vim.keymap.set("n", "<Leader>dv", function()
+                local input = vim.fn.input("Name of Element:")
+                require("dapui").float_element(input, {
+                    width = 30,
+                    height = 10,
+                    enter = false,
+                    position = nil,
+                })
+            end, { noremap = true, desc = "Show float window of element" })
         end,
+        keys = {
+            -- Placeholder ketmaps. Which-key will show them before dapui is loaded
+            { "<Leader>du", nil, noremap = true, desc = "Toggle debugger UI" },
+            { "<Leader>dv", nil, noremap = true, desc = "Show float window of element" },
+        }
     },
 
     -- https://github.com/mfussenegger/nvim-dap-python
@@ -62,5 +131,6 @@ return {
         dependencies = {
             "mfussenegger/nvim-dap",
         },
+        opt = {},
     },
 }

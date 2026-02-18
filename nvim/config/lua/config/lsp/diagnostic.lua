@@ -1,7 +1,6 @@
 local lsp_core = require('config.lsp.core')
 
 -- Show line diagnostics automatically in hover window
-vim.o.updatetime = 250
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus=false, focusable = false })]]
 
 vim.api.nvim_create_augroup("DiagnosticFloatWindow", { clear = true })

@@ -1,3 +1,0 @@
--- stylua: ignore start
-
--- stylua: ignore end

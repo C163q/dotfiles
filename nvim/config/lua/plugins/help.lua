@@ -7,32 +7,37 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        opts = {
-            preset = "modern",
-            icons = {
-                colors = true,
-                keys = {
-                    Up = keys_icon.Up,
-                    Down = keys_icon.Down,
-                    Left = keys_icon.Left,
-                    Right = keys_icon.Right,
-                    C = keys_icon.C,
-                    M = keys_icon.M,
-                    S = keys_icon.S,
-                    CR = keys_icon.CR,
-                    Esc = keys_icon.Esc,
-                    ScrollWheelDown = keys_icon.ScrollWheelDown,
-                    ScrollWheelUp = keys_icon.ScrollWheelUp,
-                    NL = keys_icon.NL,
-                    BS = keys_icon.BS,
-                    Space = keys_icon.Space,
-                    Tab = keys_icon.Tab,
+        config = function()
+            require("which-key").setup({
+                preset = "modern",
+                icons = {
+                    colors = true,
+                    keys = {
+                        Up = keys_icon.Up,
+                        Down = keys_icon.Down,
+                        Left = keys_icon.Left,
+                        Right = keys_icon.Right,
+                        C = keys_icon.C,
+                        M = keys_icon.M,
+                        S = keys_icon.S,
+                        CR = keys_icon.CR,
+                        Esc = keys_icon.Esc,
+                        ScrollWheelDown = keys_icon.ScrollWheelDown,
+                        ScrollWheelUp = keys_icon.ScrollWheelUp,
+                        NL = keys_icon.NL,
+                        BS = keys_icon.BS,
+                        Space = keys_icon.Space,
+                        Tab = keys_icon.Tab,
+                    },
                 },
-            },
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        },
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            })
+
+            local wk = require("which-key")
+            wk.add({})
+        end,
         keys = {
             {
                 "<leader>?",
@@ -88,43 +93,50 @@ return {
     {
         "uga-rosa/translate.nvim",
         event = event_presets.start_edit,
-        config = function()
-            vim.api.nvim_set_keymap(
-                "n",
-                "mr",
-                "viw:Translate ZH -output=replace<CR>",
-                { noremap = true, silent = true, desc = "󰊿 Translate word online Replace" }
-            )
-            vim.api.nvim_set_keymap(
-                "v",
-                "mr",
-                ":'<,'>Translate ZH -output=replace<CR>",
-                { noremap = true, silent = true, desc = "󰊿 Translate word online Replace" }
-            )
-            vim.api.nvim_set_keymap(
-                "n",
-                "ml",
-                "viw:Translate ZH<CR>",
-                { noremap = true, silent = true, desc = "󰊿 Translate word online" }
-            )
-            vim.api.nvim_set_keymap(
-                "v",
-                "ml",
-                ":'<,'>Translate ZH<CR>",
-                { noremap = true, silent = true, desc = "󰊿 Translate word online" }
-            )
-            require("translate").setup({
-                default = {
-                    command = "translate_shell",
-                },
-                preset = {
-                    command = {
-                        translate_shell = {
-                            args = { "-e", "google" },
-                        },
+        cmd = "Translate",
+        opt = {
+            default = {
+                command = "translate_shell",
+            },
+            preset = {
+                command = {
+                    translate_shell = {
+                        args = { "-e", "google" },
                     },
                 },
-            })
-        end,
+            },
+        },
+        keys = {
+            {
+                "mr",
+                "viw:Translate ZH -output=replace<CR>",
+                noremap = true,
+                silent = true,
+                desc = "󰊿 Translate word online Replace",
+            },
+            {
+                "mr",
+                ":Translate ZH -output=replace<CR>",
+                mode = "v",
+                noremap = true,
+                silent = true,
+                desc = "󰊿 Translate word online Replace",
+            },
+            {
+                "ml",
+                "viw:Translate ZH<CR>",
+                noremap = true,
+                silent = true,
+                desc = "󰊿 Translate word online",
+            },
+            {
+                "ml",
+                ":Translate ZH<CR>",
+                mode = "v",
+                noremap = true,
+                silent = true,
+                desc = "󰊿 Translate word online",
+            },
+        },
     },
 }

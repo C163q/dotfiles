@@ -12,14 +12,18 @@ return {
         enable = true,
         value = ",",
     },
+    search_ingore_case = false,
     trailing_whitespace_highlight = {
         enable = true,
-        highlight_color = "#c00000",
+        highlight_color = "#800000",
         highlight_cterm_color = "red",
         -- toggleterm's vim.bo.buftype is empty when opening for the first time,
         -- and then changes to "terminal".
         disabled_filetypes = { "toggleterm" },
     },
+    flavour = "mocha", -- catppuccin theme flavour
+    undo_file = true, -- https://neovim.io/doc/user/options.html#'undofile'
+    undo_levels = 2000, -- https://neovim.io/doc/user/options.html#'undolevels'
 
     -- Buffer Settings
     irreplaceable_windows = {
@@ -31,7 +35,7 @@ return {
         buftypes = {},
     },
     easy_exit_windows = {
-        filetypes = {},
+        filetypes = { "Trans" },
         buftypes = { "quickfix" },
     },
     bufferline_filter = {

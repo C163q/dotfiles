@@ -74,10 +74,10 @@ For translation plugins, there are extra requirements:
 
    Use `:set noreadonly` to make it editable.
 
-3. **Q**: `rust-analyzer` only enable `default` features by default,
-   how can I enable different features for different projects?
+3. **Q**: `rust-analyzer` only enable `default` features by default.
+   How can I enable different features for different projects?
 
-   **A**: There is many ways to do this.
+   **A**: There are many ways to do this.
 
    **Solution 1:**
 

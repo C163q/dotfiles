@@ -1,7 +1,5 @@
 local event_presets = require("core.config").event_presets
-local browser = require("core.config").browser
 
--- Highlight color
 return {
 
     -- https://github.com/numToStr/Comment.nvim
@@ -14,38 +12,6 @@ return {
         },
     },
 
-    -- https://github.com/windwp/nvim-autopairs
-    -- nvim-autopairs: A super powerful autopair plugin for Neovim that supports multiple characters.
-    {
-        "windwp/nvim-autopairs",
-        event = event_presets.start_insert,
-        config = function()
-            require("config.complement.autopairs")
-        end,
-    },
-
-    --[[
-    -- https://github.com/lukas-reineke/indent-blankline.nvim
-    -- Indent Blankline: This plugin adds indentation guides to Neovim.
-    -- It uses Neovim's virtual text feature and no conceal
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = { 'BufReadPost', 'BufNewFile' },
-        main = "ibl",
-        ---@module "ibl"
-        ---@type ibl.config
-        config = function()
-            local hooks = require "ibl.hooks"
-            hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-                vim.api.nvim_set_hl(0, 'CurrentScope', { fg = "#8a8466" })
-            end)
-            require("ibl").setup({
-                scope = { highlight = 'CurrentScope' }
-            })
-        end,
-    },
-    --]]
-
     -- https://github.com/catgoose/nvim-colorizer.lua
     -- NvChad/nvim-colorizer.lua has moved, supports custom colors. Now being maintained
     -- https://www.reddit.com/r/neovim/comments/1hjjhvb/nvchadnvimcolorizerlua_has_moved_supports_custom/
@@ -54,38 +20,6 @@ return {
         "catgoose/nvim-colorizer.lua",
         event = event_presets.start_edit,
         opts = { -- set to setup table
-        },
-    },
-
-    -- https://github.com/stevearc/conform.nvim
-    -- conform.nvim: Lightweight yet powerful formatter plugin for Neovim
-    {
-        "stevearc/conform.nvim",
-        config = function()
-            require("conform").setup({
-                formatters_by_ft = {
-                    -- You can customize some of the format options for the filetype (:help conform.format)
-                    lua = { "stylua" },
-                    -- Conform will run multiple formatters sequentially
-                    python = { "isort", "black" },
-                    rust = { "rustfmt", lsp_format = "fallback" },
-                    cpp = { "clang-format" },
-                },
-            })
-            require("config.conform")
-        end,
-        event = event_presets.start_edit,
-        version = "*",
-    },
-
-    -- https://github.com/zapling/mason-conform.nvim
-    -- mason-conform.nvim: Automatically install formatters registered with conform.nvim via Mason.
-    {
-        "zapling/mason-conform.nvim",
-        event = event_presets.start_edit,
-        dependencies = {
-            "mason-org/mason.nvim",
-            "stevearc/conform.nvim",
         },
     },
 
@@ -134,37 +68,6 @@ return {
         end,
     },
 
-    -- https://github.com/MeanderingProgrammer/render-markdown.nvim
-    -- render-markdown.nvim: Plugin to improve viewing Markdown files in Neovim
-    {
-        "MeanderingProgrammer/render-markdown.nvim",
-        ft = { "markdown", "codecompanion" },
-        dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
-        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-        ---@module 'render-markdown'
-        ---@type render.md.UserConfig
-        opts = {},
-        version = "*",
-    },
-
-    -- https://github.com/iamcco/markdown-preview.nvim
-    -- markdown-preview.nvim: Markdown Preview for (Neo)vim
-    {
-        "iamcco/markdown-preview.nvim",
-        -- Start the preview
-        -- :MarkdownPreview
-        -- Stop the preview
-        -- :MarkdownPreviewStop
-        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-        build = "cd app && yarn install",
-        config = function()
-            vim.g.mkdp_filetypes = { "markdown" }
-            vim.g.mkdp_browser = browser
-        end,
-        ft = { "markdown" },
-    },
-
     -- https://github.com/kevinhwang91/nvim-ufo
     -- nvim-ufo: The goal of nvim-ufo is to make Neovim's fold look modern and keep high performance.
     {
@@ -173,7 +76,54 @@ return {
         -- event = { 'BufReadPost', 'BufNewFile' }, -- Don't Lazy load to enable specific autocommands
         dependencies = { "kevinhwang91/promise-async" },
         config = function()
-            require("config.ufo")
+            -- Tell the server the capability of foldingRange,
+            -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
+            --[[    Notes: Unnecessary for nvim 0.11+
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true
+            }
+            local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
+            for _, ls in ipairs(language_servers) do
+                require('lspconfig')[ls].setup({
+                    capabilities = capabilities
+                    -- you can add other fields for setting up lsp server in this table
+                })
+            end
+            --]]
+
+            local handler = function(virtText, lnum, endLnum, width, truncate)
+                local newVirtText = {}
+                local suffix = (" 󰁂 %d "):format(endLnum - lnum)
+                local sufWidth = vim.fn.strdisplaywidth(suffix)
+                local targetWidth = width - sufWidth
+                local curWidth = 0
+                for _, chunk in ipairs(virtText) do
+                    local chunkText = chunk[1]
+                    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                    if targetWidth > curWidth + chunkWidth then
+                        table.insert(newVirtText, chunk)
+                    else
+                        chunkText = truncate(chunkText, targetWidth - curWidth)
+                        local hlGroup = chunk[2]
+                        table.insert(newVirtText, { chunkText, hlGroup })
+                        chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                        -- str width returned from truncate() may less than 2nd argument, need padding
+                        if curWidth + chunkWidth < targetWidth then
+                            suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+                        end
+                        break
+                    end
+                    curWidth = curWidth + chunkWidth
+                end
+                table.insert(newVirtText, { suffix, "MoreMsg" })
+                return newVirtText
+            end
+
+            require("ufo").setup({
+                fold_virt_text_handler = handler,
+            })
         end,
     },
 
@@ -185,7 +135,15 @@ return {
         event = "VeryLazy",
         config = function()
             require("flash").setup({})
-            require("config.flash")
+
+            -- This can't be setup in `keys` because we want to override the default `f` and `F` mappings.
+            vim.keymap.set({ "n", "x", "o" }, "f", function()
+                require("flash").jump()
+            end, { desc = "Flash", noremap = true })
+
+            vim.keymap.set({ "n", "x", "o" }, "F", function()
+                require("flash").treesitter()
+            end, { desc = "Flash Treesitter", noremap = true })
         end,
         keys = {
             {
@@ -220,7 +178,7 @@ return {
     {
         "bullets-vim/bullets.vim",
         event = event_presets.start_edit,
-        config = function()
+        init = function()
             -- Note: <CR> for new line with the same bullet, <C-CR> for new line without bullet
             vim.g.bullets_enabled_file_types = {
                 "markdown",
@@ -237,110 +195,38 @@ return {
         "MagicDuck/grug-far.nvim",
         -- Note (lazy loading): grug-far.lua defers all it's requires so it's lazy by default
         -- additional lazy config to defer loading is not really needed...
-        config = function()
-            -- optional setup call to override plugin options
-            -- alternatively you can set options with vim.g.grug_far = { ... }
-            vim.keymap.set({ "n", "v" }, "<Leader>sr", ":GrugFar<CR>", { desc = "Search and Replace", noremap = true })
+        opts = {
+            -- options, see Configuration section below
+            -- there are no required options atm
 
-            vim.keymap.set(
-                "v",
+            --[[
+            -- shortcuts for the actions you see at the top of the buffer
+            -- set to '' or false to unset. Mappings with no normal mode value will be removed from the help header
+            -- you can specify either a string which is then used as the mapping for both normal and insert mode
+            -- or you can specify a table of the form { [mode] = <lhs> } (e.g. { i = '<C-enter>', n = '<localleader>gr'})
+            -- it is recommended to use <localleader> though as that is more vim-ish
+            -- see https://learnvimscriptthehardway.stevelosh.com/chapters/11.html#local-leader
+            keymaps = {
+                replace = { n = '<localleader>r' },
+                -- ...
+            },
+            --]]
+        },
+        keys = {
+            {
+                "<Leader>sr",
+                ":GrugFar<CR>",
+                mode = { "n", "v" },
+                desc = "Search and Replace",
+                noremap = true,
+            },
+            {
                 "<Leader>sR",
                 ":GrugFarWithin<CR>",
-                { desc = "Replace within selection", noremap = true }
-            )
-
-            require("grug-far").setup({
-                -- options, see Configuration section below
-                -- there are no required options atm
-
-                --[[
-                -- shortcuts for the actions you see at the top of the buffer
-                -- set to '' or false to unset. Mappings with no normal mode value will be removed from the help header
-                -- you can specify either a string which is then used as the mapping for both normal and insert mode
-                -- or you can specify a table of the form { [mode] = <lhs> } (e.g. { i = '<C-enter>', n = '<localleader>gr'})
-                -- it is recommended to use <localleader> though as that is more vim-ish
-                -- see https://learnvimscriptthehardway.stevelosh.com/chapters/11.html#local-leader
-                keymaps = {
-                    replace = { n = '<localleader>r' },
-                    qflist = { n = '<localleader>q' },
-                    syncLocations = { n = '<localleader>s' },
-                    syncLine = { n = '<localleader>l' },
-                    close = { n = '<localleader>c' },
-                    historyOpen = { n = '<localleader>t' },
-                    historyAdd = { n = '<localleader>a' },
-                    refresh = { n = '<localleader>f' },
-                    openLocation = { n = '<localleader>o' },
-                    openNextLocation = { n = '<down>' },
-                    openPrevLocation = { n = '<up>' },
-                    gotoLocation = { n = '<enter>' },
-                    pickHistoryEntry = { n = '<enter>' },
-                    abort = { n = '<localleader>b' },
-                    help = { n = 'g?' },
-                    toggleShowCommand = { n = '<localleader>w' },
-                    swapEngine = { n = '<localleader>e' },
-                    previewLocation = { n = '<localleader>i' },
-                    swapReplacementInterpreter = { n = '<localleader>x' },
-                    applyNext = { n = '<localleader>j' },
-                    applyPrev = { n = '<localleader>k' },
-                    syncNext = { n = '<localleader>n' },
-                    syncPrev = { n = '<localleader>p' },
-                    syncFile = { n = '<localleader>v' },
-                    nextInput = { n = '<tab>' },
-                    prevInput = { n = '<s-tab>' },
-                },
-                --]]
-            })
-        end,
+                mode = "v",
+                desc = "Replace within selection",
+                noremap = true,
+            },
+        },
     },
-
-    -- https://github.com/lukas-reineke/virt-column.nvim
-    -- virt-column.nvim: Display a character as the colorcolumn.
-    {
-        "lukas-reineke/virt-column.nvim",
-        event = event_presets.start_edit,
-        config = (function()
-            local enable = true
-            return function()
-                require("virt-column").setup({
-                    enabled = enable,
-                    char = "│",
-                    virtcolumn = "100",
-                })
-                vim.keymap.set("n", "<Leader>vl", function()
-                    enable = not enable
-                    require("virt-column").update({
-                        enabled = enable,
-                    })
-                end, { desc = "Toggle virtual column", noremap = true })
-            end
-        end)(),
-    },
-
-    --[[
-    -- https://github.com/cappyzawa/trim.nvim
-    -- trim.nvim: This plugin trims trailing whitespace and lines.
-    {
-        "cappyzawa/trim.nvim",
-        event = event_presets.start_edit,
-        config = function()
-            -- We just use this plugin to highlight the trailing whitespaces.
-            local config = {
-                trim_on_write = false,
-                trim_trailing = false,
-                trim_last_line = false,
-                trim_first_line = false,
-                trim_current_line = false,
-                highlight = true,
-                highlight_bg = '#c00000',
-                highlight_ctermbg = 'red',
-                notifications = true,
-            }
-            require("trim").setup(config)
-            -- :TrimToggle
-            -- Toggle trim on save.
-            -- :Trim
-            -- Trim the buffer right away. Supports range selection (e.g., :'<,'>Trim to trim only selected lines).
-        end,
-    },
-    --]]
 }

@@ -1,16 +1,6 @@
-return {
-    --[[
-    -- https://github.com/olimorris/onedarkpro.nvim
-    -- onedarkpro colorscheme
-    {
-        "olimorris/onedarkpro.nvim",
-        priority = 1000,
-        config = function()
-            vim.cmd("colorscheme onedark")
-        end
-    },
-    --]]
+local catppuccin_flavour = require("core.config").flavour
 
+return {
     -- https://github.com/catppuccin/nvim
     -- Catppuccin for (Neo)vim
     {
@@ -34,7 +24,7 @@ return {
                         RainbowCyan = { fg = "#56B6C2" },
                     }
                 end,
-                flavour = "mocha",
+                flavour = catppuccin_flavour,
                 styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
                     -- Change the style of comments
                 },
@@ -45,19 +35,17 @@ return {
                     blink_cmp = {
                         style = "bordered",
                     },
+                    dap = true,
+                    dap_ui = true,
+                    flash = true,
                     -- gitsigns = true,
-                    -- nvimtree = true,
-                    treesitter = true,
-                    treesitter_context = true,
-                    -- notify = false,
+                    grug_far = true,
+                    lsp_trouble = true,
                     mini = {
                         enabled = true,
                         indentscope_color = "",
                     },
                     mason = true,
-                    neotree = true,
-                    dap = true,
-                    dap_ui = true,
                     native_lsp = {
                         enabled = true,
                         virtual_text = {
@@ -78,11 +66,14 @@ return {
                             background = true,
                         },
                     },
-                    ufo = true,
-                    telescope = {
+                    neotree = true,
+                    -- notify = false,
+                    snacks = {
                         enabled = true,
-                        -- style = "nvchad"
                     },
+                    treesitter = true,
+                    treesitter_context = true,
+                    ufo = true,
                     which_key = false,
                     -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
                 },

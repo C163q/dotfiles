@@ -1,3 +1,27 @@
+-- https://github.com/L3MON4D3/LuaSnip/issues/258#issuecomment-1429989436
+-- stop snippet when go to normal mode
+-- Shouldn't going to normal mode cancel the "session"? #258
+--
+-- NOTE: solved because of blink.cmp config
+--[[
+-- In the config of `L3MON4D3/LuaSnip`
+vim.api.nvim_create_autocmd("ModeChanged", {
+    pattern = "*",
+    callback = function()
+        if
+            (
+                (vim.v.event.old_mode == "s" and vim.v.event.new_mode == "n")
+                or (vim.v.event.old_mode == "i" and vim.v.event.new_mode == "n")
+            )
+            and require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+            and not require("luasnip").session.jump_active
+        then
+            require("luasnip").unlink_current()
+        end
+    end,
+})
+--]]
+
 local event_presets = require("core.config").event_presets
 
 return {
@@ -16,8 +40,31 @@ return {
         dependencies = { "rafamadriz/friendly-snippets" },
         event = event_presets.start_edit,
         config = function()
-            require("config.complement.luasnip")
+            -- On Neovim 0.11+ with vim.lsp.config, you may skip configuring LSP Capabilities.
+            require("luasnip.loaders.from_vscode").lazy_load()
         end,
+        keys = {
+            {
+                "<Leader>x",
+                function()
+                    if require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] then
+                        require("luasnip").unlink_current()
+                    end
+                end,
+                noremap = true,
+                desc = "clear snippet jump",
+            },
+            {
+                "<C-Tab>",
+                function()
+                    if require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] then
+                        require("luasnip").unlink_current()
+                    end
+                end,
+                mode = { "i", "n" },
+                { noremap = true, desc = "clear snippet jump" },
+            },
+        },
     },
 
     -- https://github.com/folke/lazydev.nvim
@@ -37,152 +84,42 @@ return {
         },
     },
 
-    -- https://github.com/Saghen/blink.cmp
-    -- Blink Completion (blink.cmp): Performant, batteries-included completion plugin for Neovim
+    -- https://github.com/windwp/nvim-autopairs
+    -- nvim-autopairs: A super powerful autopair plugin for Neovim that supports multiple characters.
     {
-        "saghen/blink.cmp",
-        dependencies = {
-            "rafamadriz/friendly-snippets",
-            "L3MON4D3/LuaSnip",
-            { "xzbdmw/colorful-menu.nvim", opts = {} },
-            "fang2hou/blink-copilot",
-        },
+        "windwp/nvim-autopairs",
         event = event_presets.start_insert,
-        version = "1.*",
-        opts = {
-            completion = {
-                documentation = {
-                    auto_show = true,
-                },
-                list = {
-                    selection = { auto_insert = false },
-                },
-                menu = {
-                    draw = {
-                        -- We don't need label_description now because label and label_description are already
-                        -- combined together in label by colorful-menu.nvim.
-                        columns = { { "kind_icon" }, { "label", gap = 1 } },
-                        components = {
-                            label = {
-                                text = function(ctx)
-                                    return require("colorful-menu").blink_components_text(ctx)
-                                end,
-                                highlight = function(ctx)
-                                    return require("colorful-menu").blink_components_highlight(ctx)
-                                end,
-                            },
-                        },
-                    },
-                },
-                ghost_text = {
-                    enabled = true,
-                },
-            },
-            keymap = {
-                -- unknown bug that `"scroll_documentation_up"` doesn't work properly,
-                -- but `cmp.scroll_documentation_up(num)` works fine.
-                --
-                -- unknown bug that you have to press `<C-g>` twice to scroll down.
-                ["<C-f>"] = { function(cmp) cmp.scroll_documentation_up(5) end, "fallback" },
-                ["<C-g>"] = { function(cmp) cmp.scroll_documentation_down(5) end, "fallback" },
+        config = function()
+            local npairs_ok, npairs = pcall(require, "nvim-autopairs")
+            if not npairs_ok then
+                return
+            end
 
-                ["<C-s>"] = { "hide" },
-                ["<C-b>"] = { "show", "show_documentation", "hide_documentation" },
-                ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+            npairs.setup({
+                check_ts = true,
+                ts_config = {
+                    lua = { "string", "source" },
+                    javascript = { "string", "template_string" },
+                },
+                fast_wrap = {
+                    map = "<M-e>",
+                    chars = { "{", "[", "(", '"', "'" },
+                    pattern = [=[[%'%"%)%>%]%)%}%,]]=],
+                    end_key = "$",
+                    keys = "qwertyuiopzxcvbnmasdfghjkl",
+                    check_comma = true,
+                    highlight = "Search",
+                    highlight_grey = "Comment",
+                },
+            })
 
-                ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
-                ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
-                ["<C-Tab>"] = {
-                    function(cmp)
-                        return cmp.select_next({ count = 3 })
-                    end,
-                    "fallback",
-                },
-                ["<C-S-Tab>"] = {
-                    function(cmp)
-                        return cmp.select_prev({ count = 3 })
-                    end,
-                    "fallback",
-                },
-
-                ["<Up>"] = { "select_prev", "fallback" },
-                ["<Down>"] = { "select_next", "fallback" },
-                ["<C-Down>"] = {
-                    function(cmp)
-                        return cmp.select_next({ count = 3 })
-                    end,
-                    "fallback",
-                },
-                ["<C-Up>"] = {
-                    function(cmp)
-                        return cmp.select_prev({ count = 3 })
-                    end,
-                    "fallback",
-                },
-
-                ["<CR>"] = { "accept", "fallback" },
-                ["<C-y>"] = { "select_and_accept" },
-
-                ["<C-Left>"] = { "snippet_backward", "fallback" },
-                ["<C-Right>"] = { "snippet_forward", "fallback" },
-
-                ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
-
-                -- override default configs
-                ["<C-e>"] = { "fallback" },
-            },
-            signature = {
-                enabled = true,
-            },
-            cmdline = {
-                completion = {
-                    list = {
-                        selection = { preselect = false, auto_insert = true },
-                    },
-                    menu = {
-                        auto_show = true,
-                    },
-                },
-            },
-            snippets = {
-                preset = "luasnip",
-                -- SOLVE: snippet_forward is still triggerable after user has moved on
-                -- see: https://github.com/Saghen/blink.cmp/issues/1805#issuecomment-2919327795
-                active = function(filter)
-                    local snippet = require("luasnip")
-                    local blink = require("blink.cmp")
-                    if snippet.in_snippet() and not blink.is_visible() then
-                        return true
-                    else
-                        if not snippet.in_snippet() and vim.fn.mode() == "n" then
-                            snippet.unlink_current()
-                        end
-                        return false
-                    end
-                end,
-            },
-            sources = {
-                -- add lazydev to your completion providers
-                default = { "copilot", "lazydev", "lsp", "path", "snippets", "buffer" },
-                providers = {
-                    copilot = {
-                        name = "Copilot",
-                        module = "blink-copilot",
-                        score_offset = 100,
-                        async = true,
-                    },
-                    lazydev = {
-                        name = "LazyDev",
-                        module = "lazydev.integrations.blink",
-                        -- make lazydev completions top priority (see `:h blink.cmp`)
-                        score_offset = 96,
-                        async = true,
-                    },
-                },
-                per_filetype = {
-                    codecompanion = { "codecompanion" },
-                },
-            },
-        },
+            -- This allows cmp to add the branket automatically when autocompleting.
+            local cmp_status_ok, cmp = pcall(require, "cmp")
+            if not cmp_status_ok then
+                return
+            end
+            local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+            cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+        end,
     },
 }

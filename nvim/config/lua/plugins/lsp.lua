@@ -55,47 +55,6 @@ return {
         version = "*",
     },
 
-    -- https://github.com/folke/trouble.nvim
-    -- Trouble: A pretty list for showing diagnostics, references, telescope results,
-    -- quickfix and location lists to help you solve all the trouble your code is causing.
-    {
-        "folke/trouble.nvim",
-        opts = {}, -- for default options, refer to the configuration section for custom setup.
-        cmd = "Trouble",
-        keys = {
-            {
-                "<leader>lx",
-                "<cmd>Trouble diagnostics toggle<cr>",
-                desc = "Trouble: Diagnostics",
-            },
-            {
-                "<leader>lX",
-                "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-                desc = "Trouble: Buffer Diagnostics",
-            },
-            {
-                "<leader>ls",
-                "<cmd>Trouble symbols toggle focus=false<cr>",
-                desc = "Trouble: Symbols",
-            },
-            {
-                "<leader>ll",
-                "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-                desc = "Trouble: LSP Definitions / references / ...",
-            },
-            {
-                "<leader>lL",
-                "<cmd>Trouble loclist toggle<cr>",
-                desc = "Trouble: Location List",
-            },
-            {
-                "<leader>lQ",
-                "<cmd>Trouble qflist toggle<cr>",
-                desc = "Trouble: Quickfix List",
-            },
-        },
-    },
-
     -- https://github.com/mrcjkb/rustaceanvim
     -- rustaceanvim: Supercharge your Rust experience in Neovim! A heavily modified fork of rust-tools.nvim
     {
