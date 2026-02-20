@@ -1,9 +1,9 @@
 -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_semanticTokens
 -- https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
 
-vim.api.nvim_create_augroup("CustomHighlight", { clear = true })
+vim.api.nvim_create_augroup("ConfigCustomHighlight", { clear = true })
 vim.api.nvim_create_autocmd("ColorScheme", {
-    group = "CustomHighlight",
+    group = "ConfigCustomHighlight",
     pattern = "*",
     callback = function() end,
 })
@@ -38,8 +38,9 @@ vim.api.nvim_set_hl(0, "@lsp.mod.documentation", { bold = true })
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, sp = "#F9E2AF" })
 
 -- C/C++ Specific
-vim.api.nvim_create_augroup("CCppSpeicalHighlight", { clear = true })
+vim.api.nvim_create_augroup("ConfigCCppSpeicalHighlight", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
+    group = "ConfigCCppSpeicalHighlight",
     pattern = { "c", "cpp", "cxx", "C", "h", "hpp" },
     callback = function()
         vim.schedule(function()
@@ -59,8 +60,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Rust Specific
-vim.api.nvim_create_augroup("RustSpecialHighlight", { clear = true })
+vim.api.nvim_create_augroup("ConfigRustSpecialHighlight", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
+    group = "ConfigRustSpecialHighlight",
     pattern = { "rust" },
     callback = function()
         vim.schedule(function()

@@ -7,10 +7,10 @@ vim.api.nvim_create_user_command("ComplieCommandsFix", function()
     vim.cmd("w")
 end, { nargs = 0 })
 
-vim.api.nvim_create_augroup("IrreplaceableWindows", { clear = true })
+vim.api.nvim_create_augroup("ConfigIrreplaceableWindows", { clear = true })
 -- make windows impossible to be replaced
 vim.api.nvim_create_autocmd("BufWinEnter", {
-    group = "IrreplaceableWindows",
+    group = "ConfigIrreplaceableWindows",
     pattern = "*",
     callback = function()
         local filetypes_or = config.irreplaceable_windows.filetypes
@@ -23,10 +23,10 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     end,
 })
 
-vim.api.nvim_create_augroup("NvimUFOIgnore", { clear = true })
+vim.api.nvim_create_augroup("ConfigNvimUFOIgnore", { clear = true })
 -- nvim-ufo ignore filetype
 vim.api.nvim_create_autocmd("FileType", {
-    group = "NvimUFOIgnore",
+    group = "ConfigNvimUFOIgnore",
     pattern = "*",
     callback = function()
         local buftype = config.ufo_plugin_ignore.buftypes
@@ -51,10 +51,10 @@ vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
 })
 --]]
 
-vim.api.nvim_create_augroup("WinEasyExitDapFloat", { clear = true })
+vim.api.nvim_create_augroup("ConfigWinEasyExitDapFloat", { clear = true })
 -- make dap-float easy to exit
 vim.api.nvim_create_autocmd("FileType", {
-    group = "WinEasyExitDapFloat",
+    group = "ConfigWinEasyExitDapFloat",
     pattern = { "dap-float" },
     callback = function()
         local buffer_id = vim.fn.bufnr()
@@ -76,10 +76,10 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
-vim.api.nvim_create_augroup("WinEasyExitBufType", { clear = true })
+vim.api.nvim_create_augroup("ConfigWinEasyExitBufType", { clear = true })
 -- make windows easy to exit
 vim.api.nvim_create_autocmd("FileType", {
-    group = "WinEasyExitBufType",
+    group = "ConfigWinEasyExitBufType",
     pattern = "*",
     callback = function()
         local filetypes = config.easy_exit_windows.filetypes
@@ -99,7 +99,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Highlight trailing whitespaces
 -- inspired by [trim.nvim](https://github.com/cappyzawa/trim.nvim)
 if config.trailing_whitespace_highlight.enable then
-    local augroup = vim.api.nvim_create_augroup("TrailingWhitespaceHighlight", { clear = true })
+    local augroup = vim.api.nvim_create_augroup("ConfigTrailingWhitespaceHighlight", { clear = true })
     vim.api.nvim_create_autocmd("FileType", {
         group = augroup,
         callback = function()
@@ -108,11 +108,11 @@ if config.trailing_whitespace_highlight.enable then
                 vim.bo.buftype == ""
                 and not vim.tbl_contains(config.trailing_whitespace_highlight.disabled_filetypes, vim.bo.filetype)
             then
-                vim.fn.matchadd("TrailingWhitespace", "\\s\\+$")
+                vim.fn.matchadd("ConfigTrailingWhitespace", "\\s\\+$")
             end
         end,
     })
-    vim.api.nvim_set_hl(0, "TrailingWhitespace", {
+    vim.api.nvim_set_hl(0, "ConfigTrailingWhitespace", {
         bg = config.trailing_whitespace_highlight.highlight_color,
         ctermbg = config.trailing_whitespace_highlight.highlight_cterm_color,
     })

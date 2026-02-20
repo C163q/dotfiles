@@ -32,6 +32,7 @@ Usually, this folder should be placed at `${XDG_CONFIG_HOME}`.
 - `fd`
 - `jq`
 - `yarn`
+- `libuv`
 - `xdg-utils` (WSL)
 - `vectorcode` (`uv tool install vectorcode`)
 - `ast-grep` (Optional)

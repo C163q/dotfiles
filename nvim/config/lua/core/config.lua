@@ -14,7 +14,7 @@ return {
     },
     search_ingore_case = false,
     trailing_whitespace_highlight = {
-        enable = true,
+        enable = false,
         highlight_color = "#800000",
         highlight_cterm_color = "red",
         -- toggleterm's vim.bo.buftype is empty when opening for the first time,
@@ -60,6 +60,13 @@ return {
         start_insert = { "InsertEnter" },
         load_ai = { "InsertEnter" },
     },
+    code_action = {
+        enable = true,
+        text = "💡", -- "󰌶"
+        hl = "#FFFFAD",
+        priority = 40,
+        interval = 150, -- We don't want to show code action icon immediately, because it may cause performance issue.
+    },
     icon = {
         diagnostics = {
             warn = "",
@@ -101,5 +108,6 @@ return {
             Space = "󱁐 ",
             Tab = "󰌒 ",
         },
+
     },
 }
