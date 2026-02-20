@@ -396,6 +396,13 @@ return {
                 desc = "Explore Recent",
             },
             {
+                "<Leader>eM",
+                function()
+                    Snacks.picker.man()
+                end,
+                desc = "Explore System Manuals",
+            },
+            {
                 "<Leader>gw",
                 function()
                     Snacks.lazygit.open()

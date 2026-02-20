@@ -266,3 +266,10 @@ end, {
     noremap = true,
     desc = "LSP rename",
 })
+
+vim.keymap.set({ "n", "x" }, "<Leaderla>", function()
+    vim.lsp.buf.code_action()
+end, {
+    noremap = true,
+    desc = "LSP code action",
+})

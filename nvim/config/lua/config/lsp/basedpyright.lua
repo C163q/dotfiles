@@ -43,15 +43,15 @@ function M.basedpyright_disable_annotation_missing_check(choice)
         reportAny = "none",
         reportUnannotatedClassAttribute = "none",
     }, {
-        reportUnknownParameterType = "warning",
-        reportUnknownArgumentType = "warning",
-        reportUnknownLambdaType = "warning",
-        reportUnknownVariableType = "warning",
-        reportUnknownMemberType = "warning",
-        reportMissingParameterType = "warning",
-        reportMissingTypeArgument = "warning",
-        reportAny = "warning",
-        reportUnannotatedClassAttribute = "warning",
+        reportUnknownParameterType = nil,
+        reportUnknownArgumentType = nil,
+        reportUnknownLambdaType = nil,
+        reportUnknownVariableType = nil,
+        reportUnknownMemberType = nil,
+        reportMissingParameterType = nil,
+        reportMissingTypeArgument = nil,
+        reportAny = nil,
+        reportUnannotatedClassAttribute = nil,
     })
 end
 
@@ -63,11 +63,11 @@ function M.basedpyright_unused_warning(choice)
         reportUnusedClass = "warning",
         reportDuplicateImport = "warning",
     }, {
-        reportUnusedImport = "none",
-        reportUnusedClass = "none",
-        reportUnusedFunction = "none",
-        reportUnusedVariable = "none",
-        reportDuplicateImport = "none",
+        reportUnusedImport = nil,
+        reportUnusedClass = nil,
+        reportUnusedFunction = nil,
+        reportUnusedVariable = nil,
+        reportDuplicateImport = nil,
     })
 end
 
@@ -75,7 +75,7 @@ function M.basedpyright_allow_unused_return(choice)
     basedpyright_config(choice, {
         reportUnusedCallResult = "none",
     }, {
-        reportUnusedCallResult = "warning",
+        reportUnusedCallResult = nil,
     })
 end
 
@@ -83,8 +83,18 @@ function M.basedpyright_deprecated_warning(choice)
     basedpyright_config(choice, {
         reportDeprecated = "warning",
     }, {
-        reportDeprecated = "none",
+        reportDeprecated = nil,
     })
+end
+
+function M.setup()
+    local config = require("core.config")
+    M.basedpyright_disable_annotation_missing_check(
+        config.basedpyright_disable_annotation_missing_check
+    )
+    M.basedpyright_unused_warning(config.basedpyright_unused_warning)
+    M.basedpyright_deprecated_warning(config.basedpyright_deprecated_warning)
+    M.basedpyright_allow_unused_return(config.basedpyright_allow_unused_return)
 end
 
 return M

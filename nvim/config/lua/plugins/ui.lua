@@ -160,4 +160,12 @@ return {
             end
         end)(),
     },
+
+    -- https://github.com/nvim-zh/colorful-winsep.nvim
+    -- colorful-winsep.nvim: configurable window separator
+    {
+        "nvim-zh/colorful-winsep.nvim",
+        opts = {},
+        event = { "WinLeave" },
+    },
 }

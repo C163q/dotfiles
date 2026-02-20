@@ -291,4 +291,45 @@ return {
             },
         },
     },
+
+    -- https://github.com/mrjones2014/codesettings.nvim
+    -- codesettings.nvim: Easily read your project's local settings files and merge them into your
+    -- Neovim 0.11+ native LSP configuration.
+    {
+        "mrjones2014/codesettings.nvim",
+        config = function()
+            require("codesettings").setup({
+                ---Look for these config files
+                config_file_paths = { ".vscode/settings.json", "codesettings.json", "lspsettings.json" },
+                ---List of loader extensions to use when loading settings; `string` values will be `require`d
+                loader_extensions = { "codesettings.extensions.vscode" },
+            })
+            --[[
+            -- This requires to overwrite the `before_init` function for all LSPs.
+            -- We actually need `before_init` in `nvim-lspconfig`, so we can't just set it here.
+            vim.lsp.config('*', {
+                before_init = function(_, config)
+                    local codesettings = require('codesettings')
+                    codesettings.with_local_settings(config.name, config)
+                end,
+            })
+            --]]
+            local codesettings = require("codesettings")
+            local lsp_config = require("config.lsp")
+            for _, lsp_name in ipairs(lsp_config.lsp_list) do
+                if lsp_name ~= "rust-analyzer" then
+                    -- rust-analyzer is enabled by rustaceanvim, so we skip it here to avoid conflicts
+                    local local_config = lsp_config.get_local_settings(lsp_name)
+                    local success, final_config =
+                        pcall(codesettings.with_local_settings, lsp_name, local_config)
+                    if success then
+                        vim.lsp.config(lsp_name, final_config)
+                    end
+                end
+            end
+        end,
+        -- I recommend loading on these filetype so that the
+        -- jsonls integration, lua_ls integration, and jsonc filetype setup works
+        ft = { "json", "jsonc", "lua" },
+    },
 }

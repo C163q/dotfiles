@@ -60,7 +60,7 @@ return {
     {
         -- This plugin automatically configures the rust-analyzer builtin LSP client and integrates with other Rust tools.
         "mrcjkb/rustaceanvim",
-        version = "^6", -- Recommended
+        version = "^8", -- Recommended
         lazy = false, -- This plugin is already lazy
     },
 

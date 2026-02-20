@@ -11,10 +11,8 @@ local M = {}
 ---@field callbacks table<string, function>
 ---@field displays table<string, string>
 
-M.setup = function()
-    ---@type table<string, ClientSelections>
-    M.lsp_selections = {}
-end
+---@type table<string, ClientSelections>
+M.lsp_selections = M.lsp_selections or {}
 
 ---@param client_name string
 ---@param id string

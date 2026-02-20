@@ -8,7 +8,7 @@ M.setup = function()
     vim.g.rustaceanvim = {
         server = {
             on_init = function(client, _)
-                M.lsp_name = client.name
+                M.lsp_name = client.name or "rust-analyzer"
                 -- rust-analyzer: change features dynamically
                 lsp_core.add_lsp_selection(M.lsp_name, 'ChFeat', 'set features', function()
                     local new_features = {}
@@ -40,7 +40,7 @@ M.setup = function()
                     -- end
                 end)
             end
-        }
+        },
     }
 end
 

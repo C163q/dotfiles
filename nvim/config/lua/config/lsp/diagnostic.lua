@@ -285,6 +285,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- offloads upon detachment
         vim.api.nvim_create_autocmd("LspDetach", {
             group = vim.api.nvim_create_augroup("LSPDetachCleanUp", { clear = true }),
+            ---@diagnostic disable-next-line: unused-local
             callback = function(detach_event)
                 -- vim.lsp.buf.clear_references()
                 -- vim.api.nvim_clear_autocmds({ group = 'LSPDocumentHighlightToggle', buffer = detach_event.buf })
