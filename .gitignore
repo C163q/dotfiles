@@ -35,3 +35,7 @@ yazi/plugins/
 # with package manager manually and no file record the plugins and flavors to install.
 # yazi/package.toml
 
+# `config.jsonc` in fastfetch should vary in different terminals.
+# We just provide a `config` directory to store the configs for different terminals,
+# and users can link the one they need to `config.jsonc`.
+fastfetch/config.jsonc
