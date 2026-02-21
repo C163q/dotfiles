@@ -215,6 +215,7 @@ local code_action = {
     timer = nil,
     inrender_id = 0,
     inrender_buf = nil,
+    enable = user_config.code_action.enable,
 }
 
 code_action.timer = uv.new_timer()
@@ -318,7 +319,7 @@ local function render_lightbulb()
     }
 
     ---@diagnostic disable-next-line: unused-local
-    lsp.buf_request_all(bufnr, "textDocument/codeAction", params, function(results, ctx, config)
+    lsp.buf_request_all(bufnr, vim.lsp.protocol.Methods.textDocument_codeAction, params, function(results, ctx, config)
         if vim.api.nvim_get_current_buf() ~= bufnr then
             return
         end
@@ -327,11 +328,22 @@ local function render_lightbulb()
 
         if result and #result > 0 then
             update_lightbulb(bufnr, row)
-        -- else
-        --     update_lightbulb(bufnr, nil)
+            -- else
+            --     update_lightbulb(bufnr, nil)
         end
     end)
 end
+
+vim.keymap.set("n", "<Leader>'", function()
+    if code_action.enable == false then
+        code_action.enable = true
+        vim.notify("Code Action Lightbulb Enabled", vim.log.levels.INFO)
+    else
+        code_action.enable = false
+        update_lightbulb(code_action.inrender_buf, nil)
+        vim.notify("Code Action Lightbulb Disabled", vim.log.levels.INFO)
+    end
+end, { noremap = true, desc = "Toggle Code Action Marker" })
 -- ###########################################
 -- #     CODE ACTION SIGN DEFINITION END     #
 -- ###########################################
@@ -442,48 +454,82 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
         --]]
 
-        vim.api.nvim_create_augroup(code_action.group, { clear = true })
-        local code_action_autocmd_opt = {
-            group = code_action.group,
-            buffer = event.buf,
-            callback = function(args)
-                local buf = args.buf
-                if code_action.timer == nil then
-                    return
-                end
-                code_action.timer:stop()
-                update_lightbulb(code_action.inrender_buf, nil)
-                code_action.timer:start(
-                    user_config.code_action.interval,
-                    0,
-                    vim.schedule_wrap(function()
-                        code_action.timer:stop()
-                        if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_get_current_buf() == buf then
-                            render_lightbulb()
-                        end
-                    end)
-                )
-            end,
-        }
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_codeAction) then
+            local cmd_group = "ConfigCodeAction_" .. event.buf
+            local ok = pcall(vim.api.nvim_get_autocmds, { group = cmd_group })
 
-        vim.keymap.set("n", "<Leader>'", (function ()
-            local la_autocmd_id = nil
-            if user_config.code_action.enable then
-                la_autocmd_id = vim.api.nvim_create_autocmd("CursorMoved", code_action_autocmd_opt)
+            if not ok then
+                local group = vim.api.nvim_create_augroup(cmd_group, { clear = true })
+                local code_action_autocmd_opt = {
+                    group = group,
+                    buffer = event.buf,
+                    callback = function(args)
+                        if code_action.enable == false then
+                            return
+                        end
+                        local buf = args.buf
+                        if code_action.timer == nil then
+                            return
+                        end
+                        code_action.timer:stop()
+                        update_lightbulb(code_action.inrender_buf, nil)
+                        code_action.timer:start(
+                            user_config.code_action.interval,
+                            0,
+                            vim.schedule_wrap(function()
+                                code_action.timer:stop()
+                                if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_get_current_buf() == buf then
+                                    render_lightbulb()
+                                end
+                            end)
+                        )
+                    end,
+                }
+
+                vim.api.nvim_create_autocmd("BufLeave", {
+                    group = group,
+                    buffer = event.buf,
+                    callback = function(args)
+                        update_lightbulb(args.buf, nil)
+                    end,
+                })
+
+                vim.api.nvim_create_autocmd("CursorMoved", code_action_autocmd_opt)
+
+                vim.api.nvim_create_autocmd("LspDetach", {
+                    buffer = event.buf,
+                    group = group,
+                    ---@diagnostic disable-next-line: unused-local
+                    callback = function(detach_event)
+                        pcall(vim.api.nvim_del_augroup_by_name, cmd_group)
+                    end,
+                })
+                --[[
+                vim.keymap.set(
+                    "n",
+                    "<Leader>'",
+                    (function()
+                        local la_autocmd_id = nil
+                        if user_config.code_action.enable then
+                            la_autocmd_id = vim.api.nvim_create_autocmd("CursorMoved", code_action_autocmd_opt)
+                        end
+                        return function()
+                            if la_autocmd_id == nil then
+                                la_autocmd_id = vim.api.nvim_create_autocmd("CursorMoved", code_action_autocmd_opt)
+                                vim.notify("Code Action Lightbulb Enabled", vim.log.levels.INFO)
+                            else
+                                local tmp_id = la_autocmd_id
+                                la_autocmd_id = nil
+                                update_lightbulb(code_action.inrender_buf, nil)
+                                vim.api.nvim_del_autocmd(tmp_id)
+                                vim.notify("Code Action Lightbulb Disabled", vim.log.levels.INFO)
+                            end
+                        end
+                    end)(),
+                    { noremap = true, desc = "Toggle Code Action Marker", buffer = event.buf }
+                )
+                --]]
             end
-            return function()
-                if la_autocmd_id == nil then
-                    la_autocmd_id = vim.api.nvim_create_autocmd("CursorMoved", code_action_autocmd_opt)
-                    vim.notify("Code Action Lightbulb Enabled", vim.log.levels.INFO)
-                else
-                    local tmp_id = la_autocmd_id
-                    la_autocmd_id = nil
-                    update_lightbulb(code_action.inrender_buf, nil)
-                    vim.api.nvim_del_autocmd(tmp_id)
-                    vim.notify("Code Action Lightbulb Disabled", vim.log.levels.INFO)
-                end
-            end
-        end)(),
-        { noremap = true, desc = "Toggle Code Action Marker" })
+        end
     end,
 })
