@@ -46,8 +46,8 @@ return {
         event = event_presets.load_ai,
         cmd = "Copilot",
         config = function()
-            local enable_nes = require("core.config").enable_copilot_nes
-            local enable_suggestions = require("core.config").enable_copilot_immediate_suggestions
+            local enable_nes = require("core.config").copilot.enable_nes
+            local enable_suggestions = require("core.config").copilot.enable_immediate_suggestions
             require("copilot").setup({
                 nes = {
                     enabled = enable_nes,

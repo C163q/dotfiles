@@ -205,7 +205,7 @@ vim.diagnostic.config({
 -- #    CODE ACTION SIGN DEFINITION BEGIN    #
 -- ###########################################
 -- lightbulb when code action is available
--- inspired by [lspsaga.nvim](https://github.com/nvimdev/lspsaga.nvim)
+-- **Reference:** inspired by [lspsaga.nvim](https://github.com/nvimdev/lspsaga.nvim)
 local uv = vim.uv
 local code_action = {
     namespace = vim.api.nvim_create_namespace("ConfigCodeActionSign"),
@@ -317,6 +317,7 @@ local function render_lightbulb()
         diagnostics = diagnostic_vim_to_lsp(vim.diagnostic.get(bufnr, { lnum = row })),
     }
 
+    ---@diagnostic disable-next-line: unused-local
     lsp.buf_request_all(bufnr, "textDocument/codeAction", params, function(results, ctx, config)
         if vim.api.nvim_get_current_buf() ~= bufnr then
             return

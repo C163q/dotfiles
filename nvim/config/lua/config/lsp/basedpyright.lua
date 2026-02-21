@@ -3,7 +3,7 @@ local M = {}
 ---@param choice boolean
 ---@param overrides table | nil
 ---@param original table | nil
-local function basedpyright_config(choice, overrides, original)
+local function make_config(choice, overrides, original)
     local overrides_tbl = overrides or {}
     local original_tbl = original or {}
     if choice then
@@ -31,8 +31,8 @@ end
 
 --- Configure basedpyright LSP server
 ---@param choice boolean
-function M.basedpyright_disable_annotation_missing_check(choice)
-    basedpyright_config(choice, {
+function M.disable_annotation_missing_check(choice)
+    make_config(choice, {
         reportUnknownParameterType = "none",
         reportUnknownArgumentType = "none",
         reportUnknownLambdaType = "none",
@@ -55,8 +55,8 @@ function M.basedpyright_disable_annotation_missing_check(choice)
     })
 end
 
-function M.basedpyright_unused_warning(choice)
-    basedpyright_config(choice, {
+function M.unused_warning(choice)
+    make_config(choice, {
         reportUnusedImport = "warning",
         reportUnusedVariable = "warning",
         reportUnusedFunction = "warning",
@@ -71,16 +71,16 @@ function M.basedpyright_unused_warning(choice)
     })
 end
 
-function M.basedpyright_allow_unused_return(choice)
-    basedpyright_config(choice, {
+function M.allow_unused_return(choice)
+    make_config(choice, {
         reportUnusedCallResult = "none",
     }, {
         reportUnusedCallResult = nil,
     })
 end
 
-function M.basedpyright_deprecated_warning(choice)
-    basedpyright_config(choice, {
+function M.deprecated_warning(choice)
+    make_config(choice, {
         reportDeprecated = "warning",
     }, {
         reportDeprecated = nil,
@@ -88,13 +88,13 @@ function M.basedpyright_deprecated_warning(choice)
 end
 
 function M.setup()
-    local config = require("core.config")
-    M.basedpyright_disable_annotation_missing_check(
-        config.basedpyright_disable_annotation_missing_check
+    local config = require("core.config").basedpyright
+    M.disable_annotation_missing_check(
+        config.disable_annotation_missing_check
     )
-    M.basedpyright_unused_warning(config.basedpyright_unused_warning)
-    M.basedpyright_deprecated_warning(config.basedpyright_deprecated_warning)
-    M.basedpyright_allow_unused_return(config.basedpyright_allow_unused_return)
+    M.unused_warning(config.unused_warning)
+    M.deprecated_warning(config.deprecated_warning)
+    M.allow_unused_return(config.allow_unused_return)
 end
 
 return M

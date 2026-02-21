@@ -15,16 +15,15 @@ Usually, this folder should be placed at `${XDG_CONFIG_HOME}`.
 - `unzip`
 - `tar`
 - `gzip`
-- `tree-sitter CLI` (https://github.com/tree-sitter/tree-sitter)
+- [`tree-sitter CLI`](https://github.com/tree-sitter/tree-sitter)
 - `node` (`Node.js`) 20 or higher
-- `pylatexenc` (Optional)
-- `ripgrep` (https://github.com/BurntSushi/ripgrep)
+- [`ripgrep`](https://github.com/BurntSushi/ripgrep)
 - `lua`
 - `julia`
 - `sqlite3`
 - `rust-analyzer` (install manually instead of using `mason` for the requirement of `rustaceanvim`)
-    - see [mrcjkb/rustaceanvim](https://github.com/mrcjkb/rustaceanvim?tab=readme-ov-file#masonnvim-and-nvim-lspconfig) for more information
-    - install: [rust-analyzer book](https://rust-analyzer.github.io/book/rust_analyzer_binary.html#rustup)
+  - see [mrcjkb/rustaceanvim](https://github.com/mrcjkb/rustaceanvim?tab=readme-ov-file#masonnvim-and-nvim-lspconfig) for more information
+  - install: [rust-analyzer book](https://rust-analyzer.github.io/book/rust_analyzer_binary.html#rustup)
 - `pkg-config`
 - `npm`
 - `luarocks`
@@ -35,6 +34,7 @@ Usually, this folder should be placed at `${XDG_CONFIG_HOME}`.
 - `libuv`
 - `xdg-utils` (WSL)
 - `vectorcode` (`uv tool install vectorcode`)
+- `pylatexenc` (Optional)
 - `ast-grep` (Optional)
 
 The following tools will not be automatically installed by `Mason`, so you may install manually with `Mason`:
@@ -47,18 +47,28 @@ The following tools will not be automatically installed by `Mason`, so you may i
 - `black`
 - `rustfmt` (use `rustup`)
 
-For translation plugins, there are extra requirements:
+For translation plugins, these are the extra requirements:
 
 - [English to Chinese Dictionary Database](https://github.com/skywind3000/ECDICT).
   Place it at `${HOME}/Documents/dict/ultimate.db`
 - `festival` and `festvox-kallpc16k` (Optional for `auto_play` of `Trans.nvim`)
 - [translate-shell](https://github.com/soimort/translate-shell)
 
+## Usage
+
+Simply put this directory in `${XDG_CONFIG_HOME}` and everything will work.
+
+`${XDG_CONFIG_HOME}` usually means `~/.config` in linux.
+
+## Configuartion
+
+Custom configuartions can be done in the [config file](./config/lua/core/config.lua).
+
 ## FAQs
 
-1. **Q**: Clipboard doesn't work for `WSL`.
+1. **Q**: Clipboard doesn't work in `WSL`.
 
-   **A**: This question was answered in [neovim issue#12092](https://github.com/neovim/neovim/issues/12092).
+   **A**: This question has been answered in [neovim issue#12092](https://github.com/neovim/neovim/issues/12092).
 
    But my solution is:
 
@@ -67,22 +77,22 @@ For translation plugins, there are extra requirements:
    Somethings you can't execute `.exe` (PE32+ executable) in WSL, this is actually a bug.
    You can find the solution [here](https://github.com/microsoft/WSL/issues/8952#issuecomment-1568212651).
 
-2. **Q**: Neovim opened the file with the wrong file encoding.
+2. **Q**: Neovim opens a file with the wrong file encoding.
 
    **A**: Neovim will predict the encoding, but it may be wrong.
 
-   Use `:e ++enc=utf-8` to open file using UTF-8. This will reopen the file in **READ ONLY** mode using utf-8 encoding.
+   Use `:e ++enc=utf-8` to reopen the current file using UTF-8. This will reopen it in the **READ ONLY** mode in utf-8.
 
    Use `:set noreadonly` to make it editable.
 
 3. **Q**: `rust-analyzer` only enable `default` features by default.
    How can I enable different features for different projects?
 
-   **A**: There are many ways to do this.
+   **A**: There are many ways.
 
    **Solution 1:**
 
-   Add `vim.o.exrc = true` in config file. Neovim will try to execute `.nvim.lua` in the root of the workspace.
+   Add `vim.o.exrc = true` to the config file. Neovim will try to execute `.nvim.lua` in the root of the workspace.
 
    Then put your configs in this file, for example:
 
