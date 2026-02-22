@@ -1,9 +1,9 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "88990a6"
-hash = "3996fc74044bc44144b323686f887e1"
+rev = "b224ddf"
+hash = "6fa6a05a81c98dd000fbca3cca6e9682"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:dracula"
-rev = "9e053d0"
+rev = "3001521"
 hash = "8589ae0231756a9daf9c072f31b1fe0"

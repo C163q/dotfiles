@@ -108,7 +108,7 @@ compinit
 # End of lines added by compinstall
 
 # ensure always show dotfiles for file completion
-_comp_options+=(globdots)  
+_comp_options+=(globdots)
 
 # You may need to manually set your language environment
 export LANG="en_US.UTF-8"
@@ -124,13 +124,15 @@ export LC_ALL="en_US.UTF-8"
 # Compilation flags
 export ARCHFLAGS="-arch $(uname -m)"
 
-# Load profiles from ~/.bashrc.d
-if test -d $HOME/.config/zsh; then
-    for tmp_profile in $HOME/.config/zsh/*.zsh; do
+# Load profiles from ~/.config/zsh
+MY_ZSH_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+if [[ -d "$MY_ZSH_CONFIG_DIR" ]]; then
+    for tmp_profile in "$MY_ZSH_CONFIG_DIR"/*.zsh; do
         test -r "$tmp_profile" && . "$tmp_profile"
     done
     unset tmp_profile
 fi
+unset MY_ZSH_CONFIG_DIR
 
 # cargo config
 . "$HOME/.cargo/env"
