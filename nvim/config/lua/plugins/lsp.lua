@@ -36,17 +36,7 @@ return {
         "mason-org/mason-lspconfig.nvim",
         event = "VeryLazy",
         opts = {
-            ensure_installed = {
-                "basedpyright",
-                "bashls",
-                "clangd",
-                "jdtls",
-                "jsonls",
-                "lua_ls",
-                "vtsls",
-                "asm_lsp",
-                "neocmake",
-            },
+            ensure_installed = require("core.config").mason_install,
         },
         dependencies = {
             "mason-org/mason.nvim",

@@ -55,6 +55,7 @@ vim.api.nvim_create_autocmd("FileType", {
             vim.api.nvim_set_hl(0, "cOperator", { link = "cType" })
             vim.api.nvim_set_hl(0, "@variable.builtin", { fg = "#6bf9ff" })
             vim.api.nvim_set_hl(0, "@lsp.type.unknown.cpp", { fg = "#ffd8d8" })
+            vim.api.nvim_set_hl(0, "@lsp.type.namespace.cpp", { fg = "#d2918c", italic = true })
         end)
     end,
 })

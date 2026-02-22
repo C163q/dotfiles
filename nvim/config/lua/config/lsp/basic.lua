@@ -1,6 +1,10 @@
 local lsp_core = require("config.lsp.core")
 local user_config = require("core.config")
 
+-- ####################################
+-- #  Toggle Diagnostic Float Window  #
+-- ####################################
+
 -- Show line diagnostics automatically in hover window
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus=false, focusable = false })]]
 
@@ -41,6 +45,10 @@ vim.keymap.set(
     end)(),
     { noremap = true, desc = "Toggle auto Float Window of Diagnostics" }
 )
+
+-- ###################################
+-- #  Toggle LSP Hover Float Window  #
+-- ###################################
 
 -- config: vim.lsp.buf.hover
 vim.api.nvim_create_augroup("ConfigAutoHoverFloatWindow", { clear = true })
@@ -102,6 +110,10 @@ vim.keymap.set(
     { noremap = true, desc = "Toggle LSP hover help" }
 )
 
+-- ####################################
+-- #  Toggle Diagnostic Virtual Text  #
+-- ####################################
+
 -- config: float text of diagnostics
 vim.keymap.set(
     "n",
@@ -120,6 +132,10 @@ vim.keymap.set(
     end)(),
     { noremap = true, desc = "Toggle Float Text of Diagnostics" }
 )
+
+-- #####################
+-- #    LSP Keymaps    #
+-- #####################
 
 -- config: keymap of signature_help
 vim.keymap.set("i", "<C-e>", function()
@@ -154,6 +170,10 @@ vim.keymap.set("n", "<Leader>lq", function()
     })
 end, { noremap = true, silent = false, desc = "Quickfix with choice" })
 
+-- ################################
+-- #  LSP Dynamic Configurations  #
+-- ################################
+
 -- LSP dynamic configurations
 -- This will show a selection menu of available LSP configurations
 vim.keymap.set("n", "<Leader>L", function()
@@ -177,6 +197,10 @@ vim.keymap.set("n", "<Leader>L", function()
         end
     end)
 end, { noremap = true, desc = "LSP configs" })
+
+-- ###################################
+-- #  LSP Diagnostic Configurations  #
+-- ###################################
 
 local icons_diagnostic = require("core.config").icon.diagnostics
 -- Sets icons and styling for diagnostics
@@ -215,6 +239,7 @@ local code_action = {
     timer = nil,
     inrender_id = 0,
     inrender_buf = nil,
+    show = user_config.code_action.show_by_default,
     enable = user_config.code_action.enable,
 }
 
@@ -334,21 +359,25 @@ local function render_lightbulb()
     end)
 end
 
-vim.keymap.set("n", "<Leader>'", function()
-    if code_action.enable == false then
-        code_action.enable = true
-        vim.notify("Code Action Lightbulb Enabled", vim.log.levels.INFO)
-    else
-        code_action.enable = false
-        update_lightbulb(code_action.inrender_buf, nil)
-        vim.notify("Code Action Lightbulb Disabled", vim.log.levels.INFO)
-    end
-end, { noremap = true, desc = "Toggle Code Action Marker" })
+if code_action.enable then
+    vim.keymap.set("n", "<Leader>'", function()
+        if code_action.show == false then
+            code_action.show = true
+            vim.notify("Code Action Lightbulb On", vim.log.levels.INFO)
+        else
+            code_action.show = false
+            update_lightbulb(code_action.inrender_buf, nil)
+            vim.notify("Code Action Lightbulb Off", vim.log.levels.INFO)
+        end
+    end, { noremap = true, desc = "Toggle Code Action Marker" })
+end
 -- ###########################################
 -- #     CODE ACTION SIGN DEFINITION END     #
 -- ###########################################
 
--- Lsp attach config
+-- ##########################################
+-- #  LSP Attach and Detach Configurations  #
+-- ##########################################
 vim.api.nvim_create_augroup("ConfigLspDiagnosticConfigs", { clear = true })
 vim.api.nvim_create_autocmd("LspAttach", {
     group = "ConfigLspDiagnosticConfigs",
@@ -356,7 +385,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- obtain LSP client
         local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-        -- [basic keymaps]
+        -- ###################
+        -- #  basic keymaps  #
+        -- ###################
 
         --[[ Use picker for better UI
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
@@ -400,12 +431,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
             desc = "Go to definition in a new TAB",
         })
 
-        -- [diagnostics]
+        -- #################
+        -- #  diagnostics  #
+        -- #################
         vim.diagnostic.config({
             virtual_text = true,
         })
 
-        -- Toggle inlay hint
+        -- #######################
+        -- #  Toggle inlay hint  #
+        -- #######################
         if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
             vim.keymap.set("n", "<Leader>lh", function()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
@@ -430,7 +465,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
         --]]
 
-        -- offloads upon detachment
+        -- ##############################
+        -- #  offloads upon detachment  #
+        -- ##############################
         vim.api.nvim_create_autocmd("LspDetach", {
             group = vim.api.nvim_create_augroup("ConfigLSPDetachCleanUp", { clear = true }),
             ---@diagnostic disable-next-line: unused-local
@@ -440,21 +477,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
             end,
         })
 
-        -- vim.notify(client.name, 2)
-        --[[
-        if client and client.name == 'basedpyright' then
-            vim.keymap.set('n', '<Leader>lp',function()
-                    if _G.MyCustomSettings.basedpyright_loose_check then
-                        _G.MyCustomSettings.basedpyright_loose_check = false
-                    else
-                        _G.MyCustomSettings.basedpyright_loose_check = true
-                    end
-                    vim.lsp.buf.clear_references()
-            end, { buffer = event.buf, noremap = true, desc = "Toggle basedpyright Type Check" })
-        end
-        --]]
-
-        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_codeAction) then
+        -- ################################
+        -- #  Code Action Lightbulb Sign  #
+        -- ################################
+        if code_action.enable and client and client:supports_method(vim.lsp.protocol.Methods.textDocument_codeAction) then
             local cmd_group = "ConfigCodeAction_" .. event.buf
             local ok = pcall(vim.api.nvim_get_autocmds, { group = cmd_group })
 
@@ -464,7 +490,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
                     group = group,
                     buffer = event.buf,
                     callback = function(args)
-                        if code_action.enable == false then
+                        if code_action.show == false then
                             return
                         end
                         local buf = args.buf
@@ -490,6 +516,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
                     group = group,
                     buffer = event.buf,
                     callback = function(args)
+                        if code_action.show == false then
+                            return
+                        end
                         update_lightbulb(args.buf, nil)
                     end,
                 })
@@ -504,31 +533,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
                         pcall(vim.api.nvim_del_augroup_by_name, cmd_group)
                     end,
                 })
-                --[[
-                vim.keymap.set(
-                    "n",
-                    "<Leader>'",
-                    (function()
-                        local la_autocmd_id = nil
-                        if user_config.code_action.enable then
-                            la_autocmd_id = vim.api.nvim_create_autocmd("CursorMoved", code_action_autocmd_opt)
-                        end
-                        return function()
-                            if la_autocmd_id == nil then
-                                la_autocmd_id = vim.api.nvim_create_autocmd("CursorMoved", code_action_autocmd_opt)
-                                vim.notify("Code Action Lightbulb Enabled", vim.log.levels.INFO)
-                            else
-                                local tmp_id = la_autocmd_id
-                                la_autocmd_id = nil
-                                update_lightbulb(code_action.inrender_buf, nil)
-                                vim.api.nvim_del_autocmd(tmp_id)
-                                vim.notify("Code Action Lightbulb Disabled", vim.log.levels.INFO)
-                            end
-                        end
-                    end)(),
-                    { noremap = true, desc = "Toggle Code Action Marker", buffer = event.buf }
-                )
-                --]]
             end
         end
     end,

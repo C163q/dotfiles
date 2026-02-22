@@ -25,6 +25,9 @@ opt.wrap = false
 opt.linebreak = true
 opt.listchars:append({
     trail = "·",
+    -- override default "tab:> ", because some font will combine ">" and "=".
+    -- This makes "=" looks like "≥", which is not good for readability.
+    tab = "→ ",
 })
 
 -- Enables pseudo-transparency for the popup-menu
@@ -62,7 +65,7 @@ opt.splitkeep = "screen"
 
 -- display
 opt.termguicolors = true
-opt.signcolumn = "yes"  -- Always show the signcolumn
+opt.signcolumn = "yes" -- Always show the signcolumn
 opt.winborder = "rounded"
 opt.fillchars = {
     foldopen = "󰍝",
@@ -71,8 +74,8 @@ opt.fillchars = {
 }
 opt.winminwidth = 5 -- Minimum window width
 
-opt.updatetime = 250    -- Save swap file and trigger CursorHold
-opt.timeoutlen = 500    -- Lower than default (1000) to quickly trigger which-key
+opt.updatetime = 250 -- Save swap file and trigger CursorHold
+opt.timeoutlen = 500 -- Lower than default (1000) to quickly trigger which-key
 opt.spelllang = { "en" }
 
 -- Changes the effect of the :mksession command.

@@ -11,7 +11,7 @@ return {
             { "xzbdmw/colorful-menu.nvim", opts = {} },
             "fang2hou/blink-copilot",
         },
-        event = event_presets.start_insert,
+        event = vim.tbl_extend("force", event_presets.start_insert, { "CmdlineEnter" }),
         version = "1.*",
         opts = {
             completion = {

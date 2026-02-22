@@ -35,6 +35,29 @@ return {
                 lualine_y = { "filetype", indent_size },
                 lualine_z = { "progress", "location" },
             },
+            winbar = {
+                lualine_c = {
+                    {
+                        function()
+                            local navic = require("nvim-navic")
+                            local sep = require("core.config").navic.separator or " > "
+                            local text = navic.get_location()
+                            local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t")
+                            local icon =
+                                require("nvim-web-devicons").get_icon_by_filetype(vim.bo.filetype, { default = true })
+                            if text == "" then
+                                return icon .. " " .. filename
+                            else
+                                return icon .. " " .. filename .. sep .. text
+                            end
+                        end,
+                        cond = function()
+                            local navic = require("nvim-navic")
+                            return navic.is_available()
+                        end,
+                    },
+                },
+            },
             options = {
                 theme = "catppuccin",
                 -- ... the rest of your lualine config
@@ -167,5 +190,38 @@ return {
         "nvim-zh/colorful-winsep.nvim",
         opts = {},
         event = { "WinLeave" },
+    },
+
+    -- https://github.com/SmiteshP/nvim-navic
+    -- nvim-navic: A simple statusline/winbar component that uses LSP to show your current code context.
+    {
+        "SmiteshP/nvim-navic",
+        dependencies = { "neovim/nvim-lspconfig" },
+        on_init = function()
+            -- NOTE: You can set vim.g.navic_silence = true to supress error messages thrown by nvim-navic
+            -- vim.g.navic_silence = true
+        end,
+        config = function()
+            local navic = require("nvim-navic")
+
+            local lsp_util = require("config.lsp.core")
+            local lsp_list = require("core.config").lsp_list or {}
+            for _, lsp_name in ipairs(lsp_list) do
+                lsp_util.add_on_attach(lsp_name, function(client, bufnr)
+                    if client.server_capabilities.documentSymbolProvider then
+                        -- vim.notify("Attaching nvim-navic to " .. lsp_name, vim.log.levels.INFO, { title = "LSP Attach" })
+                        navic.attach(client, bufnr)
+                    end
+                end)
+            end
+
+            navic.setup({
+                highlight = true,
+                separator = require("core.config").navic.separator or " > ",
+                depth_limit = 5,
+                depth_limit_indicator = "..",
+                lazy_update_context = true,
+            })
+        end,
     },
 }

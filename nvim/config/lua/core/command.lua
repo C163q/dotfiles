@@ -33,8 +33,8 @@ vim.api.nvim_create_autocmd("FileType", {
         local filetype = config.ufo_plugin_ignore.filetypes
         if vim.tbl_contains(buftype, vim.bo.buftype) or vim.tbl_contains(filetype, vim.bo.filetype) then
             require("ufo").detach()
-            vim.opt_local.foldenable = false
-            vim.opt_local.foldcolumn = "0"
+            vim.wo.foldenable = false
+            vim.wo.foldcolumn = "0"
         end
     end,
 })

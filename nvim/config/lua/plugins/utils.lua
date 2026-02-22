@@ -1,3 +1,4 @@
+local user_config = require("core.config")
 local event_presets = require("core.config").event_presets
 local git_status_icon = require("core.config").icon.git_status
 
@@ -293,11 +294,10 @@ return {
             })
             --]]
             local codesettings = require("codesettings")
-            local lsp_config = require("config.lsp")
-            for _, lsp_name in ipairs(lsp_config.lsp_list) do
+            for _, lsp_name in ipairs(user_config.lsp_list) do
                 if lsp_name ~= "rust-analyzer" then
-                    -- rust-analyzer is enabled by rustaceanvim, so we skip it here to avoid conflicts
-                    local local_config = lsp_config.get_local_settings(lsp_name)
+                    -- rustaceanvim has done this for rust-analyzer
+                    local local_config = require("config.lsp.core").get_local_settings(lsp_name)
                     local success, final_config = pcall(codesettings.with_local_settings, lsp_name, local_config)
                     if success then
                         vim.lsp.config(lsp_name, final_config)

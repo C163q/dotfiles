@@ -10,7 +10,7 @@ return {
     },
     search_ingore_case = false,
     trailing_whitespace_highlight = {
-        enable = false,
+        enable = true,
         highlight_color = "#800000",
         highlight_cterm_color = "red",
         -- toggleterm's vim.bo.buftype is empty when opening for the first time,
@@ -21,6 +21,7 @@ return {
     undo_levels = 2000, -- https://neovim.io/doc/user/options.html#'undolevels'
     code_action = { -- See `config/lsp/diagnostic.lua` for more details on code action configuration.
         enable = true,
+        show_by_default = false,
         text = "💡", -- "󰌶"
         hl = "#FFFFAD",
         priority = 40,
@@ -84,16 +85,37 @@ return {
             },
             highlight = {
                 enable = true,
+                -- treesiiter will override clangd's highlight
+                disable = { "c", "cpp" },
             },
             fold = {
                 enable = true,
             },
-        }
+        },
+    },
+    navic = {
+        separator = "  ", -- separator for navic component
     },
 
     -- ##########################
     -- #      LSP Settings      #
     -- ##########################
+    lsp_list = { "lua_ls", "clangd", "basedpyright", "asm_lsp", "neocmake", "rust-analyzer" },
+    lsp_skip_enable = {
+        "rust-analyzer", -- This is enabled by rustaceanvim, so we skip it here to avoid conflicts.
+        -- "clangd", -- Unknown reason that a new clangd instance is created without any configuration.
+    },
+    mason_install = { -- If you already install it globally, avoid adding it here.
+        "basedpyright",
+        "bashls",
+        -- "clangd",
+        "jdtls",
+        "jsonls",
+        "lua_ls",
+        "vtsls",
+        "asm_lsp",
+        "neocmake",
+    },
     basedpyright = {
         disable_annotation_missing_check = true,
         unused_warning = true,

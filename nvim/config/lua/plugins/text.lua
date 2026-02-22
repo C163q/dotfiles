@@ -12,6 +12,14 @@ return {
         },
     },
 
+    -- https://github.com/folke/ts-comments.nvim
+    -- ts-comments.nvim: Tiny plugin to enhance Neovim's native comments.
+    {
+        "folke/ts-comments.nvim",
+        opts = {},
+        event = "VeryLazy",
+    },
+
     -- https://github.com/catgoose/nvim-colorizer.lua
     -- NvChad/nvim-colorizer.lua has moved, supports custom colors. Now being maintained
     -- https://www.reddit.com/r/neovim/comments/1hjjhvb/nvchadnvimcolorizerlua_has_moved_supports_custom/
@@ -183,5 +191,13 @@ return {
                 noremap = true,
             },
         },
+    },
+
+    -- https://github.com/windwp/nvim-ts-autotag
+    -- nvim-ts-autotag: Use treesitter to autoclose and autorename html tag
+    {
+        "windwp/nvim-ts-autotag",
+        opts = {},
+        event = event_presets.start_edit,
     },
 }
