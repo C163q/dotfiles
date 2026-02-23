@@ -23,6 +23,7 @@ By default, `XDG_CONFIG_HOME` is `~/.config`
   - require `~/.cache/zsh/` to place `.zcompdump` file
   - require `~/.local/share/zsh/` to place `.histfile` file
 - [yazi](./yazi/) should be placed at `${XDG_CONFIG_HOME}/yazi`
+- [kitty](./kitty/) should be placed at `${XDG_CONFIG_HOME}/kitty`
 
 ## Requirement & Usage
 
