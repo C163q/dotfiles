@@ -224,4 +224,23 @@ return {
             })
         end,
     },
+
+    -- https://github.com/C163q/codeaction-lightbulb.nvim
+    -- Own
+    {
+        "C163q/codeaction-lightbulb.nvim",
+        opts = {
+            display_by_default = false,
+        },
+        event = "VeryLazy",
+        keys = {
+            {
+                "<Leader>'",
+                "<Cmd>CodeActionLightBulbToggle<CR>",
+                desc = "Toggle code action lightbulb",
+                noremap = true,
+            },
+        },
+        cmd = { "CodeActionLightBulbToggle" },
+    },
 }

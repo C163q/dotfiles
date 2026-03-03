@@ -199,6 +199,6 @@ return {
                 desc = "Chat AI: Open panel",
             },
         },
-        version = "*",
+        version = "v18.7.0", -- wait for mcphub.nvim to update
     },
 }
