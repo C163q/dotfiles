@@ -19,14 +19,7 @@ return {
     },
     undo_file = true, -- https://neovim.io/doc/user/options.html#'undofile'
     undo_levels = 2000, -- https://neovim.io/doc/user/options.html#'undolevels'
-    code_action = { -- See `config/lsp/diagnostic.lua` for more details on code action configuration.
-        enable = true,
-        show_by_default = false,
-        text = "💡", -- "󰌶"
-        hl = "#FFFFAD",
-        priority = 40,
-        interval = 150, -- We don't want to show code action icon immediately, because it may cause performance issue.
-    },
+    not_wsl = (os.getenv("WSL_INTEROP") == nil),
 
     -- ###########################
     -- #     Buffer Settings     #
@@ -78,6 +71,13 @@ return {
             "bash",
             "vim",
             "zig",
+            "css",
+            "html",
+            "latex",
+            "scss",
+            "tsx",
+            "vue",
+            "go",
         },
         features = {
             indent = {
@@ -101,10 +101,18 @@ return {
     -- ##########################
     -- #      LSP Settings      #
     -- ##########################
-    lsp_list = { "lua_ls", "clangd", "basedpyright", "asm_lsp", "neocmake", "rust-analyzer", "zls" },
+    lsp_list = {
+        "lua_ls",
+        "clangd",
+        "basedpyright",
+        "asm_lsp",
+        "neocmake",
+        "rust-analyzer",
+        "gopls",
+        "zls",
+    },
     lsp_skip_enable = {
         "rust-analyzer", -- This is enabled by rustaceanvim, so we skip it here to avoid conflicts.
-        -- "clangd", -- Unknown reason that a new clangd instance is created without any configuration.
     },
     mason_install = { -- If you already install it globally, avoid adding it here.
         "basedpyright",
