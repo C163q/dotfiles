@@ -77,6 +77,7 @@ return {
             "yaml",
             "bash",
             "vim",
+            "zig",
         },
         features = {
             indent = {
@@ -100,7 +101,7 @@ return {
     -- ##########################
     -- #      LSP Settings      #
     -- ##########################
-    lsp_list = { "lua_ls", "clangd", "basedpyright", "asm_lsp", "neocmake", "rust-analyzer" },
+    lsp_list = { "lua_ls", "clangd", "basedpyright", "asm_lsp", "neocmake", "rust-analyzer", "zls" },
     lsp_skip_enable = {
         "rust-analyzer", -- This is enabled by rustaceanvim, so we skip it here to avoid conflicts.
         -- "clangd", -- Unknown reason that a new clangd instance is created without any configuration.

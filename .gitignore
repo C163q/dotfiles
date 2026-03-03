@@ -9,7 +9,7 @@ nvim/config/lazy-lock.json
 
 # Zsh configs that are related to the specific environment.
 **/.zshrc.*
-zsh/config/opt.zsh
+zsh/config/opt/
 
 # Files aren't related to configs and are automatically generated.
 nvim/.exrc

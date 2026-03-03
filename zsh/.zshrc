@@ -134,6 +134,15 @@ if [[ -d "$MY_ZSH_CONFIG_DIR" ]]; then
 fi
 unset MY_ZSH_CONFIG_DIR
 
+MY_ZSH_OPT_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/opt"
+if [[ -d "$MY_ZSH_OPT_CONFIG_DIR" ]]; then
+    for tmp_profile in "$MY_ZSH_OPT_CONFIG_DIR"/*.zsh; do
+        test -r "$tmp_profile" && . "$tmp_profile"
+    done
+    unset tmp_profile
+fi
+unset MY_ZSH_OPT_CONFIG_DIR
+
 # cargo config
 . "$HOME/.cargo/env"
 
