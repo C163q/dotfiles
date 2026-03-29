@@ -59,7 +59,7 @@ return {
                 },
             },
             options = {
-                theme = "catppuccin",
+                theme = "catppuccin-nvim",
                 -- ... the rest of your lualine config
                 disabled_filetypes = { -- Filetypes to disable lualine for.
                     -- only ignores the ft for statusline.

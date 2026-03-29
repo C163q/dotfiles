@@ -21,17 +21,16 @@ local float_window_action = {
         })
     end,
 }
--- CursorHoldI will show diagnostics on Insert mode
-local float_window_action_autocmd_id = vim.api.nvim_create_autocmd({
-    "CursorHold", --[['CursorHoldI'--]]
-}, float_window_action)
 
 vim.keymap.set(
     "n",
     "<Leader>ld",
     (function()
         ---@type integer|nil
-        local d_autocmd_id = float_window_action_autocmd_id
+        -- CursorHoldI will show diagnostics on Insert mode
+        local d_autocmd_id = vim.api.nvim_create_autocmd({
+            "CursorHold", --[['CursorHoldI'--]]
+        }, float_window_action)
         return function()
             if d_autocmd_id == nil then
                 d_autocmd_id = vim.api.nvim_create_autocmd({ "CursorHold" }, float_window_action)
@@ -122,10 +121,10 @@ vim.keymap.set(
         return function()
             if diag_status then
                 diag_status = false
-                vim.diagnostic.config({ virtual_text = true })
+                vim.diagnostic.config({ virtual_text = false })
             else
                 diag_status = true
-                vim.diagnostic.config({ virtual_text = false })
+                vim.diagnostic.config({ virtual_text = true })
             end
         end
     end)(),
@@ -168,6 +167,28 @@ vim.keymap.set("n", "<Leader>lq", function()
         apply = false,
     })
 end, { noremap = true, silent = false, desc = "Quickfix with choice" })
+
+vim.keymap.set("n", "<Leader>lD", function()
+    local clients = vim.lsp.get_clients({
+        bufnr = 0,
+    })
+    if #clients == 0 then
+        vim.notify("No LSP client attached", vim.log.levels.INFO)
+        return
+    end
+    vim.ui.select(clients, {
+        prompt = "Select LSP client to disable:",
+        format_item = function(client)
+            return client.name
+        end,
+    }, function(selected_client)
+        if selected_client == nil then
+            return
+        end
+        local name = selected_client.name
+        vim.lsp.enable(name, false)
+    end)
+end, { noremap = true, desc = "Disable LSP client" })
 
 -- ################################
 -- #  LSP Dynamic Configurations  #

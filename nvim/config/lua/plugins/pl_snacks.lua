@@ -9,20 +9,24 @@ local snacks_buffer_picker_cfg = {
     },
 }
 
+local config = require("core.config")
+local sections = nil
+
 return {
     -- https://github.com/folke/snacks.nvim
     -- snacks.nvim: A collection of small QoL plugins for Neovim.
     {
         "folke/snacks.nvim",
-        priority = 999,
+        priority = 1000,
         lazy = false,
         opts = {
             -- your configuration comes here
             -- or leave it empty to use the default settings
             -- refer to the configuration section below
             bigfile = { enabled = true },
-            dashboard = { enabled = true },
+            dashboard = { enabled = true, sections = sections },
             explorer = { enabled = true },
+            image = { enabled = config.snacks_image },
             indent = {
                 enabled = true,
                 indent = {

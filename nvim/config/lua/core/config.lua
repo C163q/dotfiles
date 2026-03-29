@@ -97,6 +97,7 @@ return {
     navic = {
         separator = "  ", -- separator for navic component
     },
+    snacks_image = true,
 
     -- ##########################
     -- #      LSP Settings      #

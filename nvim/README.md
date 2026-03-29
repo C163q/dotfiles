@@ -36,6 +36,9 @@ Usually, this folder should be placed at `${XDG_CONFIG_HOME}`.
 - `vectorcode` (`uv tool install vectorcode`)
 - `pylatexenc` (Optional)
 - `ast-grep` (Optional)
+- `pdflatex` (For snacks.image)
+- `mmdc` (For snacks.image)
+- `chafa` (For snacks.dashboard)
 
 The following tools will not be automatically installed by `Mason`, so you may install manually with `Mason`:
 
@@ -157,3 +160,7 @@ Custom configuartions can be done in the [config file](./config/lua/core/config.
    `xdg-utils` should be installed. See [markdown-preview.nvim#199](https://github.com/iamcco/markdown-preview.nvim/issues/199).
 
    You may also have to link `cmd.exe` to a directory in `$PATH`.
+
+## Credit
+
+See [fastfetch README](../fastfetch/README.md) and [project README](../README.md) for more information.

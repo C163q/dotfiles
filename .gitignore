@@ -6,6 +6,7 @@
 # We don't want to commit it because it changes frequently. And our configs actually
 # record the plugins and their branches.
 nvim/config/lazy-lock.json
+nvim/config/assets/
 
 # Zsh configs that are related to the specific environment.
 **/.zshrc.*
