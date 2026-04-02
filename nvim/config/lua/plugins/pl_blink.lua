@@ -109,6 +109,7 @@ return {
                 enabled = true,
             },
             cmdline = {
+                keymap = { preset = 'inherit' }, -- Inherit from configured keymaps instead of the default one.
                 completion = {
                     list = {
                         selection = { preselect = false, auto_insert = true },

@@ -50,6 +50,12 @@ return {
                         highlight = "Directory",
                         text_align = "center",
                     },
+                    {
+                        filetype = "codecompanion_cli",
+                        text = "AI Chat CLI",
+                        highlight = "Directory",
+                        text_align = "center",
+                    },
                 },
                 custom_filter = function(buf_number, buf_numbers)
                     -- filter out filetypes you don't want to see

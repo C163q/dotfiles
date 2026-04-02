@@ -135,6 +135,9 @@ return {
             use_bundled_binary = true, -- Use local `mcp-hub` binary
         },
         event = event_presets.start_edit,
+        branch = "pull/279/merge",
+        -- `CodeCompanion` has updated to v19, but the lastest `mcphub.nvim` has not merged the PR
+        -- that supports `CodeCompanion` v19 yet.
     },
 
     -- https://github.com/Davidyz/VectorCode

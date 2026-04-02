@@ -13,8 +13,86 @@ return {
             "ravitemer/codecompanion-history.nvim",
         },
         opts = {
-            opts = {
+            opts = { -- `opts.opts`, nothing wrong though it can be a bit confusing
                 language = "Chinese",
+            },
+            -- The `strategies` field is a backwards compatibility alias for `interactions`.
+            -- Note that the `interactions` field will not come into effect with `strategies` still defined,
+            -- so you must remove the `strategies` field to use `interactions`.
+            interactions = {
+                chat = {
+                    -- You can specify an adapter by name and model (both ACP and HTTP)
+                    adapter = {
+                        name = "copilot",
+                        model = "gpt-5.2",
+                    },
+                    opts = {
+                        ---Decorate the user message before it's sent to the LLM
+                        ---@param message string
+                        ---@param adapter CodeCompanion.Adapter
+                        ---@param context table
+                        ---@return string
+                        prompt_decorator = function(message, adapter, context)
+                            return string.format([[<prompt>%s</prompt>]], message)
+                        end,
+                    },
+                },
+                inline = {
+                    keymaps = {
+                        accept_change = {
+                            modes = { n = "<Leader>aA" }, -- Remember this as DiffAccept
+                        },
+                        reject_change = {
+                            modes = { n = "<Leader>aD" }, -- Remember this as DiffReject
+                        },
+                        always_accept = {
+                            modes = { n = "<Leader>aY" }, -- Remember this as DiffYolo
+                        },
+                    },
+                },
+                cli = {
+                    agent = "claude_code",
+                    agents = {
+                        claude_code = {
+                            cmd = "claude",
+                            args = {},
+                            description = "Claude Code CLI",
+                            provider = "terminal",
+                        },
+                        gemini = {
+                            cmd = "gemini",
+                            args = {},
+                            description = "Gemini CLI",
+                        },
+                    },
+                },
+            },
+            adapters = {
+                acp = {
+                    claude_code = function()
+                        return require("codecompanion.adapters").extend("claude_code", {})
+                    end,
+                },
+                http = {
+                    copilot = function()
+                        -- copilot's API does not support top_p,
+                        -- so we disable it in the schema when the model is a gpt model
+                        return require("codecompanion.adapters").extend("copilot", {
+                            schema = {
+                                top_p = {
+                                    ---@type fun(self: CodeCompanion.HTTPAdapter): boolean | boolean
+                                    enabled = function(self)
+                                        local model = self.schema.model.default
+                                        if model:find("gpt") then
+                                            return false
+                                        end
+                                        return true
+                                    end,
+                                },
+                            },
+                        })
+                    end,
+                },
             },
             extensions = {
                 mcphub = {
@@ -85,7 +163,7 @@ return {
                     provider_opts = {
                         -- Options for inline diff provider
                         inline = {
-                            layout = "float", -- float|buffer - Where to display the diff
+                            layout = "buffer", -- float|buffer - Where to display the diff
 
                             diff_signs = {
                                 signs = {
@@ -134,36 +212,9 @@ return {
                     },
                 },
             },
-            strategies = {
-                chat = {
-                    opts = {
-                        ---Decorate the user message before it's sent to the LLM
-                        ---@param message string
-                        ---@param adapter CodeCompanion.Adapter
-                        ---@param context table
-                        ---@return string
-                        prompt_decorator = function(message, adapter, context)
-                            return string.format([[<prompt>%s</prompt>]], message)
-                        end,
-                    },
-                },
-                inline = {
-                    keymaps = {
-                        accept_change = {
-                            modes = { n = "<Leader>aA" }, -- Remember this as DiffAccept
-                        },
-                        reject_change = {
-                            modes = { n = "<Leader>aD" }, -- Remember this as DiffReject
-                        },
-                        always_accept = {
-                            modes = { n = "<Leader>aY" }, -- Remember this as DiffYolo
-                        },
-                    },
-                },
-            },
         },
         event = event_presets.load_ai,
-        cmd = { "CodeCompanionChat", "CodeCompanionActions", "CodeCompanion" },
+        cmd = { "CodeCompanionChat", "CodeCompanionActions", "CodeCompanion", "CodeCompanionCmd", "CodeCompanionCLI" },
         keys = {
             {
                 "<Leader>at",
@@ -198,7 +249,13 @@ return {
                 noremap = true,
                 desc = "Chat AI: Open panel",
             },
+            {
+                "<Leader>ac",
+                "<Cmd>CodeCompanionCLI<CR>",
+                noremap = true,
+                desc = "Chat AI: Open CLI",
+            },
         },
-        version = "v18.7.0", -- wait for mcphub.nvim to update
+        version = "*",
     },
 }
