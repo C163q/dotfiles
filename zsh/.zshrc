@@ -144,7 +144,9 @@ fi
 unset MY_ZSH_OPT_CONFIG_DIR
 
 # cargo config
-. "$HOME/.cargo/env"
+if [[ -f "$HOME/.cargo/env" ]]; then
+    . "$HOME/.cargo/env"
+fi
 
 # Set personal aliases, overriding those provided by Oh My Zsh libs,
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
