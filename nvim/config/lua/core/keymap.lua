@@ -273,3 +273,43 @@ end, {
     noremap = true,
     desc = "LSP code action",
 })
+
+vim.keymap.set({ "n" }, "<M-h>", "<C-w><", {
+    noremap = true,
+    desc = "Decrease window width",
+})
+
+vim.keymap.set({ "n" }, "<M-l>", "<C-w>>", {
+    noremap = true,
+    desc = "Increase window width",
+})
+
+vim.keymap.set({ "n" }, "<M-j>", "<C-w>-", {
+    noremap = true,
+    desc = "Decrease window height",
+})
+
+vim.keymap.set({ "n" }, "<M-k>", "<C-w>+", {
+    noremap = true,
+    desc = "Increase window height",
+})
+
+vim.keymap.set({ "n" }, "<M-Left>", "<C-w><Left>", {
+    noremap = true,
+    desc = "Move to left window",
+})
+
+vim.keymap.set({ "n" }, "<M-Right>", "<C-w><Right>", {
+    noremap = true,
+    desc = "Move to right window",
+})
+
+vim.keymap.set({ "n" }, "<M-Up>", "<C-w><Up>", {
+    noremap = true,
+    desc = "Move to upper window",
+})
+
+vim.keymap.set({ "n" }, "<M-Down>", "<C-w><Down>", {
+    noremap = true,
+    desc = "Move to lower window",
+})

@@ -93,5 +93,6 @@ return {
                 map({ "o", "x" }, "ih", gitsigns.select_hunk, { desc = "Select hunk" })
             end,
         },
+        version = "*",
     },
 }
