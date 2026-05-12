@@ -1,4 +1,5 @@
 local event_presets = require("core.config").event_presets
+local lsp_list = require("core.config").lsp_list
 
 return {
     -- https://github.com/mason-org/mason.nvim

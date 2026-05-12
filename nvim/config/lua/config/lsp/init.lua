@@ -30,6 +30,9 @@ M.setup = function()
         if success then
             pcall(lsp.setup)
         end
+        local capabilities = vim.lsp.protocol.make_client_capabilities() -- Get The capabilities
+        capabilities.general.positionEncodings = { "utf-16" } -- Set the offset encoding, see `:h vim.lsp.start` for more info
+        vim.lsp.config(lsp_name, { capabilities = capabilities }) -- Setup the server
     end
 
     -- general diagnostic configuration

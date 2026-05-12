@@ -31,7 +31,8 @@ The term "window" here doesn't means OS window, but a pane. When we infer
 
 ## Tab management
 
-- `KittyMod + t`: Open new tab
+- `KittyMod + t`: Open new tab in current location
+- `KittyMod + y`: Open new tab in default location
 - `KittyMod + q`: Close tab
 - `KittyMod + Right`: Next Tab
 - `KittyMod + Left`: Previous Tab
