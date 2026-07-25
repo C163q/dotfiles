@@ -1,4 +1,5 @@
 local event_presets = require("core.config").event_presets
+local codecompanion_config = require("core.config").codecompanion
 
 return {
     -- https://github.com/olimorris/codecompanion.nvim
@@ -23,8 +24,8 @@ return {
                 chat = {
                     -- You can specify an adapter by name and model (both ACP and HTTP)
                     adapter = {
-                        name = "copilot",
-                        model = "gpt-5.2",
+                        name = codecompanion_config.chat_provider,
+                        model = codecompanion_config.chat_model,
                     },
                     opts = {
                         ---Decorate the user message before it's sent to the LLM
@@ -91,6 +92,9 @@ return {
                                 },
                             },
                         })
+                    end,
+                    openrouter = function()
+                        return require("codecompanion.adapters").extend("openrouter", {})
                     end,
                 },
             },
@@ -213,6 +217,9 @@ return {
                 },
             },
         },
+        config = function(_, opts)
+            require("codecompanion").setup(opts)
+        end,
         event = event_presets.load_ai,
         cmd = { "CodeCompanionChat", "CodeCompanionActions", "CodeCompanion", "CodeCompanionCmd", "CodeCompanionCLI" },
         keys = {
@@ -257,5 +264,17 @@ return {
             },
         },
         version = "*",
+    },
+
+    -- https://github.com/ravitemer/codecompanion-history.nvim
+    -- CodeCompanion History Extension: A history management extension for codecompanion.nvim that
+    -- enables saving, browsing and restoring chat sessions.
+    {
+        "ravitemer/codecompanion-history.nvim",
+        dependencies = {
+            "Davidyz/VectorCode",
+            "folke/snacks.nvim",
+        },
+        event = event_presets.load_ai,
     },
 }

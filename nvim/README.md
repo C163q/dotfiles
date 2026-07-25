@@ -59,7 +59,7 @@ For translation plugins, these are the extra requirements:
 
 ## Usage
 
-Simply put this directory in `${XDG_CONFIG_HOME}` and everything will work.
+Put this directory in `${XDG_CONFIG_HOME}`.
 
 `${XDG_CONFIG_HOME}` usually means `~/.config` in linux.
 

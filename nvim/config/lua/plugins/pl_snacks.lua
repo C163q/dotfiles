@@ -108,6 +108,12 @@ return {
             }
             --]]
         },
+        config = function(_, opts)
+            require("snacks").setup(opts)
+            vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "#636779" })
+            vim.api.nvim_set_hl(0, "SnacksIndentChunk", { fg = "#faf4cd" })
+            vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#dcd1da" })
+        end,
         keys = {
             -- picker overwrite windows for winfixbuf is set!!!!!!
             -- May solve: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md

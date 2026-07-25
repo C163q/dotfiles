@@ -27,11 +27,16 @@ return {
                         },
                     },
                 },
-                lualine_x = {
-                    { "copilot", show_colors = true, show_loading = true },
-                    "encoding",
-                    "overseer",
-                },
+                lualine_x = (function()
+                    local default_components = { "encoding", "overseer" }
+
+                    local copilot_config = require("core.config").copilot
+                    if copilot_config.enable then
+                        table.insert(default_components, 1, { "copilot", show_colors = true, show_loading = true })
+                    end
+
+                    return default_components
+                end)(),
                 lualine_y = { "filetype", indent_size },
                 lualine_z = { "progress", "location" },
             },

@@ -5,12 +5,20 @@ return {
     -- Blink Completion (blink.cmp): Performant, batteries-included completion plugin for Neovim
     {
         "saghen/blink.cmp",
-        dependencies = {
-            "rafamadriz/friendly-snippets",
-            "L3MON4D3/LuaSnip",
-            { "xzbdmw/colorful-menu.nvim", opts = {} },
-            "fang2hou/blink-copilot",
-        },
+        dependencies = (function()
+            local dependencies = {
+                "rafamadriz/friendly-snippets",
+                "L3MON4D3/LuaSnip",
+                { "xzbdmw/colorful-menu.nvim", opts = {} },
+            }
+
+            local copilot_enabled = require("core.config").copilot.enable
+            if copilot_enabled then
+                table.insert(dependencies, "zbirenbaum/copilot.lua")
+            end
+
+            return dependencies
+        end)(),
         event = vim.tbl_extend("force", event_presets.start_insert, { "CmdlineEnter" }),
         version = "1.*",
         opts = {
@@ -109,7 +117,7 @@ return {
                 enabled = true,
             },
             cmdline = {
-                keymap = { preset = 'inherit' }, -- Inherit from configured keymaps instead of the default one.
+                keymap = { preset = "inherit" }, -- Inherit from configured keymaps instead of the default one.
                 completion = {
                     list = {
                         selection = { preselect = false, auto_insert = true },
@@ -138,14 +146,17 @@ return {
             },
             sources = {
                 -- add lazydev to your completion providers
-                default = { "copilot", "lazydev", "lsp", "path", "snippets", "buffer" },
+                default = (function()
+                    local default_sources = { "lazydev", "lsp", "path", "snippets", "buffer" }
+
+                    local copilot_config = require("core.config").copilot
+                    if copilot_config.enable and copilot_config.enable_auto_completion then
+                        table.insert(default_sources, 1, "copilot")
+                    end
+
+                    return default_sources
+                end)(),
                 providers = {
-                    copilot = {
-                        name = "Copilot",
-                        module = "blink-copilot",
-                        score_offset = 100,
-                        async = true,
-                    },
                     lazydev = {
                         name = "LazyDev",
                         module = "lazydev.integrations.blink",
@@ -153,6 +164,17 @@ return {
                         score_offset = 96,
                         async = true,
                     },
+                    copilot = (function()
+                        local copilot_config = require("core.config").copilot
+                        if copilot_config.enable and copilot_config.enable_auto_completion then
+                            return {
+                                name = "Copilot",
+                                module = "blink-copilot",
+                                score_offset = 100,
+                                async = true,
+                            }
+                        end
+                    end)(),
                 },
                 per_filetype = {
                     codecompanion = { "codecompanion" },

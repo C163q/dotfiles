@@ -38,6 +38,8 @@ return {
             vim.keymap.set("n", "<Leader>fd", function()
                 require("mini.diff").toggle_overlay(0)
             end, { noremap = true, desc = "Toggle diff overlay" })
+
+            require("mini.pick").setup({})
         end,
     },
 }

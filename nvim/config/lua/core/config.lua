@@ -37,10 +37,19 @@ return {
     -- #     Plugin Settings     #
     -- ###########################
     copilot = {
+        enable = true,
+        enable_auto_completion = true, -- for blink.cmp
         -- Since it is async, error may occur when the original content is changed.
         -- I recommend to disable it if you don't need it.
         enable_nes = false,
         enable_immediate_suggestions = false,
+    },
+    codecompanion = {
+        chat_provider = "openrouter",
+        chat_model = "z-ai/glm-5.2",
+    },
+    neocodeium = {
+        enable = false,
     },
     browser = "", -- Default browser. Empty string means using system default browser.
     flavour = "mocha", -- catppuccin theme flavour
@@ -49,7 +58,7 @@ return {
         buftypes = {},
     },
     bufferline_filter = { -- These buffers will be filtered out from the bufferline.
-        filetypes = { "neo-tree", "checkhealth", "grug-far", "grug-far-history" },
+        filetypes = { "neo-tree", "checkhealth", "grug-far", "grug-far-history", "codecompanion" },
         buftypes = { "terminal", "quickfix" },
     },
     treesitter = {
