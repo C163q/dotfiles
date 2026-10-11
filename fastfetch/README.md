@@ -1,30 +1,32 @@
-# Fastfetch Config
+# Fastfetch configuration
 
-This is the config for [`fastfetch`](https://github.com/fastfetch-cli/fastfetch).
+My personal [Fastfetch](https://github.com/fastfetch-cli/fastfetch) configuration.
 
 ## Usage
 
-Pick up the proper config file in the [`config`](./config/) directory and link `config.jsonc`
-to it.
+Choose a configuration file from [`config/`](./config/) that matches your environment,
+then create a symlink named `config.jsonc` pointing to it.
 
-For example:
+For example, to create a new `config.jsonc` symlink for WSL, run this command from this directory:
 
 ```sh
 ln -s config/config-wsl.jsonc config.jsonc
 ```
 
-## Limitation of `Windows Terminal`
+## Images in Windows Terminal
 
-Because of the limitation of `Windows Terminal`, images cannot be shown directly.
-Instead, it must be converted to the `sixel` file.
+The [WSL configuration](./config/config-wsl.jsonc) uses a preconverted Sixel file
+and Fastfetch's `raw` logo type to display an image in Windows Terminal.
+
+Preconversion is not required for every setup. Fastfetch also supports loading
+image files with the `sixel` logo type, as described in its
+[Windows Terminal instructions](https://github.com/fastfetch-cli/fastfetch#windows-terminal).
 
 For more details, see:
 
-- [README.md in fastfetch](https://github.com/fastfetch-cli/fastfetch?tab=readme-ov-file#windows-terminal)
-- [discussions#1243](https://github.com/fastfetch-cli/fastfetch/discussions/1243)
-- [Logo-options#sixel](https://github.com/fastfetch-cli/fastfetch/wiki/Logo-options#sixel)
+- [Fastfetch discussion #1243](https://github.com/fastfetch-cli/fastfetch/discussions/1243)
+- [Sixel logo options](https://github.com/fastfetch-cli/fastfetch/wiki/Logo-options#sixel)
 
 ## Credits
 
-This configuration incorporates images from artists.
-Refer to [`credit.md`](./custom/credit.md) to get a full list of them.
+See [`custom/credit.md`](./custom/credit.md) for image credits and links to the original sources.

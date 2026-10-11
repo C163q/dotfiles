@@ -1,46 +1,46 @@
 # Dotfiles
 
-Personal dotfile repository.
+My personal dotfiles.
 
-## Placement
+## File locations
 
-By default, `XDG_CONFIG_HOME` is `~/.config`
+If `XDG_CONFIG_HOME` is unset or empty, use `~/.config` for the destinations below.
 
-- [nvim](./nvim/)
-  - [config](./nvim/config/) should be placed at `${XDG_CONFIG_HOME}/nvim`
-- [tmux](./tmux/)
-  - [tmux.conf](./tmux/tmux.conf) should be placed at `${XDG_CONFIG_HOME}/tmux/tmux.conf`
-- [vim](./vim/)
-  - [.vimrc](./vim/.vimrc) should be placed at `~/.vimrc`
-  - [.vim](./vim/.vim/) should be placed at `~/.vim`
-- [fastfetch](./fastfetch/) should be placed at `${XDG_CONFIG_HOME}/fastfetch`
-- [zsh](./zsh/)
-  - [.zshrc](./zsh/.zshrc) should be placed at `~/.local/share/zsh/.zshrc`
-  - [.zshenv](./zsh/.zshenv) should be placed at `~/.zshenv`
-  - [config](./zsh/config/) should be placed at `${XDG_CONFIG_HOME}/zsh`
-  - [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) should be placed at `~/.local/share/zsh/ohmyzsh`
-  - [powerlevel10k](https://github.com/romkatv/powerlevel10k) should be placed at `~/.local/share/zsh/ohmyzsh/themes/powerlevel10k`
-  - require `~/.cache/zsh/` to place `.zcompdump` file
-  - require `~/.local/share/zsh/` to place `.histfile` file
-- [yazi](./yazi/) should be placed at `${XDG_CONFIG_HOME}/yazi`
-- [kitty](./kitty/) should be placed at `${XDG_CONFIG_HOME}/kitty`
+Create symbolic links at the destinations listed below, pointing to the corresponding files or directories in this repository.
 
-## Requirement & Usage
+| Source | Destination |
+| --- | --- |
+| [Neovim configuration](./nvim/config/) | `${XDG_CONFIG_HOME}/nvim` |
+| [tmux.conf](./tmux/tmux.conf) | `${XDG_CONFIG_HOME}/tmux/tmux.conf` |
+| [.vimrc](./vim/.vimrc) | `~/.vimrc` |
+| [.vim](./vim/.vim/) | `~/.vim` |
+| [Fastfetch configuration](./fastfetch/) | `${XDG_CONFIG_HOME}/fastfetch` |
+| [.zshrc](./zsh/.zshrc) | `~/.local/share/zsh/.zshrc` |
+| [.zshenv](./zsh/.zshenv) | `~/.zshenv` |
+| [Zsh configuration](./zsh/config/) | `${XDG_CONFIG_HOME}/zsh` |
+| [Yazi configuration](./yazi/) | `${XDG_CONFIG_HOME}/yazi` |
+| [Kitty configuration](./kitty/) | `${XDG_CONFIG_HOME}/kitty` |
 
-- Place files in correct directories, see [Placement](#placement).
-  [`setup.sh`](./setup.sh) may help you out.
-- `vim`:
-  - open vim, and run `:PlugInstall` to install plugins
-  - change to `./vim/.vim/plugged/youcompleteme` and run `./install.py`
-    (To install for the specific languages, see [Full Installation Guide](https://github.com/ycm-core/YouCompleteMe/wiki/Full-Installation-Guide).)
-- `neovim`:
-  - see [README.md in `nvim`](./nvim/README.md)
-- `yazi`:
-  - see [README.md in `yazi`](./yazi/README.md)
-- `fastfetch`:
-  - see [README.md in `fastfetch`](./fastfetch/README.md)
+For Zsh, also install:
 
-## Credit
+- [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh) at `~/.local/share/zsh/ohmyzsh`.
+- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) at `~/.local/share/zsh/ohmyzsh/themes/powerlevel10k`.
+
+Create `~/.cache/zsh/` for the completion cache and `~/.local/share/zsh/` for the command history.
+
+## Setup
+
+- Create the symbolic links described in [File locations](#file-locations).
+  See also [`setup.sh`](./setup.sh).
+- Vim:
+  - Open Vim and run `:PlugInstall` to install plugins.
+  - Change to `vim/.vim/plugged/youcompleteme/` and run `./install.py`.
+    For language-specific installation instructions, see the [Full Installation Guide](https://github.com/ycm-core/YouCompleteMe/wiki/Full-Installation-Guide).
+- Neovim: See the [Neovim README](./nvim/README.md) for setup instructions.
+- Yazi: See the [Yazi README](./yazi/README.md) for setup instructions.
+- Fastfetch: See the [Fastfetch README](./fastfetch/README.md) for setup instructions.
+
+## Credits
 
 This project incorporates code from the following open-source project:
 
