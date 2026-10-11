@@ -37,7 +37,7 @@
     "modules": [
         {
             "type": "title",
-            "format": "{#37}╭{$1}┤{user-name-colored>20}{at-symbol-colored}{host-name-colored<20}{#37}├{$1}╮",
+            "format": "{#37}╭{$1}┤{user-name-colored>8}{at-symbol-colored}{host-name-colored<8}{#37}├{$1}╮",
             "outputColor": "light_white",
             "color": {
                 "host": "light_cyan",

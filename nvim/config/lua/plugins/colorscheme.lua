@@ -31,6 +31,7 @@ return {
                 -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead.
                 -- Should work with the standard **StatusLine** and **LuaLine**.
                 hide_inactive_statusline = true,
+                auto_integrations = true,
                 integrations = {
                     blink_cmp = {
                         style = "bordered",
@@ -38,7 +39,7 @@ return {
                     dap = true,
                     dap_ui = true,
                     flash = true,
-                    -- gitsigns = true,
+                    gitsigns = true,
                     grug_far = true,
                     lsp_trouble = true,
                     mini = {
@@ -67,7 +68,7 @@ return {
                         },
                     },
                     neotree = true,
-                    -- notify = false,
+                    notify = false,
                     snacks = {
                         enabled = true,
                     },
@@ -75,6 +76,10 @@ return {
                     treesitter_context = true,
                     ufo = true,
                     which_key = false,
+                    colorful_winsep = {
+                        enabled = false,
+                        color = "mauve",
+                    }
                     -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
                 },
                 highlight_overrides = {

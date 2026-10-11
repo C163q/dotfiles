@@ -9,6 +9,12 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 
 vim.api.nvim_set_hl(0, "CursorColumn", { bg = "#282935" })
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#4b4d62" })
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#BAC3FF" })
+
+vim.api.nvim_set_hl(0, "SnacksIndent", { fg = "#636779" })
+vim.api.nvim_set_hl(0, "SnacksIndentChunk", { fg = "#faf4cd" })
+vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#dcd1da" })
 
 vim.api.nvim_set_hl(0, "Type", { fg = "#63a7e4" })
 vim.api.nvim_set_hl(0, "Function", { fg = "#f4efa3" })

@@ -19,3 +19,4 @@ alias yf='yazi_chdir'
 alias n='nvim'
 alias ze='zellij'
 
+alias open='xdg-open'
