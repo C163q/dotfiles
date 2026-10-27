@@ -200,4 +200,25 @@ return {
         opts = {},
         event = event_presets.start_edit,
     },
+
+    -- https://github.com/Fau818/fade.nvim
+    -- fade.nvim: Faded text that keeps its syntax colors.
+    {
+        "Fau818/fade.nvim",
+        event = { "LspAttach", "InsertEnter" }, -- `unused` needs a server, `ghost` needs insert mode
+        opts = {
+            unused = {
+                alpha = 0.65, -- share of the original color kept; lower fades further
+                hide = { underline = false, virtual_text = false, signs = false }, -- handlers to skip
+            },
+            ghost = {
+                alpha = 0.55,
+            },
+        },
+
+        dependencies = {
+            { "zbirenbaum/copilot.lua", optional = true },
+            { "Saghen/blink.cmp", optional = true },
+        },
+    },
 }
