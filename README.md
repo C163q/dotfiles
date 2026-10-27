@@ -15,23 +15,28 @@ Create symbolic links at the destinations listed below, pointing to the correspo
 | [.vimrc](./vim/.vimrc) | `~/.vimrc` |
 | [.vim](./vim/.vim/) | `~/.vim` |
 | [Fastfetch configuration](./fastfetch/) | `${XDG_CONFIG_HOME}/fastfetch` |
-| [.zshrc](./zsh/.zshrc) | `~/.local/share/zsh/.zshrc` |
+| [.zshrc](./zsh/.zshrc) | `~/.zshrc` |
 | [.zshenv](./zsh/.zshenv) | `~/.zshenv` |
 | [Zsh configuration](./zsh/config/) | `${XDG_CONFIG_HOME}/zsh` |
 | [Yazi configuration](./yazi/) | `${XDG_CONFIG_HOME}/yazi` |
 | [Kitty configuration](./kitty/) | `${XDG_CONFIG_HOME}/kitty` |
 
-For Zsh, also install:
-
-- [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh) at `~/.local/share/zsh/ohmyzsh`.
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) at `~/.local/share/zsh/ohmyzsh/themes/powerlevel10k`.
-
-Create `~/.cache/zsh/` for the completion cache and `~/.local/share/zsh/` for the command history.
-
 ## Setup
 
-- Create the symbolic links described in [File locations](#file-locations).
-  See also [`setup.sh`](./setup.sh).
+Run [`setup.sh`](./setup.sh) with Bash from the repository root:
+
+```sh
+bash setup.sh
+```
+
+The script creates the symbolic links listed in [File locations](#file-locations)
+and installs shell dependencies as needed.
+Existing links to the correct sources and existing installations are left in place.
+If a destination conflicts with an existing file, directory, or symlink, the script
+stops and reports the path. Move the conflicting item aside and rerun the script.
+
+Then complete the application-specific setup:
+
 - Vim:
   - Open Vim and run `:PlugInstall` to install plugins.
   - Change to `vim/.vim/plugged/youcompleteme/` and run `./install.py`.
@@ -39,6 +44,17 @@ Create `~/.cache/zsh/` for the completion cache and `~/.local/share/zsh/` for th
 - Neovim: See the [Neovim README](./nvim/README.md) for setup instructions.
 - Yazi: See the [Yazi README](./yazi/README.md) for setup instructions.
 - Fastfetch: See the [Fastfetch README](./fastfetch/README.md) for setup instructions.
+- Zsh: See the [Zsh README](./zsh/README.md) for dependencies and configuration details.
+
+## Tests
+
+Run the regression tests from the repository root with Python 3, Git, Bash, and Zsh installed:
+
+```sh
+python3 -B -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+The tests use temporary home directories and local Git repositories, without network downloads.
 
 ## Credits
 
