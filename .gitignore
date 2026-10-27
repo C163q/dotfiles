@@ -1,43 +1,41 @@
-# Out-of-date configs
+# Old configuration files and backups.
 *.old
 *.bak
 
-# Neovim lazy-lock.json file, this keeps track of installed plugins and their branches.
-# We don't want to commit it because it changes frequently. And our configs actually
-# record the plugins and their branches.
+# Neovim's plugin lockfile is excluded because it changes frequently.
+# Plugin sources and version constraints are declared in the Lua configuration.
 nvim/config/lazy-lock.json
+
+# Local Neovim assets and legacy configurations.
 nvim/config/assets/
 nvim/legacy/
 
-# Zsh configs that are related to the specific environment.
+# Environment-specific Zsh configuration.
 **/.zshrc.*
 zsh/config/opt/
 
-# Files aren't related to configs and are automatically generated.
+# Local files and generated state.
 nvim/.exrc
 vim/.vim/.netrwhist
 
-# Vim plugins, should be installed with `:PlugInstall`
+# Vim plugins installed with :PlugInstall.
 vim/.vim/plugged/
 
-# Yazi flavors and plugins should be managed with official package manager.
+# Yazi flavors and plugins managed by the official package manager.
 yazi/flavors/
 yazi/plugins/
 
-# `whoosh` can't be managed by official package manager yet.
-# Extra configs are also needed.
+# whoosh is managed separately as a Git submodule.
 !yazi/plugins/whoosh.yazi/
 
-# We commit the `package.toml` to keep track of installed plugins.
+# Keep yazi/package.toml under version control to record flavor and plugin dependencies.
 #
-# However, we **should not** commit it until we actually change flavors or plugins.
-# Because those commits would be useless.
+# Commit changes only when intentionally adding, removing, or updating dependencies.
 #
-# This is different from Neovim's lazy-lock.json, because you should install them
-# with package manager manually and no file record the plugins and flavors to install.
+# Unlike Neovim's Lua plugin specifications, this file serves as the dependency
+# list for Yazi's package manager.
 # yazi/package.toml
 
-# `config.jsonc` in fastfetch should vary in different terminals.
-# We just provide a `config` directory to store the configs for different terminals,
-# and users can link the one they need to `config.jsonc`.
+# Fastfetch's config.jsonc symlink selects the configuration for the current terminal.
+# Terminal-specific configurations are stored in fastfetch/config/.
 fastfetch/config.jsonc
