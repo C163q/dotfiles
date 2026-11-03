@@ -3,7 +3,7 @@ typeset -U PATH path
 path=("$HOME/bin" "$HOME/.local/bin" /usr/local/bin "${path[@]}")
 export PATH
 
-export EDITOR="${EDITOR:-vim}"
+export EDITOR="${EDITOR:-nvim}"
 
 export PYENV_ROOT="${PYENV_ROOT:-$HOME/.local/extra/pyenv}"
 if [[ -d "$PYENV_ROOT/bin" ]]; then

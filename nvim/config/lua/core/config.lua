@@ -44,10 +44,6 @@ return {
         enable_nes = false,
         enable_immediate_suggestions = false,
     },
-    codecompanion = {
-        chat_provider = "openrouter",
-        chat_model = "z-ai/glm-5.2",
-    },
     neocodeium = {
         enable = false,
     },
@@ -58,7 +54,7 @@ return {
         buftypes = {},
     },
     bufferline_filter = { -- These buffers will be filtered out from the bufferline.
-        filetypes = { "neo-tree", "checkhealth", "grug-far", "grug-far-history", "codecompanion" },
+        filetypes = { "neo-tree", "checkhealth", "grug-far", "grug-far-history", "sidekick_terminal" },
         buftypes = { "terminal", "quickfix" },
     },
     treesitter = {
@@ -107,6 +103,10 @@ return {
         separator = "  ", -- separator for navic component
     },
     snacks_image = true,
+    sidekick = {
+        nes_enabled = false,
+        nes_apply_keymap = "<C-,>",
+    },
 
     -- ##########################
     -- #      LSP Settings      #
@@ -120,6 +120,7 @@ return {
         "rust-analyzer",
         "gopls",
         "zls",
+        "copilot",
     },
     lsp_skip_enable = {
         "rust-analyzer", -- This is enabled by rustaceanvim, so we skip it here to avoid conflicts.
@@ -134,6 +135,7 @@ return {
         "vtsls",
         "asm_lsp",
         "neocmake",
+        "copilot",
     },
     basedpyright = {
         disable_annotation_missing_check = true,

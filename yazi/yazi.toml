@@ -1,0 +1,9 @@
+[opener]
+office = [
+    { run = "XMODIFIERS=@im=fcitx GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx GLFW_IM_MODULE=ibus /usr/bin/wps %s" }
+]
+
+[open]
+prepend_rules = [
+    { mime = "application/{vnd.openxmlformats-officedocument.wordprocessingml.document,msword}", use = "office" }
+]

@@ -1,4 +1,5 @@
 local event_presets = require("core.config").event_presets
+local sidekick_config = require("core.config").sidekick
 
 return {
     -- https://github.com/Saghen/blink.cmp

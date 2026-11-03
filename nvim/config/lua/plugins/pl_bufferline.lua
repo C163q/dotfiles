@@ -45,14 +45,8 @@ return {
                         text_align = "center",
                     },
                     {
-                        filetype = "codecompanion",
-                        text = "AI Chat",
-                        highlight = "Directory",
-                        text_align = "center",
-                    },
-                    {
-                        filetype = "codecompanion_cli",
-                        text = "AI Chat CLI",
+                        filetype = "sidekick_terminal",
+                        text = "Agent CLI",
                         highlight = "Directory",
                         text_align = "center",
                     },

@@ -221,4 +221,13 @@ return {
             { "Saghen/blink.cmp", optional = true },
         },
     },
+
+    -- https://github.com/folke/todo-comments.nvim
+    -- todo-comments.nvim: todo-comments is a lua plugin for Neovim >= 0.8.0 to highlight and
+    -- search for todo comments like `TODO`, `HACK`, `BUG` in your code base.
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {}
+    },
 }
