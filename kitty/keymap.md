@@ -21,6 +21,8 @@ The term "window" here doesn't means OS window, but a pane. When we infer
 `OS window`, it means the real OS window.
 
 - `KittyMod + W`: Open a new window, it will split current window into two.
+- `KittyMod + ;`: Open a new window, horizontally split.
+- `KittyMod + '`: Open a new window, vertically split.
 - `KittyMod + N`: Open a new OS window.
 - `KittyMod + D`: Close a window.
 - `KittyMod + ]`: Next window.

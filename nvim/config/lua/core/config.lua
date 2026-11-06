@@ -120,7 +120,6 @@ return {
         "rust-analyzer",
         "gopls",
         "zls",
-        "copilot",
     },
     lsp_skip_enable = {
         "rust-analyzer", -- This is enabled by rustaceanvim, so we skip it here to avoid conflicts.
@@ -135,7 +134,6 @@ return {
         "vtsls",
         "asm_lsp",
         "neocmake",
-        "copilot",
     },
     basedpyright = {
         disable_annotation_missing_check = true,
